@@ -44,6 +44,62 @@ header h1 {
   cursor: default;
 }
 
+header img {
+  color: #764ba2;
+  outline: #764ba2;
+  background-color: #764ba2;
+  position: relative;
+  height: auto;
+  /* width: 10%; */
+  max-width: 120px;
+  /* left: 50%; */
+  /* margin-left: 300px; */
+  background-color: #764ba2;
+}
+
+header button{
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.dropdown{
+  display: inline-block;
+}
+
+.dropdown a{
+  display: block;
+  color: black;
+  text-decoration: none;
+  padding: 10px 15px;
+}
+
+.dropdown .content{
+  display: none;
+  position: absolute;
+  left: auto;
+  right: 0;
+  transform: translateX(-25%);
+  background-color: rgb(240, 242, 255);
+  min-width: 100px;
+  box-shadow: 2px 2px 2px; /*horizontal, vertical, blur level*/
+  z-index: 9999;
+} 
+
+.dropdown:hover .content{
+  display: block;
+}
+
+.dropdown:hover button{
+  background-color: rgb(240, 242, 255);
+}
+
+.dropdown a:hover{
+  background-color: #667eea;
+}
+
 main{
   display: flex;
   align-items: center;
