@@ -191,7 +191,7 @@ width: 100%;
 height: 100%;
 border: 2px solid white;
 border-radius: 15px;
-appearance: none;  
+appearance: none;   /* remove default look */
 }
 
 /* Chrome / Safari / Edge */
@@ -253,7 +253,24 @@ pointer-events: none; /* let clicks pass through */
 .play-space .hand .cards .card {
   border: 1px solid black;
   border-radius: 25px;
-  background-color: white;
-  padding: 80px 60px;
-  margin: 0 20px;
+  padding: 50px 40px;
+  margin: 10px;
+}
+
+.play-space .hand .play {
+  text-decoration: none;
+  background-color: rgb(77, 231, 77);
+  border: 2px solid black;
+  border-radius: 20px;
+  margin-left: 20px;
+  padding: 20px 28px;
+}
+
+.play-space .hand .undo {
+  text-decoration: none;
+  background-color: rgb(180, 9, 9);
+  border: 2px solid black;
+  border-radius: 20px;
+  margin-left: 20px;
+  padding: 20px 28px;
 }
