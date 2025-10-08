@@ -1,24 +1,34 @@
+//Use this script for non-game related features
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Web app loaded successfully!');
     
     // Get references to elements
-    const startBtn = document.getElementById('startBtn');
+    const playBtn = document.getElementById('playBtn');
     const cards = document.querySelectorAll('.card');
     
-    // Add click event to start button
-    if (startBtn) {
-        startBtn.addEventListener('click', function() {
-            alert('Welcome to your web app! Start building amazing features.');
-            console.log('Start button clicked');
-            
-            // Add some visual feedback
-            startBtn.textContent = 'Let\'s Go!';
-            setTimeout(() => {
-                startBtn.textContent = 'Get Started';
-            }, 2000);
+    // Add click event to play button
+    if (playBtn)
+        playBtn.addEventListener('click', function() {
+            console.log('Play button clicked');
         });
-    }
+
+    // Accordion functionality
+    document.querySelectorAll(".accordion").forEach(button => {
+        button.addEventListener("click", () => {
+          const desc = button.nextElementSibling;
+
+          if (desc.style.display === "block") {
+            desc.style.display = "none";
+            button.querySelector("i").classList.remove("bx-chevron-up");
+            button.querySelector("i").classList.add("bx-chevron-down");
+          } else {
+            desc.style.display = "block";
+            button.querySelector("i").classList.remove("bx-chevron-down");
+            button.querySelector("i").classList.add("bx-chevron-up");
+          }
+        });
+      });
     
     // Add hover effects to cards
     cards.forEach((card, index) => {

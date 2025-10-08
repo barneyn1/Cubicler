@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game | Cubicler</title>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');</style>
+    <!--CSS-->
+    <link rel="stylesheet" href="../css/game.css">
+    <!--JS-->
+    <script src="/js/script.js" defer></script>
+    <script src="/js/cubicler.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="../index.html">Back to Home</a>
+        <h1>Cubicler</h1>
+    </header>
+
+    <main>
+        <div class="left-column">
+            <div class="vert-container">
+                <div class="title"> Shop</div>
+
+                <div class="items">
+                    <div class="item-row">
+                        <div class="item">item 1</div>
+                        <button class="buy">Buy</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 2</div>
+                        <button class="buy">Buy</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 3</div>
+                        <button class="buy">Buy</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 4</div>
+                        <button class="buy">Buy</button>
+                    </div>
+                </div>
+
+                <button class="reroll">Reroll
+                    <div class="cost">Cost</div>
+                </button>
+            </div>
+
+            <div class="vert-container">
+                <div class="title">Bin</div>
+
+                <div class="items">
+                    <div class="item-row">
+                        <div class="item">item 1</div>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 2</div>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 3</div>
+                    </div>
+                </div>
+                    
+                <button class="shuffle">Shuffle
+                    <div class="num">Num</div>
+                </button>
+                
+            </div>
+        </div>
+
+        <div class="play-space">play space
+            <div class="hand">
+                <div class="cards">
+                    <div class="card">1</div>
+                    <div class="card">2</div>
+                    <div class="card">3</div>
+                    <div class="card">4</div>
+                    <div class="card">5</div>
+                    <!-- <div class="card">6</div>
+                    <div class="card">7</div> -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-column">
+            <div class="title">Score</div>
+            
+            <div class="progress-wrapper">
+                <progress value="50" max="100"></progress>
+                <span class="progress-label">50/100</span>
+            </div>
+
+
+            <div class="title">Round</div>
+            <p>1 of 8</p>
+
+            <div class="title">Level</div>
+            <p class="bottom">1 of 4</p>
+
+            <button class="undo">UNDO</button>
+            <button class="play">PLAY</button>
+        </div>
+    </main>
+
+   
+
+    
+</body>
+</html>

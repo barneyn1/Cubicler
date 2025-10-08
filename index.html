@@ -3,43 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web App</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Home | Cubicler</title>
+    <!-- Font and Boxicons -->
+    <style>@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');</style>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <!--CSS-->
+    <link rel="stylesheet" href="css/style.css">
+    <!--JS-->
+    <script src="js/script.js" defer></script>
 </head>
+<!--For running updated pages in Replit: add the filename to the url bar
+Ex. .replit.dev/index.html (open in new tab feature works well too)    
+-->
 <body>
     <header>
-        <h1>Welcome to My Web App</h1>
+        <h1>Cubicler</h1>
     </header>
     
     <main>
         <div class="container">
             <section class="hero">
-                <h2>Start Building Your App</h2>
-                <p>This is your basic starter template with HTML, CSS, and JavaScript.</p>
-                <button id="startBtn">Get Started</button>
+                <div class="heroTop">
+                    <h2>A Game About Doing the Best at Your Job</h2>
+                    <p>Assemble the best desk to accomplish your tasks. Become the best office worker!</p>
+                </div>
+                <div class="heroBottom">
+                    <button id="playBtn"><a href="html/game.html">Play Game</a></button>
+                    <button id="pageBtn"><a href="html/instructions.html">How To Play</a></button>
+                    <button id="pageBtn"><a href="html/credits.html"> Credits</a></button>
+                </div>
             </section>
             
             <section class="content">
                 <div class="card">
-                    <h3>Feature 1</h3>
-                    <p>Add your content here</p>
+                    <h3 class="accordion">About Game <i class='bxr bx-chevron-down'></i> </h3>
+                    <p class="accordionDesc">
+                        Cubicler is a deck-building strategy game about productivity, synergy, and the modern digital workspace. The player's goal is to build their ultimate cubicle setup by collecting and combining cards that represent tools of office efficiency. From ergonomic chairs and mechanical keyboards to AI assistants and productivity apps, there are many ways to customize your desk. Cubicler explores how incremental improvements and smart combinations lead to exponential gains in productivity!<br>
+                        Created by Nick Barney, Collin Follett, Antonios Ibrakhim, Steven Lonsdale-Verbiest, and Brandon Morrow for the Fall 2025 Senior Capstone at Oakland University.
+                    </p>
                 </div>
                 <div class="card">
-                    <h3>Feature 2</h3>
-                    <p>Add your content here</p>
+                    <h3 class="accordion">Development Tools <i class='bxr bx-chevron-down'></i></h3>
+                    <div class="accordionDesc">
+                        <h4>Coding Languages</h4>
+                        <p>HTML, CSS, JavaScript</p>
+                        <h4>Design Tools</h4>
+                        <p>Figma, Microsoft Visio, Apple Freeform</p>
+                        <h4>Version Control & Web Hosting</h4>
+                        <p>GitHub, Replit, [Web Hosting Service]</p>
+                    </div>
                 </div>
                 <div class="card">
-                    <h3>Feature 3</h3>
-                    <p>Add your content here</p>
+                    <h3 class="accordion">Art Tools <i class='bxr bx-chevron-down'></i></h3>
+                    <p class="accordionDesc">Aseprite, LibreSprite, GIMP</p>
                 </div>
             </section>
         </div>
     </main>
     
     <footer>
-        <p>&copy; 2025 My Web App</p>
+        <p>Senior Capstone Project - Fall 2025</p>
     </footer>
-    
-    <script src="script.js"></script>
+
 </body>
 </html>

@@ -1,4 +1,20 @@
-# My Web App
+# Cubicler
+
+## Using Replit Development Environment
+
+Hey, Nick here. The new Replit format is annoying so I'm putting some helpful stuff here in case you need help operating the environment.
+
+1. The page .replit.dev/ is NOT the actual updated index page. It fetches the index page at a delayed rate, add index.html (OR html/game.html) to the URL to get your updated page.
+
+2. The filesystem panel for Replit is in the top right, next to the blue publish button (I HATE this). I found out you can move it to the left under the Files ... options.
+
+3. The Edit History can be seen in the Bottom Panel. Helpful for if we need to document what we did.
+
+4. If you're looking for console.log outputs, the Console tab is a little misleading. The Console tab is for the replit http host monitoring, meanwhile the website console (found in Preview -> Devtools [Wrench Icon]) will show the JS console.log outputs
+
+5. Often times you need to clear your browser cache for Replit preview to update and/or grab files properly.
+
+6. Don't worry about the Agent Cost thing when you want to stop the preview, costs are currently minimal I'll update if otherwise.
 
 ## Overview
 

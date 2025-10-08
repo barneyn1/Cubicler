@@ -16,14 +16,16 @@ body {
 header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 1rem 0;
+    padding: 0.2rem 0;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 header h1 {
+    font-family: 'Jersey 10', sans-serif;
     font-size: 2.5rem;
-    font-weight: 300;
+    font-weight: 400;
+    cursor: default;
 }
 
 /* Main content */
@@ -60,6 +62,21 @@ main {
     margin-bottom: 2rem;
 }
 
+.hero a {
+    text-decoration: none;
+    color: white;
+}
+
+.heroBottom button{
+    margin: 0 2vw;
+    width: 150px;
+}
+
+#playBtn {
+    background: linear-gradient(135deg, #4de74d 0%, #3cbf3c 100%);
+    box-shadow: 0 4px 15px rgba(60, 191, 60, 0.3);
+}
+
 /* Button */
 button {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -84,18 +101,22 @@ button:active {
 
 /* Content section */
 .content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    display: column;
     margin-top: 2rem;
 }
 
 .card {
     background: white;
     padding: 2rem;
+    margin-bottom: 1rem;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.07);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:last-child {
+    margin-bottom: 0;
 }
 
 .card:hover {
@@ -105,13 +126,22 @@ button:active {
 
 .card h3 {
     color: #2c3e50;
-    margin-bottom: 1rem;
+    /*margin-bottom: 1rem;*/
     font-size: 1.3rem;
+}
+
+.card h3 i {
+    
 }
 
 .card p {
     color: #7f8c8d;
     line-height: 1.6;
+}
+
+.accordionDesc {
+    display: none; /* Hide the description by default */
+    margin-top: 1rem;
 }
 
 /* Footer */
