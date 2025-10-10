@@ -121,9 +121,10 @@ function initializeGameEngine() {
     synergyLabel.style.color = "#00ff00";
     synergyLabel.style.padding = "6px"; 
     synergyLabel.style.borderRadius = "4px"; 
-    synergyLabel.style.fontFamily = "monospace"; 
+    synergyLabel.style.fontFamily = "Arial, sans-serif"; 
     synergyLabel.innerText = "Synergy: 0";
     document.body.appendChild(synergyLabel)
+    initDisplay();
 }
 
 // New Level
@@ -161,6 +162,7 @@ function newLevel() {
         default:
             console.log("Default Level Logic");
     }
+    refreshDisplay(); // refresh display
 }
 
 // New Round
@@ -171,6 +173,8 @@ function newLevel() {
         
         // Set default round variables
         lastScore = 0;
+
+        refreshDisplay(); // refresh display
     }
 
 // New Bin, used for initialization and new levels
@@ -184,6 +188,8 @@ function newBin() {
     // Print the player's bin to the console
     console.log("Initial Bin Order:")
     bin.forEach(card => console.log(card.describe()));
+
+    refreshDisplay(); // refresh display 
 }
 
 // ---Calculation functions---
@@ -332,6 +338,8 @@ function calculateScore() {
         console.log("Round Lost!");
         newRound();
     }
+
+    refreshDisplay(); // refresh display 
 }
 
 // ---Interaction functions---
@@ -343,6 +351,8 @@ function shuffleBin() {
     // Print the player's bin to the console
     console.log("New Bin Order:")
     bin.forEach(card => console.log(card.describe()));
+
+    refreshDisplay(); // refresh display 
 }
 
 // Reroll Shop, will need code to make reroll button unclickable if money is insufficient
@@ -365,6 +375,8 @@ function rerollShop() {
     // Print the player's shop to the console
     console.log("New Shop Contents:")
     shop.forEach(card => console.log(card.describe()));
+
+    refreshDisplay(); // refresh display
 }
 
 // Add to Hand from Bin
@@ -377,6 +389,8 @@ function addToHand(card) {
     // Print the player's hand to the console
     console.log("New Hand Contents:")
     hand.forEach(card => console.log(card.describe()));
+
+    refreshDisplay(); // refresh display 
 }
 
 //Add to Bin, used in removeFromHand and buyFromShop
@@ -387,6 +401,8 @@ function addToBin(card) {
     // Print the player's bin to the console
     console.log("New Bin Contents:")
     bin.forEach(card => console.log(card.describe()));
+
+    refreshDisplay(); // refresh display 
 }
 
 // Remove from Hand
@@ -399,6 +415,8 @@ function removeFromHand(card) {
     // Print the player's hand to the console
     console.log("New Hand Contents:")
     hand.forEach(card => console.log(card.describe()));
+
+    refreshDisplay(); // refresh display 
 }
 
 // Buy From Shop
@@ -412,6 +430,8 @@ function buyFromShop(card) {
     addToBin(card);
     // Print the player's shop to the console
     console.log("New Shop Contents:")
+
+    refreshDisplay(); // refresh display
 }
 
 // Play Round
@@ -419,6 +439,8 @@ function playRound() {
     console.log("Playing round...");
     // Calculate the player's score
     calculateScore();
+
+    refreshDisplay(); // refresh display
 }
 
 // Undo Bin -> Hand Selection
@@ -432,6 +454,117 @@ function undoSelection() {
 
 // ---Object state functions---
 // Making a function to update the display of the bin, hand, and shop for when values change
+
+function initDisplay() {
+    console.log("Initializing display...");
+
+    // Score section
+    const scoreProgress = document.querySelector(".progress-wrapper progress");
+    const scoreLabel = document.querySelector(".progress-wrapper .progress-label");
+    if (scoreProgress && scoreLabel) {
+        scoreProgress.value = 0;
+        scoreProgress.max = 100;
+        scoreLabel.textContent = "0/100";
+    }
+
+    // Round section
+    const roundText = document.querySelector(".right-column p:nth-of-type(1)");
+    if (roundText) {
+        roundText.textContent = round + " of 8";
+    }
+
+    // Level section
+    const levelText = document.querySelector(".right-column .bottom");
+    if (levelText) {
+        levelText.textContent = level + " of 4";
+    }
+
+    // Shop items
+    const shopItems = document.querySelectorAll(".left-column .title + .items .item");
+    shopItems.forEach((item, index) => {
+        if (shop[index]) {
+            item.textContent = shop[index].name;
+        } else {
+            item.textContent = "Empty";
+        }
+    });
+
+    // Bin items
+    const binItems = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
+    binItems.forEach((item, index) => {
+        if (bin[index]) {
+            item.textContent = bin[index].name;
+        } else {
+            item.textContent = "Empty";
+        }
+    });
+
+    // Hand cards
+    const handCards = document.querySelectorAll(".play-space .card");
+    handCards.forEach((card, index) => {
+        if (hand[index]) {
+            card.textContent = hand[index].name;
+        } else {
+            card.textContent = "";
+        }
+    });
+}
+
+
+function refreshDisplay() {
+    console.log("Refreshing display...");
+
+    // Score section
+    const scoreProgress = document.querySelector(".progress-wrapper progress");
+    const scoreLabel = document.querySelector(".progress-wrapper .progress-label");
+    if (scoreProgress && scoreLabel) {
+        scoreProgress.value = score;
+        scoreProgress.max = goalScore || 100;
+        scoreLabel.textContent = score + "/" + (goalScore || 100);
+    }
+
+    // Round section
+    const roundText = document.querySelector(".right-column p:nth-of-type(1)");
+    if (roundText) {
+        roundText.textContent = round + " of 8";
+    }
+
+    // Level section
+    const levelText = document.querySelector(".right-column .bottom");
+    if (levelText) {
+        levelText.textContent = level + " of 4";
+    }
+
+    // Shop items
+    const shopItems = document.querySelectorAll(".left-column .title + .items .item");
+    shopItems.forEach((item, index) => {
+        if (shop[index]) {
+            item.textContent = shop[index].name;
+        } else {
+            item.textContent = "Empty";
+        }
+    });
+
+    // Bin items
+    const binItems = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
+    binItems.forEach((item, index) => {
+        if (bin[index]) {
+            item.textContent = bin[index].name;
+        } else {
+            item.textContent = "Empty";
+        }
+    });
+
+    // Hand cards
+    const handCards = document.querySelectorAll(".play-space .card");
+    handCards.forEach((card, index) => {
+        if (hand[index]) {
+            card.textContent = hand[index].name;
+        } else {
+            card.textContent = "";
+        }
+    });
+}
 
 // Making a function to make shop items unclickable if money is insufficient
 
