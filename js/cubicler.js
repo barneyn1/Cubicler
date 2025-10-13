@@ -127,6 +127,7 @@ function initializeGameEngine() {
     synergyLabel.innerText = "Synergy: 0";
     document.body.appendChild(synergyLabel);
     initDisplay();
+    initImages();
 }
 
 // New Level
@@ -469,8 +470,7 @@ function undoSelection() {
 }
 
 // ---Object state functions---
-// Making a function to update the display of the bin, hand, and shop for when values change
-
+// Functions to initialize the display of the bin, hand, and shop & update for when values change
 function initDisplay() {
     console.log("Initializing display...");
 
@@ -580,7 +580,138 @@ function refreshDisplay() {
             card.textContent = "";
         }
     });
+
+    refreshImages();
 }
+
+// Adding art images dynamically to shop and hand areas
+// FUTURE: Currently using placeholders, Alter code so image matches card, might want to edit into initDisplay code
+function initImages() {
+    console.log("Adding images...");
+    // Shop images
+    const shopItems = document.querySelectorAll(".left-column .items .item");
+    shopItems.forEach(item => {
+        // If the item doesn't already have an image
+        if (!item.querySelector("img")) {
+            const img = document.createElement("img");
+            // In the future, replace placeholder with card-specific art:
+            // img.src = `../assets/cards/${shop[index].id}.png`;
+            img.src = "../assets/pics/placeholder.png";
+            img.alt = "Card placeholder";
+            img.width = 40;   // we can change this
+            img.height = 40;
+            img.style.display = "block";
+            img.style.margin = "0 auto 5px";
+            item.prepend(img);
+        }
+    });
+
+    // Bin images
+    const binItems = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
+    binItems.forEach(item => {
+        // If the item doesn't already have an image
+        if (!item.querySelector("img")) {
+            const img = document.createElement("img");
+            img.src = "../assets/pics/placeholder.png";
+            img.alt = "Card placeholder";
+            img.width = 40;   // we can change this
+            img.height = 40;
+            img.style.display = "block";
+            img.style.margin = "0 auto 5px";
+            item.prepend(img);
+        }
+    });
+
+    // Hand images
+    const handCards = document.querySelectorAll(".play-space .cards .card");
+    handCards.forEach(card => {
+        if (!card.querySelector("img")) {
+            const img = document.createElement("img");
+            img.src = "../assets/pics/placeholder.png";
+            img.alt = "Card placeholder";
+            img.width = 80;  // we can change this
+            img.height = 80;
+            img.style.display = "block";
+            img.style.margin = "0 auto 5px";
+            card.prepend(img);
+        }
+    });
+}
+
+// Refreshes images for shop, bin, and hand when contents update
+// Currently called in refreshDisplay
+function refreshImages() {
+    console.log("Refreshing images...");
+
+    // Shop images
+    const shopItems = document.querySelectorAll(".left-column .items .item");
+    shopItems.forEach((item, index) => {
+        let img = item.querySelector("img");
+        if (!img) {
+            img = document.createElement("img");
+            img.style.display = "block";
+            img.style.margin = "0 auto 5px";
+            img.width = 40;
+            img.height = 40;
+            item.prepend(img);
+        }
+
+        if (shop[index]) {
+            // In the future, replace placeholder with card-specific art:
+            // img.src = `../assets/cards/${shop[index].id}.png`;
+            img.src = "../assets/pics/placeholder.png";
+            img.alt = shop[index].name;
+        } else {
+            img.src = "../assets/pics/placeholder.png";
+            img.alt = "Empty slot";
+        }
+    });
+
+    // Bin images
+    const binItems = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
+    binItems.forEach((item, index) => {
+        let img = item.querySelector("img");
+        if (!img) {
+            img = document.createElement("img");
+            img.style.display = "block";
+            img.style.margin = "0 auto 5px";
+            img.width = 40;
+            img.height = 40;
+            item.prepend(img);
+        }
+
+        if (bin[index]) {
+            img.src = "../assets/pics/placeholder.png";
+            img.alt = bin[index].name;
+        } else {
+            img.src = "../assets/pics/placeholder.png";
+            img.alt = "Empty slot";
+        }
+    });
+
+    // Hand images
+    const handCards = document.querySelectorAll(".play-space .cards .card");
+    handCards.forEach((card, index) => {
+        let img = card.querySelector("img");
+        if (!img) {
+            img = document.createElement("img");
+            img.style.display = "block";
+            img.style.margin = "0 auto 5px";
+            img.width = 80;
+            img.height = 80;
+            card.prepend(img);
+        }
+
+        if (hand[index]) {
+            img.src = "../assets/pics/placeholder.png";
+            img.alt = hand[index].name;
+        } else {
+            img.src = "../assets/pics/placeholder.png";
+            img.alt = "Empty slot";
+        }
+    });
+}
+
 
 // Making a function to make shop items unclickable if money is insufficient
 
