@@ -28,18 +28,20 @@ class Card {
 
 // --Global Variables--
 // Code-based variables
-var cardPool = []
-var hand = []
-var shop = []
-var bin = []
-var round = 0
-var level = 0
-var money = 0
-var lastScore = 0
-var score = 0
-var bonusScore = 0
-var goalScore = 0
-var synergyLabel
+var cardPool = [];
+var hand = [];
+var shop = [];
+var bin = [];
+var round = 0;
+var level = 0;
+var money = 0;
+var lastScore = 0;
+var score = 0;
+var bonusScore = 0;
+var goalScore = 0;
+var lastAddedCard = null;
+var synergyLabel;
+
 
 // Doc-based variables
 const testBtn = document.getElementById('testBtn');
@@ -123,7 +125,7 @@ function initializeGameEngine() {
     synergyLabel.style.borderRadius = "4px"; 
     synergyLabel.style.fontFamily = "Arial, sans-serif"; 
     synergyLabel.innerText = "Synergy: 0";
-    document.body.appendChild(synergyLabel)
+    document.body.appendChild(synergyLabel);
     initDisplay();
 }
 
@@ -138,9 +140,12 @@ function newLevel() {
     shop = [];
     round = 0;
     score = 0;
+    lastAddedCard = null;
     
     // Starting new round at 0 -> +1 in newRound()
     newRound();
+    
+    // Initializing bin
     newBin();
 
     // Initializing shop
@@ -186,7 +191,7 @@ function newBin() {
         bin.push(cardPool[randomIndex]);
     }
     // Print the player's bin to the console
-    console.log("Initial Bin Order:")
+    console.log("Initial Bin Order:");
     bin.forEach(card => console.log(card.describe()));
 
     refreshDisplay(); // refresh display 
@@ -321,7 +326,7 @@ function calculateScore() {
     score = 25;
     // Add the base value of each card in the player's hand to the score
     hand.forEach(card => score += card.base);
-    console.log("Base Score: " + score)
+    console.log("Base Score: " + score);
     // Determining synergies and adding bonus score
     bonusScore = calculateBonusScore();
     score += bonusScore;
@@ -333,7 +338,7 @@ function calculateScore() {
     // Determining if the player has won the round
     if (score >= goalScore) {
         console.log("Level Won!");
-        newLevel()    
+        newLevel();  
     } else {
         console.log("Round Lost!");
         newRound();
@@ -349,7 +354,7 @@ function shuffleBin() {
     // Shuffle the player's bin
     bin.sort(() => Math.random() - 0.5);
     // Print the player's bin to the console
-    console.log("New Bin Order:")
+    console.log("New Bin Order:");
     bin.forEach(card => console.log(card.describe()));
 
     refreshDisplay(); // refresh display 
@@ -373,39 +378,41 @@ function rerollShop() {
         shop.push(cardPool[randomIndex]);
     }
     // Print the player's shop to the console
-    console.log("New Shop Contents:")
+    console.log("New Shop Contents:");
     shop.forEach(card => console.log(card.describe()));
 
     refreshDisplay(); // refresh display
 }
 
 // Add to Hand from Bin
-function addToHand(card) {
+function addToHand(card, index = hand.length) { // default index = end
     console.log("Adding card to hand...");
     // Add the card to the player's hand
-    hand.push(card);
+    hand.splice(index, 0, card);
+    // Track the last added card
+    lastAddedCard = card;
     // Remove the card from the player's bin
     bin.splice(bin.indexOf(card), 1);
     // Print the player's hand to the console
-    console.log("New Hand Contents:")
+    console.log("New Hand Contents:");
     hand.forEach(card => console.log(card.describe()));
 
     refreshDisplay(); // refresh display 
 }
 
-//Add to Bin, used in removeFromHand and buyFromShop
+// Add to Bin, used in removeFromHand and buyFromShop
 function addToBin(card) {
     console.log("Adding card to bin...");
     // Add the card to the player's bin
     bin.push(card);
     // Print the player's bin to the console
-    console.log("New Bin Contents:")
+    console.log("New Bin Contents:");
     bin.forEach(card => console.log(card.describe()));
 
     refreshDisplay(); // refresh display 
 }
 
-// Remove from Hand
+// Remove from Hand, used in undoSelection
 function removeFromHand(card) {
     console.log("Removing card from hand...");
     // Remove the card from the player's hand
@@ -413,7 +420,7 @@ function removeFromHand(card) {
     // Add the card to the player's bin
     addToBin(card);
     // Print the player's hand to the console
-    console.log("New Hand Contents:")
+    console.log("New Hand Contents:");
     hand.forEach(card => console.log(card.describe()));
 
     refreshDisplay(); // refresh display 
@@ -429,7 +436,7 @@ function buyFromShop(card) {
     // Add the card to the player's bin
     addToBin(card);
     // Print the player's shop to the console
-    console.log("New Shop Contents:")
+    console.log("New Shop Contents:");
 
     refreshDisplay(); // refresh display
 }
@@ -449,7 +456,16 @@ function playRound() {
 function undoSelection() {
     console.log("Undoing selection...");
     // Add code for undoing selection
-    
+    // Protection check
+    if (!lastAddedCard) {
+        console.log("No recent card to undo.");
+        return;
+    }
+    // Remove last added card from hand
+    removeFromHand(lastAddedCard);
+
+    // Clear tracking after undo
+    lastAddedCard = null;
 }
 
 // ---Object state functions---
@@ -570,9 +586,9 @@ function refreshDisplay() {
 
 // Making a function to make reroll button unclickable if money is insufficient
 
-//Making a function to make play button unclickable if hand is empty
+// Making a function to make play button unclickable if hand is empty
 
-//Making a function to make a shop item unclickable if it gets bought
+// Making a function to make a shop item unclickable if it gets bought
 
 // ---Interaction events---
 // Testing Button
@@ -582,6 +598,14 @@ if (testBtn) {
         playRound();
     });
 }
+
+// Click events
+// Clicking the play button -> playRound()
+// Clicking the undo button -> undoSelection()
+// Clicking a card's buy button in shop -> buyFromShop(card)
+
+// Drag & Drop events
+// Drag card from bin to hand -> addToHand(card)
 
 // ---Main (keep below functions and events)---
 // Call the initialization function to start the engine
