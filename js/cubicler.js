@@ -128,6 +128,7 @@ function initializeGameEngine() {
     document.body.appendChild(synergyLabel);
     initDisplay();
     initImages();
+    initDragAndDrop();
 }
 
 // New Level
@@ -736,7 +737,115 @@ if (testBtn) {
 // Clicking a card's buy button in shop -> buyFromShop(card)
 
 // Drag & Drop events
-// Drag card from bin to hand -> addToHand(card)
+// Drag card from bin to hand -> addToHand(card) 
+// it also lets you add the card back to the bin
+
+let draggedFrom = null;
+let draggedCardIndex = null;
+let dndBound = false;
+
+function initDragAndDrop() {
+    if (dndBound) return;
+    dndBound = true;
+
+    console.log("Initializing drag and drop...");
+
+    const handArea = document.querySelector(".play-space .cards");
+    const binArea  = document.querySelector(".left-column .vert-container:nth-of-type(2) .items");
+
+    function markDraggable() {
+        const binItems  = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
+        const handCards = document.querySelectorAll(".play-space .cards .card");
+        binItems.forEach((el, i) => { el.setAttribute("draggable", "true"); el.dataset.index = i; });
+        handCards.forEach((el, i) => { el.setAttribute("draggable", "true"); el.dataset.index = i; });
+    }
+
+    function attachDragStarts() {
+        binArea.addEventListener("dragstart", (e) => {
+            const el = e.target.closest(".item");
+            if (!el) return;
+            draggedFrom = "bin";
+            draggedCardIndex = parseInt(el.dataset.index, 10);
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData("text/plain", "x");
+            el.style.opacity = "0.5";
+        }, true);
+
+        handArea.addEventListener("dragstart", (e) => {
+            const el = e.target.closest(".card");
+            if (!el) return;
+            draggedFrom = "hand";
+            draggedCardIndex = parseInt(el.dataset.index, 10);
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData("text/plain", "x");
+            el.style.opacity = "0.5";
+        }, true);
+
+        document.addEventListener("dragend", (e) => {
+            const el = e.target;
+            if (el && el.style) el.style.opacity = "";
+            draggedFrom = null;
+            draggedCardIndex = null;
+        }, true);
+    }
+
+    function handleDrop(targetArea) {
+        if (draggedCardIndex === null || !draggedFrom) return;
+
+        const from = draggedFrom;
+        const index = draggedCardIndex;
+
+        draggedFrom = null;
+        draggedCardIndex = null;
+
+        if (from === "bin" && targetArea === "hand") {
+            const card = bin[index];
+            if (card) addToHand(card);
+        } else if (from === "hand" && targetArea === "bin") {
+            const card = hand[index];
+            if (card) removeFromHand(card);
+        }
+
+        setTimeout(() => {
+            originalRefresh();
+        }, 0);
+    }
+
+    function allowDrop(area) {
+        area.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = "move";
+        });
+    }
+
+    function originalRefresh() {
+        if (!initDragAndDrop._wrapped) {
+            const _refresh = refreshDisplay;
+            refreshDisplay = function() {
+                _refresh();
+                markDraggable();
+            };
+            initDragAndDrop._wrapped = true;
+        }
+        refreshDisplay();
+    }
+
+    allowDrop(handArea);
+    allowDrop(binArea);
+
+    handArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        handleDrop("hand");
+    });
+
+    binArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        handleDrop("bin");
+    });
+
+    attachDragStarts();
+    markDraggable();
+}
 
 // ---Main (keep below functions and events)---
 // Call the initialization function to start the engine
