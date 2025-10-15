@@ -45,12 +45,16 @@ var synergyLabel;
 
 // Doc-based variables
 const testBtn = document.getElementById('testBtn');
+const playBtn = document.getElementById('playBtn');
+const undoBtn = document.getElementById('undoBtn');
+const shuffleBtn = document.getElementById('shuffleBtn');
+const rerollBtn = document.getElementById('rerollBtn');
 
 // ---Initialization functions---
 // setting up the enviroment with all cards and prints them to console.
 function setupEnvironment() {
     console.log("Setting up environment...");
-    
+
     // Full pool of available game cards
     // Changed the declaration to outside of function for globality
     cardPool = [
@@ -100,7 +104,7 @@ function startGame() {
     console.log("Starting game...");
     // Set default game variables
     level = 0;
-    money = 0;
+    money = 5;
     // Starting new level at 0 -> +1 in newLevel()
     newLevel();
 }
@@ -136,17 +140,17 @@ function newLevel() {
     // Increment level & Log
     level++;
     console.log("New Level: " + level);
-    
+
     // Set default level variables
     bin = [];
     shop = [];
     round = 0;
     score = 0;
     lastAddedCard = null;
-    
+
     // Starting new round at 0 -> +1 in newRound()
     newRound();
-    
+
     // Initializing bin
     newBin();
 
@@ -177,7 +181,7 @@ function newLevel() {
         // Increment round & Log
         round++;
         console.log("New Round: " + round);
-        
+
         // Set default round variables
         lastScore = 0;
 
@@ -308,15 +312,16 @@ function calculateMoney(){
     // Determining money to add to player's money based on score
     console.log("Money before Addition: " + money);
     // Add code for money calculation based on score
+    var addMoney = 0;
     if (score > 0 & score <= 3) {
-        money += score;
+        addMoney += score;
     } else if (score > 3 & score <= 6) {
-        money += (Math.floor(score / 2) + 1);
+        addMoney += (Math.floor(score / 2) + 1);
     } else {
-        money += 0;
+        addMoney += 0;
     }
-    console.log("Money to Add: " + money);
-    return money;
+    console.log("Money to Add: " + addMoney);
+    return addMoney;
 }
 
 // Calculate Score, used in playRound
@@ -324,7 +329,7 @@ function calculateScore() {
     console.log("Calculating Score...");
     // Calculate the player's score
     lastScore = score;
-    //Testing score = 25
+    //Testing score = 25 THIS IS TEMPORARY
     score = 25;
     // Add the base value of each card in the player's hand to the score
     hand.forEach(card => score += card.base);
@@ -496,6 +501,12 @@ function initDisplay() {
         levelText.textContent = level + " of 4";
     }
 
+    // Money section
+    const moneyText = document.querySelector(".right-column .money");
+    if (moneyText) {
+        moneyText.textContent = "$" + money
+    }
+
     // Shop items
     const shopItems = document.querySelectorAll(".left-column .title + .items .item");
     shopItems.forEach((item, index) => {
@@ -552,6 +563,12 @@ function refreshDisplay() {
         levelText.textContent = level + " of 4";
     }
 
+    // Money section
+    const moneyText = document.querySelector(".right-column .money");
+    if (moneyText) {
+        moneyText.textContent = "$" + money
+    }
+
     // Shop items
     const shopItems = document.querySelectorAll(".left-column .title + .items .item");
     shopItems.forEach((item, index) => {
@@ -583,6 +600,7 @@ function refreshDisplay() {
     });
 
     refreshImages();
+    updateShopButtonStatus();
 }
 
 // Adding art images dynamically to shop and hand areas
@@ -714,7 +732,25 @@ function refreshImages() {
 }
 
 
-// Making a function to make shop items unclickable if money is insufficient
+// Making a function to make shop buy buttons unclickable if money is insufficient
+// Currently called in refreshDisplay
+function updateShopButtonStatus() {
+    console.log("Updating shop button status...");
+
+    // Select the actual Buy buttons
+    const buttons = document.querySelectorAll('.left-column .items .item-row .buy');
+
+    buttons.forEach((button, i) => {
+        const item = shop[i]
+        const cost = item ? item.base : 0
+        const cash = money
+        // Check if the player has enough money to buy the item, also accounts for anomalies
+        const disable = !(Number.isFinite(cost) && Number.isFinite(cash) && cash >= cost);
+        // Dynamically disable buttons based on money
+        button.disabled = disable;
+        button.classList.toggle('disabled', disable); //Add a class to style dark disabled buttons
+    });
+}
 
 // Making a function to make reroll button unclickable if money is insufficient
 
@@ -733,8 +769,23 @@ if (testBtn) {
 
 // Click events
 // Clicking the play button -> playRound()
+if (playBtn) {
+    playBtn.addEventListener('click', function() {
+        console.log('*-*-*-Play Button Clicked-*-*-*');
+        playRound();
+    });
+}
 // Clicking the undo button -> undoSelection()
+
 // Clicking a card's buy button in shop -> buyFromShop(card)
+const shopItems = document.querySelectorAll('.left-column .items .item-row .buy')
+    .forEach((buyButton, index) => {
+        buyButton.addEventListener('click', () => {
+            console.log(`*-*-*-Buy Button ${index + 1} Clicked-*-*-*`);
+            //need to do more coding before this is implemented
+            //buyFromShop(shop[index]);
+        });
+    });
 
 // Drag & Drop events
 // Drag card from bin to hand -> addToHand(card) 
