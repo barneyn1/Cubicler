@@ -770,17 +770,22 @@ if (testBtn) {
 // Click events
 // Clicking the play button -> playRound()
 if (playBtn) {
-    playBtn.addEventListener('click', function() {
-        console.log('*-*-*-Play Button Clicked-*-*-*');
+    playBtn.addEventListener("click", function() {
+        console.log("*-*-*-Play Button Clicked-*-*-*");
         playRound();
     });
 }
 // Clicking the undo button -> undoSelection()
-
+if (undoBtn) {
+    undoBtn.addEventListener("click", function() {
+        console.log("*-*-*-Undo Button Clicked-*-*-*");
+        undoSelection();
+    });
+}
 // Clicking a card's buy button in shop -> buyFromShop(card)
-const shopItems = document.querySelectorAll('.left-column .items .item-row .buy')
+const shopItems = document.querySelectorAll(".left-column .items .item-row .buy")
     .forEach((buyButton, index) => {
-        buyButton.addEventListener('click', () => {
+        buyButton.addEventListener("click", () => {
             console.log(`*-*-*-Buy Button ${index + 1} Clicked-*-*-*`);
             //need to do more coding before this is implemented
             //buyFromShop(shop[index]);
