@@ -14,49 +14,34 @@ body {
 }
 
 header {
-  /* position: relative; */
   display: flex;
   align-items: center;
-  /* justify-content: flex-start; */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  /* padding: 1rem 0; */
-  padding: .5rem 2rem;
-  /* text-align: center; */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+  padding: 0.35vh 0.78vw; /* .5rem 2rem → responsive */
+  box-shadow: 0 0.14vh 0.7vh rgba(0,0,0,0.1); /* 2px 10px */
 }
 
 header a {
   text-decoration: none;
   color: white;
-  border: 2px solid white;
-  border-radius: 20px;
-  /* margin-left: 20px; */
-  padding: 5px 7px;
+  border: 0.08vw solid white; /* 2px */
+  border-radius: 0.78vw; /* 20px */
+  padding: 0.35vh 0.27vw; /* 5px 7px */
 }
 
 header h1 {
-  /* position: absolute; */
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
-  font-size: 2.5rem;
+  font-size: 1.56vw; /* 2.5rem ≈ 40px */
   font-weight: 300;
   margin: 0;
   text-align: center;
-  flex: 1; /* takes available space */
+  flex: 1;
   cursor: default;
 }
 
 header img {
-  color: #764ba2;
-  outline: #764ba2;
-  background-color: #764ba2;
-  position: relative;
+  max-width: 4.69vw; /* 120px */
   height: auto;
-  /* width: 10%; */
-  max-width: 120px;
-  /* left: 50%; */
-  /* margin-left: 300px; */
   background-color: #764ba2;
 }
 
@@ -76,18 +61,17 @@ header button{
   display: block;
   color: black;
   text-decoration: none;
-  padding: 10px 15px;
+  padding: 0.7vh 0.59vw; /* 10px 15px */
 }
 
 .dropdown .content{
   display: none;
   position: absolute;
-  left: auto;
   right: 0;
-  transform: translateX(-25%);
+  transform: translateX(-0.98vw); /* 25px */
   background-color: rgb(240, 242, 255);
-  min-width: 100px;
-  box-shadow: 2px 2px 2px; /*horizontal, vertical, blur level*/
+  min-width: 3.91vw; /* 100px */
+  box-shadow: 0.08vw 0.08vw 0.08vw; 
   z-index: 9999;
 } 
 
@@ -125,9 +109,9 @@ button {
   background: repeating-linear-gradient(
       45deg,
       #525252,          
-      #525252 20px,
-      #3b3b3b 20px,
-      #3b3b3b 40px
+      #525252 1.39vh, /* 20px */
+      #3b3b3b 1.39vh,
+      #3b3b3b 2.78vh /* 40px */
   );
 }
 
@@ -139,9 +123,9 @@ button {
 }
 
 .left-column .vert-container .title{
-  font-size: 60px;
+  font-size: 4.17vh; /* 60px */
   color: white;
-  margin-bottom: -20px;
+  margin-bottom: -1.39vh; /* -20px */
 }
 
 .left-column .vert-container .items{
@@ -154,40 +138,44 @@ button {
 .left-column .vert-container .items .item-row{
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin: 0.7vh 0; /* 10px 0 */
 }
 
 .left-column .vert-container .items .item-row .item{
-  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 6.25vw; /* 160px */
+  height: 6.94vh; /* 100px */
+  padding: 0;
   color: white;
-  border: 2px solid white;
-  border-radius: 6px;
+  border: 0.08vw solid white; /* 2px */
+  border-radius: 0.23vw; /* 6px */
   cursor: pointer;
 }
 
 .left-column .vert-container .items .item-row .buy{
   background-color: rgb(77, 231, 77);
-  margin-left: 15px;
-  margin-top: -1px;
-  padding: 15px 8px;
+  margin-left: 0.59vw; /* 15px */
+  margin-top: -0.07vh; /* -1px */
+  padding: 1.04vh 0.31vw; /* 15px 8px */
   color: white;
-  border-radius: 6px;
+  border-radius: 0.23vw; /* 6px */
   cursor: pointer;
-
 }
 
 .left-column .vert-container button{
   background-color: #FFB700;
-  border-radius: 16px;
-  margin-top: 10px;
-  font-size: 18px;
-  padding: 0 40px;
+  border-radius: 0.63vw; /* 16px */
+  margin-top: 0.7vh; /* 10px */
+  font-size: 1.11vh; /* 18px */
+  padding: 0 1.56vw; /* 0 40px */
   cursor: pointer;
-
 }
 
 .left-column .vert-container button div{
-  font-size: 40px;
+  font-size: 2.78vh; /* 40px */
 }
 
 .right-column {
@@ -201,85 +189,80 @@ button {
   background: repeating-linear-gradient(
       -45deg,
       #525252,          
-      #525252 20px,
-      #3b3b3b 20px,
-      #3b3b3b 40px
+      #525252 1.39vh,
+      #3b3b3b 1.39vh,
+      #3b3b3b 2.78vh
   );
 }
 
 .right-column .title{
-  margin-top: 20px;
-  font-size: 60px;
+  margin-top: 1.39vh; /* 20px */
+  font-size: 4.17vh; /* 60px */
 }
 
 .right-column p{
-  font-size: 30px;
+  font-size: 2.08vh; /* 30px */
 }
 
 .right-column .undo {
   text-decoration: none;
   background-color: rgb(180, 9, 9);
-  border-radius: 16px;
+  border-radius: 0.63vw; /* 16px */
   color: white;
-  font-size: 40px;
-  margin-top: 100px;
-  padding: 20px 40px;
+  font-size: 2.78vh; /* 40px */
+  margin-top: 6.94vh; /* 100px */
+  padding: 1.39vh 1.56vw; /* 20px 40px */
   cursor: pointer;
 }
 
 .right-column .play {
   text-decoration: none;
   background-color: rgb(77, 231, 77);
-  border-radius: 16px;
+  border-radius: 0.63vw; /* 16px */
   color: white;
-  font-size: 40px;
-  margin-top: 60px;
-  padding: 20px 40px;
+  font-size: 2.78vh; /* 40px */
+  margin-top: 4.17vh; /* 60px */
+  padding: 1.39vh 1.56vw; /* 20px 40px */
   cursor: pointer;
 }
 
 .progress-wrapper {
-position: relative;
-width: 75%; /* adjust size */
-height: 30px;
+  position: relative;
+  width: 75%;
+  height: 2.08vh; /* 30px */
 }
 
-/* Style the native progress */
 progress {
-width: 100%;
-height: 100%;
-border: 2px solid white;
-border-radius: 15px;
-appearance: none;   /* remove default look */
+  width: 100%;
+  height: 100%;
+  border: 0.08vw solid white; /* 2px */
+  border-radius: 1.04vh; /* 15px */
+  appearance: none;
 }
 
-/* Chrome / Safari / Edge */
 progress::-webkit-progress-bar {
-background-color: #eee;
-border-radius: 15px;
+  background-color: #eee;
+  border-radius: 1.04vh; /* 15px */
 }
 progress::-webkit-progress-value {
-background: #FFB700;
-border-radius: 15px;
+  background: #FFB700;
+  border-radius: 1.04vh; /* 15px */
 }
 
-/* Firefox */
 progress::-moz-progress-bar {
-background: #FFB700;
-border-radius: 15px;
+  background: #FFB700;
+  border-radius: 1.04vh; /* 15px */
 }
 
-/* Overlayed fraction label */
 .progress-label {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-font-size: 20px;
-color: black; /* switch to white if fill is dark */
-pointer-events: none; /* let clicks pass through */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.39vh; /* 20px */
+  color: black;
+  pointer-events: none;
 }
-
 
 .play-space {
   display: flex;
@@ -288,7 +271,7 @@ pointer-events: none; /* let clicks pass through */
   justify-content: space-around;
   height: 100vh;
   background-color: #060C23;
-  padding-top: 26.5%;
+  padding-top: 26.5%; 
   width: 70%;
 }
 
@@ -299,7 +282,7 @@ pointer-events: none; /* let clicks pass through */
   justify-content: space-evenly;
   width: 100%;
   padding: 5%;
-  border: 2px solid black
+  border: 0.08vw solid black;
 }
 
 .play-space .hand .cards {
@@ -310,26 +293,9 @@ pointer-events: none; /* let clicks pass through */
 }
 
 .play-space .hand .cards .card {
-  border: 1px solid black;
-  border-radius: 25px;
-  padding: 50px 40px;
-  margin: 10px;
-}
-
-.play-space .hand .play {
-  text-decoration: none;
-  background-color: rgb(77, 231, 77);
-  border: 2px solid black;
-  border-radius: 20px;
-  margin-left: 20px;
-  padding: 20px 28px;
-}
-
-.play-space .hand .undo {
-  text-decoration: none;
-  background-color: rgb(180, 9, 9);
-  border: 2px solid black;
-  border-radius: 20px;
-  margin-left: 20px;
-  padding: 20px 28px;
+  border: 0.04vw solid black;
+  border-radius: 1.74vh; /* 25px */
+  padding: 3.47vh 2.78vh; /* 50px 40px */
+  margin: 0.7vh; /* 10px */
+  cursor: pointer;
 }
