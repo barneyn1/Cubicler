@@ -1,3 +1,5 @@
+/* Game.css */
+/* Game exclusive styles */
 * {
   margin: 0;
   padding: 0;
@@ -53,6 +55,7 @@ header button{
   cursor: pointer;
 }
 
+/* FUTURE: Dropdown in all pages (migrate to style.css)? */
 .dropdown{
   display: inline-block;
 }
@@ -256,7 +259,7 @@ progress::-moz-progress-bar {
 
 .progress-label {
   position: absolute;
-  top: 50%;
+  top: 75%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 1.39vh; /* 20px */
@@ -283,6 +286,7 @@ progress::-moz-progress-bar {
   width: 100%;
   padding: 5%;
   border: 0.08vw solid black;
+  background-color: #773f1a;
 }
 
 .play-space .hand .cards {

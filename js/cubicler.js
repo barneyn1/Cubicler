@@ -4,7 +4,7 @@
 // Add script to game.html to use the Cubicler game engine.
 // Maybe use defer attribute to ensure the script runs after the HTML is fully loaded.
 
-// ---Classes---
+// -----Classes-----
 // Class for blueprint for all cards with id, name, base, tags, rarity and the text displayed.
 class Card {
     constructor(id, name, base, tags, rarity, text) {
@@ -26,7 +26,7 @@ class Card {
     }
 }
 
-// --Global Variables--
+// -----Global Variables-----
 // Code-based variables
 var cardPool = [];
 var hand = [];
@@ -44,13 +44,17 @@ var synergyLabel;
 
 
 // Doc-based variables
-const testBtn = document.getElementById('testBtn');
+const testBtn = document.getElementById("testBtn");
+const playBtn = document.getElementById("playBtn");
+const undoBtn = document.getElementById("undoBtn");
+const shuffleBtn = document.getElementById("shuffleBtn");
+const rerollBtn = document.getElementById("rerollBtn");
 
-// ---Initialization functions---
-// setting up the enviroment with all cards and prints them to console.
+// -----Initialization functions-----
+// Setting up the enviroment with all cards and prints them to console.
 function setupEnvironment() {
     console.log("Setting up environment...");
-    
+
     // Full pool of available game cards
     // Changed the declaration to outside of function for globality
     cardPool = [
@@ -90,17 +94,17 @@ function setupEnvironment() {
     cardPool.forEach(card => console.log(card.describe()));
 }
 
-// later: preload images
+// FUTURE: preload images
 function loadAssets() {
     console.log("Loading assets..."); 
 }
 
-//Start Game, used for initialization and resetting the game
+// Start Game, used for initialization and resetting the game
 function startGame() {
     console.log("Starting game...");
     // Set default game variables
     level = 0;
-    money = 0;
+    money = 5;
     // Starting new level at 0 -> +1 in newLevel()
     newLevel();
 }
@@ -114,11 +118,11 @@ function initializeGameEngine() {
     // Start the game loop
     startGame();
 
-    // dyanmic label for synergy score
+    // dyanmic label for synergy score FUTURE CHANGE
     synergyLabel = document.createElement("div"); 
     synergyLabel.style.position = "absolute"; 
-    synergyLabel.style.top = "10px"; 
-    synergyLabel.style.right = "10px";
+    synergyLabel.style.top = "2px"; 
+    synergyLabel.style.right = "50px";
     synergyLabel.style.background = "#222";
     synergyLabel.style.color = "#00ff00";
     synergyLabel.style.padding = "6px"; 
@@ -136,32 +140,32 @@ function newLevel() {
     // Increment level & Log
     level++;
     console.log("New Level: " + level);
-    
+
     // Set default level variables
     bin = [];
     shop = [];
     round = 0;
     score = 0;
     lastAddedCard = null;
-    
+
     // Starting new round at 0 -> +1 in newRound()
     newRound();
-    
+
     // Initializing bin
     newBin();
 
     // Initializing shop
-    rerollShop(); //If shop is empty, reroll for free
+    rerollShop();
 
-    // Level Logic, add more later
+    // Level Logic, add more FUTURE
     switch (level) {
         case 1:
             console.log("Level 1 Logic");
-            goalScore = 25;
+            goalScore = 25; //TEMP FUTURE CHANGE
             break;
         case 2:
             console.log("Level 2 Logic");
-            goalScore = 35;
+            goalScore = 35; //TEMP FUTURE CHANGE
             break;
         case 3:
             console.log("Level 3 Logic");
@@ -177,7 +181,7 @@ function newLevel() {
         // Increment round & Log
         round++;
         console.log("New Round: " + round);
-        
+
         // Set default round variables
         lastScore = 0;
 
@@ -199,12 +203,11 @@ function newBin() {
     refreshDisplay(); // refresh display 
 }
 
-// ---Calculation functions---
+// -----Calculation functions-----
 // Synergy, used in calculateBonusScore
 function synergy() {
     console.log("Calculating Synergy...");
     let synergy = 0;
-    // Need to add code for synergies first, will assess hand array for synergies and add bonus score
 
     let names = hand.map(card => card.id); // gets all cards from hand
 
@@ -308,15 +311,16 @@ function calculateMoney(){
     // Determining money to add to player's money based on score
     console.log("Money before Addition: " + money);
     // Add code for money calculation based on score
+    var addMoney = 0;
     if (score > 0 & score <= 3) {
-        money += score;
+        addMoney += score;
     } else if (score > 3 & score <= 6) {
-        money += (Math.floor(score / 2) + 1);
+        addMoney += (Math.floor(score / 2) + 1);
     } else {
-        money += 0;
+        addMoney += 0;
     }
-    console.log("Money to Add: " + money);
-    return money;
+    console.log("Money to Add: " + addMoney);
+    return addMoney;
 }
 
 // Calculate Score, used in playRound
@@ -324,7 +328,7 @@ function calculateScore() {
     console.log("Calculating Score...");
     // Calculate the player's score
     lastScore = score;
-    //Testing score = 25
+    // Testing score = 25 TEMP FUTURE CHANGE THIS
     score = 25;
     // Add the base value of each card in the player's hand to the score
     hand.forEach(card => score += card.base);
@@ -349,7 +353,7 @@ function calculateScore() {
     refreshDisplay(); // refresh display 
 }
 
-// ---Interaction functions---
+// -----Interaction functions-----
 // Shuffle Bin, used for rerolling the bin, add code for -1 shuffles remaining
 function shuffleBin() {
     console.log("Shuffling Bin...");
@@ -452,7 +456,7 @@ function playRound() {
     refreshDisplay(); // refresh display
 }
 
-// Undo Bin -> Hand Selection
+// Undo Bin to Hand Selection
 // Questions for a later date: How should bin undo work? Refund card to bin or just remove from hand? 
 // Should this be overhauled to discard drag & drop zone? Would need to address bin -> undo drag bug.
 function undoSelection() {
@@ -470,7 +474,7 @@ function undoSelection() {
     lastAddedCard = null;
 }
 
-// ---Object state functions---
+// -----Object state functions-----
 // Functions to initialize the display of the bin, hand, and shop & update for when values change
 function initDisplay() {
     console.log("Initializing display...");
@@ -494,6 +498,18 @@ function initDisplay() {
     const levelText = document.querySelector(".right-column .bottom");
     if (levelText) {
         levelText.textContent = level + " of 4";
+    }
+
+    // Money section
+    const moneyText = document.querySelector(".right-column .money");
+    if (moneyText) {
+        moneyText.textContent = "$" + money;
+    }
+
+    // Plays section
+    const playText = document.querySelector(".right-column .plays-remaining");
+    if (playText) {
+        playText.textContent = (9 - round) + " Play(s) remaining !";
     }
 
     // Shop items
@@ -527,7 +543,6 @@ function initDisplay() {
     });
 }
 
-
 function refreshDisplay() {
     console.log("Refreshing display...");
 
@@ -550,6 +565,18 @@ function refreshDisplay() {
     const levelText = document.querySelector(".right-column .bottom");
     if (levelText) {
         levelText.textContent = level + " of 4";
+    }
+
+    // Money section
+    const moneyText = document.querySelector(".right-column .money");
+    if (moneyText) {
+        moneyText.textContent = "$" + money
+    }
+
+    // Plays section
+    const playText = document.querySelector(".right-column .plays-remaining");
+    if (playText) {
+        playText.textContent = (9 - round) + " Play(s) remaining !";
     }
 
     // Shop items
@@ -583,6 +610,7 @@ function refreshDisplay() {
     });
 
     refreshImages();
+    updateShopButtonStatus();
 }
 
 // Adding art images dynamically to shop and hand areas
@@ -658,7 +686,7 @@ function refreshImages() {
         }
 
         if (shop[index]) {
-            // In the future, replace placeholder with card-specific art:
+            // FUTURE, replace placeholder with card-specific art:
             // img.src = `../assets/cards/${shop[index].id}.png`;
             img.src = "../assets/pics/placeholder.png";
             img.alt = shop[index].name;
@@ -714,27 +742,65 @@ function refreshImages() {
 }
 
 
-// Making a function to make shop items unclickable if money is insufficient
+// Making a function to make shop buy buttons unclickable if money is insufficient
+// Currently called in refreshDisplay
+function updateShopButtonStatus() {
+    console.log("Updating shop button status...");
+
+    // Select the actual Buy buttons
+    const buttons = document.querySelectorAll('.left-column .items .item-row .buy');
+
+    buttons.forEach((button, i) => {
+        const item = shop[i]
+        const cost = item ? item.base : 0
+        const cash = money
+        // Check if the player has enough money to buy the item, also accounts for anomalies
+        const disable = !(Number.isFinite(cost) && Number.isFinite(cash) && cash >= cost);
+        // Dynamically disable buttons based on money
+        button.disabled = disable;
+        button.classList.toggle("disabled", disable); //Add a class to style dark disabled buttons
+    });
+}
 
 // Making a function to make reroll button unclickable if money is insufficient
 
-// Making a function to make play button unclickable if hand is empty
+// Write code to make shuffle unclickable if 3 shuffles done
 
-// Making a function to make a shop item unclickable if it gets bought
+// Write code to make play button unclickable if hand is empty
 
-// ---Interaction events---
-// Testing Button
-if (testBtn) {
-    testBtn.addEventListener('click', function() {
-        console.log('*-*-*-Test Button Clicked-*-*-*');
+// Write code to make a shop item unclickable if it gets bought
+
+// -----Interaction events-----
+// Click events
+// Clicking the play button -> playRound()
+if (playBtn) {
+    playBtn.addEventListener("click", function() {
+        console.log("*-*-*-Play Button Clicked-*-*-*");
         playRound();
     });
 }
 
-// Click events
-// Clicking the play button -> playRound()
 // Clicking the undo button -> undoSelection()
+if (undoBtn) {
+    undoBtn.addEventListener("click", function() {
+        console.log("*-*-*-Undo Button Clicked-*-*-*");
+        undoSelection();
+    });
+}
+
+// Clicking the reroll button -> rerollShop()
+
+// Clicking the shuffle button -> shuffleBin()
+
 // Clicking a card's buy button in shop -> buyFromShop(card)
+//need to do more coding before buyFromShop call is implemented
+const shopItems = document.querySelectorAll(".left-column .items .item-row .buy")
+    .forEach((buyButton, index) => {
+        buyButton.addEventListener("click", () => {
+            console.log(`*-*-*-Buy Button ${index + 1} Clicked-*-*-*`);
+            //buyFromShop(shop[index]);
+        });
+    });
 
 // Drag & Drop events
 // Drag card from bin to hand -> addToHand(card) 
