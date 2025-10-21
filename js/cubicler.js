@@ -191,8 +191,8 @@ function newLevel() {
 // New Bin, used for initialization and new levels
 function newBin() {
     console.log("Creating New Bin...");
-    // Add 5 random cards to the player's bin
-    for (let i = 0; i < 5; i++) {
+    // Add 4 random cards to the player's bin
+    for (let i = 0; i < 4; i++) {
         let randomIndex = Math.floor(Math.random() * cardPool.length);
         bin.push(cardPool[randomIndex]);
     }
@@ -630,7 +630,7 @@ function initImages() {
             img.width = 40;   // we can change this
             img.height = 40;
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             item.prepend(img);
         }
     });
@@ -646,7 +646,7 @@ function initImages() {
             img.width = 40;   // we can change this
             img.height = 40;
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             item.prepend(img);
         }
     });
@@ -661,7 +661,7 @@ function initImages() {
             img.width = 80;  // we can change this
             img.height = 80;
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             card.prepend(img);
         }
     });
@@ -679,7 +679,7 @@ function refreshImages() {
         if (!img) {
             img = document.createElement("img");
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             img.width = 40;
             img.height = 40;
             item.prepend(img);
@@ -703,7 +703,7 @@ function refreshImages() {
         if (!img) {
             img = document.createElement("img");
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             img.width = 40;
             img.height = 40;
             item.prepend(img);
@@ -725,7 +725,7 @@ function refreshImages() {
         if (!img) {
             img = document.createElement("img");
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             img.width = 80;
             img.height = 80;
             card.prepend(img);
@@ -751,9 +751,9 @@ function updateShopButtonStatus() {
     const buttons = document.querySelectorAll('.left-column .items .item-row .buy');
 
     buttons.forEach((button, i) => {
-        const item = shop[i]
-        const cost = item ? item.base : 0
-        const cash = money
+        const item = shop[i];
+        const cost = item ? item.base : 0;
+        const cash = money;
         // Check if the player has enough money to buy the item, also accounts for anomalies
         const disable = !(Number.isFinite(cost) && Number.isFinite(cash) && cash >= cost);
         // Dynamically disable buttons based on money
