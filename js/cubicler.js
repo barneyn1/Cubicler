@@ -157,7 +157,7 @@ function newLevel() {
     // Initializing shop
     rerollShop();
 
-    // Level Logic, add more FUTURE
+    // Level Logic, add more FUTURE for completion reloop
     switch (level) {
         case 1:
             console.log("Level 1 Logic");
@@ -191,8 +191,8 @@ function newLevel() {
 // New Bin, used for initialization and new levels
 function newBin() {
     console.log("Creating New Bin...");
-    // Add 5 random cards to the player's bin
-    for (let i = 0; i < 5; i++) {
+    // Add 4 random cards to the player's bin
+    for (let i = 0; i < 4; i++) {
         let randomIndex = Math.floor(Math.random() * cardPool.length);
         bin.push(cardPool[randomIndex]);
     }
@@ -328,7 +328,7 @@ function calculateScore() {
     console.log("Calculating Score...");
     // Calculate the player's score
     lastScore = score;
-    // Testing score = 25 TEMP FUTURE CHANGE THIS
+    // Testing score = 25 TEMP FUTURE CHANGE BACK TO 0
     score = 25;
     // Add the base value of each card in the player's hand to the score
     hand.forEach(card => score += card.base);
@@ -517,6 +517,25 @@ function initDisplay() {
     shopItems.forEach((item, index) => {
         if (shop[index]) {
             item.textContent = shop[index].name;
+            // Name fitting logic
+            switch(shop[index].name){
+                case "Standard Keyboard":
+                    item.textContent = "Std. Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Mechanical Keyboard":
+                    item.textContent = "Mech Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Standard Monitor":
+                    item.textContent = "Std. Monitor";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Smart Notetaker":
+                    item.textContent = "Smart Notetaker";
+                    item.style.fontSize = "11pt";
+                    break;
+            }
         } else {
             item.textContent = "Empty";
         }
@@ -527,6 +546,25 @@ function initDisplay() {
     binItems.forEach((item, index) => {
         if (bin[index]) {
             item.textContent = bin[index].name;
+            // Name fitting logic
+            switch(bin[index].name){
+                case "Standard Keyboard":
+                    item.textContent = "Std. Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Mechanical Keyboard":
+                    item.textContent = "Mech Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Standard Monitor":
+                    item.textContent = "Std. Monitor";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Smart Notetaker":
+                    item.textContent = "Smart Notetaker";
+                    item.style.fontSize = "11pt";
+                    break;
+            }
         } else {
             item.textContent = "Empty";
         }
@@ -584,6 +622,25 @@ function refreshDisplay() {
     shopItems.forEach((item, index) => {
         if (shop[index]) {
             item.textContent = shop[index].name;
+            // Name fitting logic
+            switch(shop[index].name){
+                case "Standard Keyboard":
+                    item.textContent = "Std. Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Mechanical Keyboard":
+                    item.textContent = "Mech Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Standard Monitor":
+                    item.textContent = "Std. Monitor";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Smart Notetaker":
+                    item.textContent = "Smart Notetaker";
+                    item.style.fontSize = "11pt";
+                    break;
+            }
         } else {
             item.textContent = "Empty";
         }
@@ -594,6 +651,25 @@ function refreshDisplay() {
     binItems.forEach((item, index) => {
         if (bin[index]) {
             item.textContent = bin[index].name;
+            // Name fitting logic
+            switch(bin[index].name){
+                case "Standard Keyboard":
+                    item.textContent = "Std. Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Mechanical Keyboard":
+                    item.textContent = "Mech Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Standard Monitor":
+                    item.textContent = "Std. Monitor";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Smart Notetaker":
+                    item.textContent = "Smart Notetaker";
+                    item.style.fontSize = "11pt";
+                    break;
+            }
         } else {
             item.textContent = "Empty";
         }
@@ -630,7 +706,7 @@ function initImages() {
             img.width = 40;   // we can change this
             img.height = 40;
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             item.prepend(img);
         }
     });
@@ -646,7 +722,7 @@ function initImages() {
             img.width = 40;   // we can change this
             img.height = 40;
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             item.prepend(img);
         }
     });
@@ -661,7 +737,7 @@ function initImages() {
             img.width = 80;  // we can change this
             img.height = 80;
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             card.prepend(img);
         }
     });
@@ -679,7 +755,7 @@ function refreshImages() {
         if (!img) {
             img = document.createElement("img");
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             img.width = 40;
             img.height = 40;
             item.prepend(img);
@@ -703,7 +779,7 @@ function refreshImages() {
         if (!img) {
             img = document.createElement("img");
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             img.width = 40;
             img.height = 40;
             item.prepend(img);
@@ -725,7 +801,7 @@ function refreshImages() {
         if (!img) {
             img = document.createElement("img");
             img.style.display = "block";
-            img.style.margin = "0 auto 5px";
+            img.style.margin = "5px auto 2px auto";
             img.width = 80;
             img.height = 80;
             card.prepend(img);
@@ -751,9 +827,9 @@ function updateShopButtonStatus() {
     const buttons = document.querySelectorAll('.left-column .items .item-row .buy');
 
     buttons.forEach((button, i) => {
-        const item = shop[i]
-        const cost = item ? item.base : 0
-        const cash = money
+        const item = shop[i];
+        const cost = item ? item.base : 0;
+        const cash = money;
         // Check if the player has enough money to buy the item, also accounts for anomalies
         const disable = !(Number.isFinite(cost) && Number.isFinite(cash) && cash >= cost);
         // Dynamically disable buttons based on money
@@ -798,7 +874,7 @@ const shopItems = document.querySelectorAll(".left-column .items .item-row .buy"
     .forEach((buyButton, index) => {
         buyButton.addEventListener("click", () => {
             console.log(`*-*-*-Buy Button ${index + 1} Clicked-*-*-*`);
-            //buyFromShop(shop[index]);
+            buyFromShop(shop[index]);
         });
     });
 

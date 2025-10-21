@@ -150,7 +150,7 @@ button {
   justify-content: center;
   flex-direction: column;
   width: 6.25vw; /* 160px */
-  height: 6.94vh; /* 100px */
+  height: 8.85vh; /* 100px */ /*Was: 6.94vh*/
   padding: 0;
   color: white;
   border: 0.08vw solid white; /* 2px */
