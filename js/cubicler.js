@@ -157,7 +157,7 @@ function newLevel() {
     // Initializing shop
     rerollShop();
 
-    // Level Logic, add more FUTURE
+    // Level Logic, add more FUTURE for completion reloop
     switch (level) {
         case 1:
             console.log("Level 1 Logic");
@@ -328,7 +328,7 @@ function calculateScore() {
     console.log("Calculating Score...");
     // Calculate the player's score
     lastScore = score;
-    // Testing score = 25 TEMP FUTURE CHANGE THIS
+    // Testing score = 25 TEMP FUTURE CHANGE BACK TO 0
     score = 25;
     // Add the base value of each card in the player's hand to the score
     hand.forEach(card => score += card.base);
@@ -874,7 +874,7 @@ const shopItems = document.querySelectorAll(".left-column .items .item-row .buy"
     .forEach((buyButton, index) => {
         buyButton.addEventListener("click", () => {
             console.log(`*-*-*-Buy Button ${index + 1} Clicked-*-*-*`);
-            //buyFromShop(shop[index]);
+            buyFromShop(shop[index]);
         });
     });
 
