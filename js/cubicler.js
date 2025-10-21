@@ -517,6 +517,25 @@ function initDisplay() {
     shopItems.forEach((item, index) => {
         if (shop[index]) {
             item.textContent = shop[index].name;
+            // Name fitting logic
+            switch(shop[index].name){
+                case "Standard Keyboard":
+                    item.textContent = "Std. Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Mechanical Keyboard":
+                    item.textContent = "Mech Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Standard Monitor":
+                    item.textContent = "Std. Monitor";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Smart Notetaker":
+                    item.textContent = "Smart Notetaker";
+                    item.style.fontSize = "11pt";
+                    break;
+            }
         } else {
             item.textContent = "Empty";
         }
@@ -527,6 +546,25 @@ function initDisplay() {
     binItems.forEach((item, index) => {
         if (bin[index]) {
             item.textContent = bin[index].name;
+            // Name fitting logic
+            switch(bin[index].name){
+                case "Standard Keyboard":
+                    item.textContent = "Std. Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Mechanical Keyboard":
+                    item.textContent = "Mech Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Standard Monitor":
+                    item.textContent = "Std. Monitor";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Smart Notetaker":
+                    item.textContent = "Smart Notetaker";
+                    item.style.fontSize = "11pt";
+                    break;
+            }
         } else {
             item.textContent = "Empty";
         }
@@ -584,6 +622,25 @@ function refreshDisplay() {
     shopItems.forEach((item, index) => {
         if (shop[index]) {
             item.textContent = shop[index].name;
+            // Name fitting logic
+            switch(shop[index].name){
+                case "Standard Keyboard":
+                    item.textContent = "Std. Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Mechanical Keyboard":
+                    item.textContent = "Mech Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Standard Monitor":
+                    item.textContent = "Std. Monitor";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Smart Notetaker":
+                    item.textContent = "Smart Notetaker";
+                    item.style.fontSize = "11pt";
+                    break;
+            }
         } else {
             item.textContent = "Empty";
         }
@@ -594,6 +651,25 @@ function refreshDisplay() {
     binItems.forEach((item, index) => {
         if (bin[index]) {
             item.textContent = bin[index].name;
+            // Name fitting logic
+            switch(bin[index].name){
+                case "Standard Keyboard":
+                    item.textContent = "Std. Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Mechanical Keyboard":
+                    item.textContent = "Mech Keyboard";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Standard Monitor":
+                    item.textContent = "Std. Monitor";
+                    //item.style.fontSize = "12pt";
+                    break;
+                case "Smart Notetaker":
+                    item.textContent = "Smart Notetaker";
+                    item.style.fontSize = "11pt";
+                    break;
+            }
         } else {
             item.textContent = "Empty";
         }
