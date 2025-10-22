@@ -45,6 +45,7 @@ var synergyLabel;
 
 // Doc-based variables
 const testBtn = document.getElementById("testBtn");
+const restBtn = document.getElementById("resetBtn");
 const playBtn = document.getElementById("playBtn");
 const undoBtn = document.getElementById("undoBtn");
 const shuffleBtn = document.getElementById("shuffleBtn");
@@ -122,7 +123,7 @@ function initializeGameEngine() {
     synergyLabel = document.createElement("div"); 
     synergyLabel.style.position = "absolute"; 
     synergyLabel.style.top = "2px"; 
-    synergyLabel.style.right = "50px";
+    synergyLabel.style.right = "95px";
     synergyLabel.style.background = "#222";
     synergyLabel.style.color = "#00ff00";
     synergyLabel.style.padding = "6px"; 
@@ -849,6 +850,14 @@ function updateShopButtonStatus() {
 
 // -----Interaction events-----
 // Click events
+//Clicking the reset button -> startGame()
+if (resetBtn) {
+    resetBtn.addEventListener("click", function() {
+        console.log("*-*-*-Reset Button Clicked-*-*-*");
+        startGame();
+    });
+}
+
 // Clicking the play button -> playRound()
 if (playBtn) {
     playBtn.addEventListener("click", function() {
