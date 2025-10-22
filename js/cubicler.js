@@ -133,6 +133,7 @@ function initializeGameEngine() {
     initDisplay();
     initImages();
     initDragAndDrop();
+    initHoverTooltips();
 }
 
 // New Level
@@ -987,6 +988,165 @@ function initDragAndDrop() {
 
     attachDragStarts();
     markDraggable();
+}
+// code to show stats of card when hovering over the card
+
+var _tipEl, _tipTarget;
+
+function _makeTip() {
+  _tipEl = document.createElement('div');
+  _tipEl.style.position = 'fixed';
+  _tipEl.style.maxWidth = '260px';
+  _tipEl.style.padding = '10px 12px';
+  _tipEl.style.background = 'rgba(18,18,24,.96)';
+  _tipEl.style.color = '#fff';
+  _tipEl.style.border = '1px solid rgba(255,255,255,.15)';
+  _tipEl.style.borderRadius = '10px';
+  _tipEl.style.boxShadow = '0 8px 24px rgba(0,0,0,.35)';
+  _tipEl.style.font = '500 13px/1.35 system-ui,sans-serif';
+  _tipEl.style.zIndex = '9999';
+  _tipEl.style.pointerEvents = 'none';
+  _tipEl.style.display = 'none';
+  document.body.appendChild(_tipEl);
+}
+
+function _showTip(html, x, y){
+  _tipEl.innerHTML = html;
+  _tipEl.style.display = 'block';
+  var padding = 12, viewportWidth = window.innerWidth, viewportHeight = window.innerHeight;
+  var left = x + padding, top = y + padding;
+  var tipRect = _tipEl.getBoundingClientRect();
+  if (left + tipRect.width > viewportWidth) left = x - tipRect.width - padding;
+  if (top + tipRect.height > viewportHeight) top = y - tipRect.height - padding;
+  if (left < 8) left = 8;
+  if (top  < 8) top  = 8;
+  _tipEl.style.left = left + 'px';
+  _tipEl.style.top  = top  + 'px';
+}
+function _hideTip(){ if (_tipEl) _tipEl.style.display = 'none'; }
+
+function _tipHTML(card){
+  var name   = card ? card.name   : 'Unknown';
+  var base   = card ? card.base   : '-';
+  var tags   = card ? card.tags   : '-';
+  var rarity = card ? card.rarity : '-';
+  var text   = card && card.text ? card.text : '';
+  var html = '';
+  html += '<div style="font-weight:700;font-size:14px">' + name + '</div>';
+  html += '<div style="margin-top:6px;display:flex;justify-content:space-between;gap:12px;opacity:.9"><span style="opacity:.75">Base</span><span>' + base + '</span></div>';
+  html += '<div style="margin-top:6px;display:flex;justify-content:space-between;gap:12px;opacity:.9"><span style="opacity:.75">Rarity</span><span>' + rarity + '</span></div>';
+  html += '<div style="margin-top:6px;display:flex;justify-content:space-between;gap:12px;opacity:.9"><span style="opacity:.75">Tags</span><span>' + tags + '</span></div>';
+  if (text) html += '<div style="margin-top:6px">' + text + '</div>';
+  return html;
+}
+
+// resolve a card object from the hovered element using arrays and dom
+// we need to know if the element is in the hand, the bin, or the shop.
+// then we use its position to pick the right object from hand/bin/shop.
+function _resolveCard(el){
+  // if the element is inside the hand area, read its data-index
+  // and use that slot in the hand array
+  if (el.closest('.play-space .cards')) {
+    var handIndex = parseInt(el.dataset.index || '-1', 10);
+    return (Array.isArray(hand) && hand[handIndex]) ? hand[handIndex] : null;
+  }
+  // if the element is inside the bin area, read its data-index
+  // and use that slot in the bin array
+  if (el.closest('.left-column .vert-container:nth-of-type(2) .items')) {
+    var binIndex = parseInt(el.dataset.index || '-1', 10);
+    return (Array.isArray(bin) && bin[binIndex]) ? bin[binIndex] : null;
+  }
+  
+  // shop items don’t have data index, so to make this work
+  // get the list of shop item elements in order
+  // find which position this element is in that list
+  // use that position to read from the shop array
+  var containers = document.querySelectorAll('.left-column .vert-container');
+  if (containers.length > 0 && el.closest('.left-column .vert-container:first-of-type .items')) {
+    var shopItems = containers[0].querySelectorAll('.items .item');
+    var shopIndex = Array.prototype.indexOf.call(shopItems, el);
+    return (Array.isArray(shop) && shop[shopIndex]) ? shop[shopIndex] : null;
+  }
+  // if none match empty card
+  return null;
+}
+
+function initHoverTooltips(){
+  if (_tipEl) return; // run once
+  _makeTip();
+
+  // helper to check if an element is a card/item we care about
+  function isTarget(el){
+    return el.matches('.play-space .cards .card') ||
+           el.matches('.left-column .vert-container:nth-of-type(2) .items .item') ||
+           el.matches('.left-column .vert-container:first-of-type .items .item');
+  }
+  // walk up to find the actual target
+  function findTarget(el){
+    while (el && el !== document.body){
+      if (el.nodeType === 1 && isTarget(el)) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  // show on hover if there is a real card
+  document.addEventListener('mouseover', function(e){
+    var targetElement = findTarget(e.target);
+    if (!targetElement) return;
+    var card = _resolveCard(targetElement);
+    if (!card) { // if no card, do not show anything
+      _tipTarget = null;
+      _hideTip();
+      return;
+    }
+    _tipTarget = targetElement;
+    _showTip(_tipHTML(card), e.clientX, e.clientY);
+  });
+
+  // follow the cursor, but do not show during drag/hold, and hide if empty slot
+  document.addEventListener('mousemove', function(e){
+    // if a mouse button is down (dragging or holding), keep it hidden
+    if (e.buttons) {
+      _tipTarget = null;
+      _hideTip();
+      return;
+    }
+    if (!_tipTarget) return;
+    var card = _resolveCard(_tipTarget);
+    if (!card) { // if no card under target anymore, hide
+      _tipTarget = null;
+      _hideTip();
+      return;
+    }
+    _showTip(_tipHTML(card), e.clientX, e.clientY);
+  });
+
+  // hide when leaving the element
+  document.addEventListener('mouseout', function(e){
+    if (!_tipTarget) return;
+    if (!e.relatedTarget || !_tipTarget.contains(e.relatedTarget)){
+      _tipTarget = null;
+      _hideTip();
+    }
+  });
+
+  // if user clicks on the card it makes the box dissapear, makes the game run smoother
+  document.addEventListener('pointerdown', function(e){
+    if (findTarget(e.target)) { 
+      _tipTarget = null;
+      _hideTip();
+    }
+  }, true); 
+
+  // also hide when dragging starts
+  document.addEventListener('dragstart', function(){
+    _tipTarget = null;
+    _hideTip();
+  }, true);
+
+  // also hide on scroll
+  window.addEventListener('scroll', _hideTip, { passive: true });
 }
 
 // ---Main (keep below functions and events)---
