@@ -45,7 +45,7 @@ var synergyLabel;
 
 // Doc-based variables
 const testBtn = document.getElementById("testBtn");
-const restBtn = document.getElementById("resetBtn");
+const resetBtn = document.getElementById("resetBtn");
 const playBtn = document.getElementById("playBtn");
 const undoBtn = document.getElementById("undoBtn");
 const shuffleBtn = document.getElementById("shuffleBtn");
