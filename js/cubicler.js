@@ -50,6 +50,7 @@ const playBtn = document.getElementById("playBtn");
 const undoBtn = document.getElementById("undoBtn");
 const shuffleBtn = document.getElementById("shuffleBtn");
 const rerollBtn = document.getElementById("rerollBtn");
+const winPopup = document.createElement("div");
 
 // -----Initialization functions-----
 // Setting up the enviroment with all cards and prints them to console.
@@ -182,16 +183,15 @@ function newLevel() {
             document.querySelector("main").style.pointerEvents = "none";
             
             //add popup for "you win" & reset button
-            const winPopup = document.createElement("div");
             winPopup.className = "winPopup";
             winPopup.style.pointerEvents = "auto";
             winPopup.innerHTML = `<h1>You Win!</h1><button class="innerResetBtn"id="innerResetBtn">Reset</button>`;
             document.body.appendChild(winPopup);
             //reset button
             document.getElementById("innerResetBtn").addEventListener("click", function() {
-                 document.body.removeChild(winPopup);
-                 document.querySelector("main").style.pointerEvents = "auto";
-                 startGame();                                                    
+                document.body.removeChild(winPopup);
+                document.querySelector("main").style.pointerEvents = "auto";
+                startGame();                                                    
             });
             break;
         default:
@@ -876,6 +876,8 @@ function updateShopButtonStatus() {
 if (resetBtn) {
     resetBtn.addEventListener("click", function() {
         console.log("*-*-*-Reset Button Clicked-*-*-*");
+        document.body.removeChild(winPopup);
+        document.querySelector("main").style.pointerEvents = "auto";
         startGame();
     });
 }
