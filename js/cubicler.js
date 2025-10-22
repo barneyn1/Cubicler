@@ -160,17 +160,39 @@ function newLevel() {
     rerollShop();
 
     // Level Logic, add more FUTURE for completion reloop
-    switch (level) {
-        case 1:
+    switch (true) {
+        case (level == 1):
             console.log("Level 1 Logic");
-            goalScore = 25; //TEMP FUTURE CHANGE
+            goalScore = 25; //TEMP FUTURE CHANGE UPDATE SCOREBAR TOO
             break;
-        case 2:
+        case (level == 2):
             console.log("Level 2 Logic");
             goalScore = 35; //TEMP FUTURE CHANGE
             break;
-        case 3:
+        case (level == 3):
             console.log("Level 3 Logic");
+            break;
+        case (level == 4):
+            console.log("Level 4 Logic");
+            break;
+        case (level > 4):
+            console.log("-*-*-* YOU WIN *-*-*-")
+            //win case
+            //make everything within main tag unclickable
+            document.querySelector("main").style.pointerEvents = "none";
+            
+            //add popup for "you win" & reset button
+            const winPopup = document.createElement("div");
+            winPopup.className = "winPopup";
+            winPopup.style.pointerEvents = "auto";
+            winPopup.innerHTML = `<h1>You Win!</h1><button class="innerResetBtn"id="innerResetBtn">Reset</button>`;
+            document.body.appendChild(winPopup);
+            //reset button
+            document.getElementById("innerResetBtn").addEventListener("click", function() {
+                 document.body.removeChild(winPopup);
+                 document.querySelector("main").style.pointerEvents = "auto";
+                 startGame();                                                    
+            });
             break;
         default:
             console.log("Default Level Logic");
@@ -314,12 +336,12 @@ function calculateMoney(){
     console.log("Money before Addition: " + money);
     // Add code for money calculation based on score
     var addMoney = 0;
-    if (score > 0 & score <= 3) {
-        addMoney += score;
-    } else if (score > 3 & score <= 6) {
-        addMoney += (Math.floor(score / 2) + 1);
-    } else {
-        addMoney += 0;
+    if (score <= 0) {
+        addMoney = 0;
+    } else if (score > 0 & score <= 3) {
+        addMoney += 1;
+    } else if (score > 3) {
+        addMoney += (Math.floor(score / 2))
     }
     console.log("Money to Add: " + addMoney);
     return addMoney;
@@ -331,7 +353,7 @@ function calculateScore() {
     // Calculate the player's score
     lastScore = score;
     // Testing score = 25 TEMP FUTURE CHANGE BACK TO 0
-    score = 25;
+    score = 50;
     // Add the base value of each card in the player's hand to the score
     hand.forEach(card => score += card.base);
     console.log("Base Score: " + score);
@@ -486,8 +508,8 @@ function initDisplay() {
     const scoreLabel = document.querySelector(".progress-wrapper .progress-label");
     if (scoreProgress && scoreLabel) {
         scoreProgress.value = 0;
-        scoreProgress.max = 100;
-        scoreLabel.textContent = "0/100";
+        scoreProgress.max = goalScore || 100;
+        scoreLabel.textContent = score + "/" + (goalScore || 100);
     }
 
     // Round section
@@ -1065,7 +1087,7 @@ function _resolveCard(el){
     var binIndex = parseInt(el.dataset.index || '-1', 10);
     return (Array.isArray(bin) && bin[binIndex]) ? bin[binIndex] : null;
   }
-  
+
   // shop items don’t have data index, so to make this work
   // get the list of shop item elements in order
   // find which position this element is in that list
