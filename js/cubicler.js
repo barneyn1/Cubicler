@@ -287,6 +287,17 @@ function synergy() {
         synergy += ergo;
     }
 
+    // fixed CPU synergy didnt have it before
+    if (names.includes("sCPU")) {
+    let software = hand.filter(c => c.tags == "software").length;
+    synergy += software * 1;
+    }
+    
+if (names.includes("uCPU")) {
+    let software = hand.filter(c => c.tags == "software").length;
+    synergy += software * 2;
+    }
+
     // show synergy in console and update UI label
     console.log("Synergy: " + synergy);
     if (synergyLabel) {
@@ -583,6 +594,7 @@ function initDisplay() {
 }
 
 function refreshDisplay() {
+    clearDragStyles();
     console.log("Refreshing display...");
 
     // Score section
@@ -884,6 +896,12 @@ const shopItems = document.querySelectorAll(".left-column .items .item-row .buy"
 // it also lets you add the card back to the bin
 
 let draggedFrom = null;
+// helper to remove any stuck dragged classes
+function clearDragStyles() {
+  document.querySelectorAll('.is-dragging, .darkened').forEach(el => {
+    el.classList.remove('is-dragging', 'darkened');
+  });
+}
 let draggedCardIndex = null;
 let dndBound = false;
 
@@ -911,7 +929,7 @@ function initDragAndDrop() {
             draggedCardIndex = parseInt(el.dataset.index, 10);
             e.dataTransfer.effectAllowed = "move";
             e.dataTransfer.setData("text/plain", "x");
-            el.style.opacity = "0.5";
+            el.classList.add("is-dragging");
         }, true);
 
         handArea.addEventListener("dragstart", (e) => {
@@ -921,12 +939,12 @@ function initDragAndDrop() {
             draggedCardIndex = parseInt(el.dataset.index, 10);
             e.dataTransfer.effectAllowed = "move";
             e.dataTransfer.setData("text/plain", "x");
-            el.style.opacity = "0.5";
+            el.classList.add("is-dragging");
         }, true);
 
         document.addEventListener("dragend", (e) => {
             const el = e.target;
-            if (el && el.style) el.style.opacity = "";
+            if (el) el.classList.remove("is-dragging");
             draggedFrom = null;
             draggedCardIndex = null;
         }, true);
@@ -950,6 +968,7 @@ function initDragAndDrop() {
         }
 
         setTimeout(() => {
+            clearDragStyles(); 
             originalRefresh();
         }, 0);
     }

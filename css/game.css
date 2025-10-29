@@ -303,3 +303,15 @@ progress::-moz-progress-bar {
   margin: 0.7vh; /* 10px */
   cursor: pointer;
 }
+
+/*drag and drop helpers */
+.is-dragging {
+  opacity: 0.55;
+  filter: grayscale(25%);
+  transition: opacity .15s ease, filter .15s ease;
+}
+
+/* helper class add/remove darken anything */
+.darkened {
+  filter: brightness(0.6) saturate(0.85);
+}
