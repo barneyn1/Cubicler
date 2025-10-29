@@ -691,6 +691,7 @@ function initDisplay() {
             card.textContent = "";
         }
     });
+    updateRerollButtonStatus(); // updates reroll button status 
 }
 
 function refreshDisplay() {
@@ -946,7 +947,15 @@ function refreshImages() {
 }
 
 
-// make shop buy buttons unclickable if money is insufficient
+// Making a function to make shop buy buttons unclickable if money is insufficient
+function updateRerollButtonStatus() {
+    if (!rerollBtn) return;
+    // Reroll costs 5 only when the shop is not empty, free if its empty 
+    const requiresMoney = shop.length > 0;
+    const disable = requiresMoney && money < 5;
+    rerollBtn.disabled = disable;
+    rerollBtn.classList.toggle("disabled", disable);
+}
 // Currently called in refreshDisplay
 function updateShopButtonStatus() {
     console.log("Updating shop button status...");
@@ -974,15 +983,6 @@ function updateRerollButtonStatus() {
     rerollBtn.disabled = blocked;
     rerollBtn.classList.toggle("disabled", blocked);
     rerollBtn.title = blocked ? "Need $5 to reroll" : "Reroll the shop";
-}
-
-// make shuffle unclickable if 3 shuffles done
-function updateShuffleButtonStatus() {
-    if (!shuffleBtn) return;
-    const blocked = shuffles < 1;
-    shuffleBtn.disabled = blocked;
-    shuffleBtn.classList.toggle("disabled", blocked);
-    shuffleBtn.title = blocked ? "No shuffles remaining" : "Shuffle your bin";
 }
 
 // make play button unclickable if hand is empty
