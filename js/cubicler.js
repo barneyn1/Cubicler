@@ -614,6 +614,7 @@ function initDisplay() {
             card.textContent = "";
         }
     });
+    updateRerollButtonStatus(); // updates reroll button status 
 }
 
 function refreshDisplay() {
@@ -723,6 +724,7 @@ function refreshDisplay() {
 
     refreshImages();
     updateShopButtonStatus();
+    updateRerollButtonStatus();
 }
 
 // Adding art images dynamically to shop and hand areas
@@ -855,6 +857,14 @@ function refreshImages() {
 
 
 // Making a function to make shop buy buttons unclickable if money is insufficient
+function updateRerollButtonStatus() {
+    if (!rerollBtn) return;
+    // Reroll costs 5 only when the shop is not empty, free if its empty 
+    const requiresMoney = shop.length > 0;
+    const disable = requiresMoney && money < 5;
+    rerollBtn.disabled = disable;
+    rerollBtn.classList.toggle("disabled", disable);
+}
 // Currently called in refreshDisplay
 function updateShopButtonStatus() {
     console.log("Updating shop button status...");
@@ -911,6 +921,13 @@ if (undoBtn) {
 }
 
 // Clicking the reroll button -> rerollShop()
+if (rerollBtn) {
+    rerollBtn.addEventListener("click", function () {
+        if (rerollBtn.disabled) return; // safety
+        console.log("*-*-*-Reroll Button Clicked-*-*-*");
+        rerollShop();
+    });
+}
 
 // Clicking the shuffle button -> shuffleBin()
 
