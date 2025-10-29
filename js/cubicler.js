@@ -985,6 +985,15 @@ function updateRerollButtonStatus() {
     rerollBtn.title = blocked ? "Need $5 to reroll" : "Reroll the shop";
 }
 
+// make shuffle button unclickable shuffles < 1
+function updateShuffleButtonStatus() {
+  if (!shuffleBtn) return;
+  const blocked = shuffles < 1;
+  shuffleBtn.disabled = blocked;
+  shuffleBtn.classList.toggle("disabled", blocked);
+  shuffleBtn.title = blocked ? "No shuffles remaining" : "Shuffle your bin";
+}
+
 // make play button unclickable if hand is empty
 function updatePlayButtonStatus() {
     if (!playBtn) return;
