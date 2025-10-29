@@ -320,6 +320,17 @@ function synergy() {
         synergy += ergo;
     }
 
+    // fixed CPU synergy didnt have it before
+    if (names.includes("sCPU")) {
+    let software = hand.filter(c => c.tags == "software").length;
+    synergy += software * 1;
+    }
+    
+if (names.includes("uCPU")) {
+    let software = hand.filter(c => c.tags == "software").length;
+    synergy += software * 2;
+    }
+
     // show synergy in console and update UI label
     console.log("Synergy: " + synergy);
     if (synergyLabel) {
@@ -683,6 +694,7 @@ function initDisplay() {
 }
 
 function refreshDisplay() {
+    clearDragStyles();
     console.log("Refreshing display...");
 
     // Score section
@@ -1054,6 +1066,12 @@ const shopItems = document.querySelectorAll(".left-column .items .item-row .buy"
 // it also lets you add the card back to the bin
 
 let draggedFrom = null;
+// helper to remove any stuck dragged classes
+function clearDragStyles() {
+  document.querySelectorAll('.is-dragging, .darkened').forEach(el => {
+    el.classList.remove('is-dragging', 'darkened');
+  });
+}
 let draggedCardIndex = null;
 let dndBound = false;
 const handArea = document.querySelector(".play-space .cards");
@@ -1129,6 +1147,7 @@ function initDragAndDrop() {
         }
 
         setTimeout(() => {
+            clearDragStyles(); 
             originalRefresh();
         }, 0);
     }
