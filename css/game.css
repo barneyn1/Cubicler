@@ -44,7 +44,7 @@ header h1 {
 header img {
   max-width: 4.69vw; /* 120px */
   height: auto;
-  background-color: #764ba2;
+  background-color: linear-gradient(135deg, #775cb3 0%, #764ba2 100%);
 }
 
 header button{
@@ -53,6 +53,17 @@ header button{
   outline: none;
   padding: 0;
   cursor: pointer;
+}
+
+header .resetBtn{
+  background: none;
+  text-decoration: none;
+  font-size: 16px;
+  color: white;
+  border: 0.08vw solid white; /* 2px */
+  border-radius: 0.55vw; /* 20px */
+  padding: 0.35vh 0.27vw;
+  margin-right: 10px;
 }
 
 /* FUTURE: Dropdown in all pages (migrate to style.css)? */
