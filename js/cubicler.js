@@ -196,6 +196,7 @@ function newLevel() {
             winPopup.style.pointerEvents = "auto";
             winPopup.innerHTML = `<h1>You Win!</h1><button class="innerResetBtn"id="innerResetBtn">Reset</button>`;
             document.body.appendChild(winPopup);
+            
             //reset button
             document.getElementById("innerResetBtn").addEventListener("click", function() {
                 document.body.removeChild(winPopup);
