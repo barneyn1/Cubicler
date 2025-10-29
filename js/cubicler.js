@@ -26,12 +26,19 @@ class Card {
     }
 }
 
+function createCardInstance(c) {
+    return new Card(c.id, c.name, c.base, c.tags, c.rarity, c.text);
+}
+
 // -----Global Variables-----
 // Code-based variables
 var cardPool = [];
 var hand = [];
 var shop = [];
 var bin = [];
+var removedFromBin = [];
+var removedFromHand = [];
+var binDisabled = new Set();
 var round = 0;
 var level = 0;
 var money = 0;
@@ -39,6 +46,7 @@ var lastScore = 0;
 var score = 0;
 var bonusScore = 0;
 var goalScore = 0;
+var shuffles = 0;
 var lastAddedCard = null;
 var synergyLabel;
 
@@ -147,6 +155,7 @@ function newLevel() {
     // Set default level variables
     bin = [];
     shop = [];
+    hand = [];
     round = 0;
     score = 0;
     lastAddedCard = null;
@@ -208,6 +217,7 @@ function newLevel() {
 
         // Set default round variables
         lastScore = 0;
+        shuffles = 3;
 
         refreshDisplay(); // refresh display
     }
@@ -218,7 +228,7 @@ function newBin() {
     // Add 4 random cards to the player's bin
     for (let i = 0; i < 4; i++) {
         let randomIndex = Math.floor(Math.random() * cardPool.length);
-        bin.push(cardPool[randomIndex]);
+        bin.push(createCardInstance(cardPool[randomIndex]));
     }
     // Print the player's bin to the console
     console.log("Initial Bin Order:");
@@ -392,8 +402,58 @@ function calculateScore() {
 // Shuffle Bin, used for rerolling the bin, add code for -1 shuffles remaining
 function shuffleBin() {
     console.log("Shuffling Bin...");
+    
+    // Removing appropriate cards from bin
+    // for cards in removedInBin
+    // remove from bin[]
+    // bin.splice(bin.indexOf(card), 1)
+    // if card is in removedFromHand add back to bin then remove card from removedFromHand to prevent duplicates
+    // bin.push(card)
+    const sameRef = (a, b) => a === b;
+
+    // Remove all occurrences of a card object from bin
+    function removeAllFromBin(card) {
+        bin = bin.filter(c => !sameRef(c, card));
+    }
+    
+    function dedupeOneInBin(card) {
+        let seen = false;
+        bin = bin.filter(c => {
+            if (!sameRef(c, card)) return true;
+            if (!seen) { seen = true; return true; } // keep the first encounter
+            return false; // drop extras
+        });
+    }
+
+    const undoneSet = new Set(removedFromHand); // object identity set
+
+    for (const card of removedFromBin) {
+        if (undoneSet.has(card)) {
+            // undone: make sure card is in bin only once
+            dedupeOneInBin(card);
+            undoneSet.delete(card); // prevent double-processing
+        } else {
+            // not undone: remove its disabled presence from bin
+            removeAllFromBin(card);
+        }
+    }
+
+    // Setting all bin fields to clickable / removing darkened styles
+    // FUTURE: implement this after merging with Antonios's darken code
+
+    // Clearing removedFromBin and removedFromHand arrays
+    binDisabled.clear();
+    //attachDragStarts();
+    markDraggable();
+    removedFromBin = [];
+    removedFromHand = [];
+    
+    // -1 shuffles
+    shuffles -= 1;
+
     // Shuffle the player's bin
     bin.sort(() => Math.random() - 0.5);
+
     // Print the player's bin to the console
     console.log("New Bin Order:");
     bin.forEach(card => console.log(card.describe()));
@@ -401,22 +461,25 @@ function shuffleBin() {
     refreshDisplay(); // refresh display 
 }
 
-// Reroll Shop, will need code to make reroll button unclickable if money is insufficient
+// Reroll Shop, FUTURE will need code to make reroll button unclickable if money is insufficient
 function rerollShop() {
     console.log("Rerolling Shop...");
     //If shop is already empty, reroll for free
     if (shop.length === 0) {
         console.log("Shop is empty, rerolling for free");
-    } else {
+    } else if (money >= 5) {
         console.log("Rerolling Shop for 5 dollars");
         money -= 5;
+    } else {
+        console.log("Not Enough Money For Reroll! Current Money: $" + money);
+        return;
     }
     // Clear the shop
     shop = [];
     // Add 5 random cards to the player's shop
     for (let i = 0; i < 5; i++) {
         let randomIndex = Math.floor(Math.random() * cardPool.length);
-        shop.push(cardPool[randomIndex]);
+        shop.push(createCardInstance(cardPool[randomIndex]));
     }
     // Print the player's shop to the console
     console.log("New Shop Contents:");
@@ -429,11 +492,14 @@ function rerollShop() {
 function addToHand(card, index = hand.length) { // default index = end
     console.log("Adding card to hand...");
     // Add the card to the player's hand
+    removedFromBin.push(card);
+    console.log("Adding", card.name, "to removedFromBin list...");
+    console.log("Removed From Bin:", removedFromBin);
     hand.splice(index, 0, card);
     // Track the last added card
     lastAddedCard = card;
-    // Remove the card from the player's bin
-    bin.splice(bin.indexOf(card), 1);
+    // Keep the card in the bin array but disable its HTML div (no click/drag)
+    binDisabled.add(card);
     // Print the player's hand to the console
     console.log("New Hand Contents:");
     hand.forEach(card => console.log(card.describe()));
@@ -457,9 +523,14 @@ function addToBin(card) {
 function removeFromHand(card) {
     console.log("Removing card from hand...");
     // Remove the card from the player's hand
+    removedFromHand.push(card);
+    console.log("Adding", card.name, "to removedFromHand list...");
+    console.log("Removed From Hand:", removedFromHand);
     hand.splice(hand.indexOf(card), 1);
     // Add the card to the player's bin
     addToBin(card);
+    binDisabled.delete(card); // makes the card clickable again immediately
+
     // Print the player's hand to the console
     console.log("New Hand Contents:");
     hand.forEach(card => console.log(card.describe()));
@@ -492,7 +563,7 @@ function playRound() {
 }
 
 // Undo Bin to Hand Selection
-// Questions for a later date: How should bin undo work? Refund card to bin or just remove from hand? 
+// Questions for a FUTURE date: How should bin undo work? Refund card to bin or just remove from hand? 
 // Should this be overhauled to discard drag & drop zone? Would need to address bin -> undo drag bug.
 function undoSelection() {
     console.log("Undoing selection...");
@@ -548,7 +619,7 @@ function initDisplay() {
     }
 
     // Shop items
-    const shopItems = document.querySelectorAll(".left-column .title + .items .item");
+    const shopItems = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item");
     shopItems.forEach((item, index) => {
         if (shop[index]) {
             item.textContent = shop[index].name;
@@ -604,6 +675,12 @@ function initDisplay() {
             item.textContent = "Empty";
         }
     });
+
+    // Shuffle button
+    const shuffleBtn = document.querySelector(".left-column .vert-container:nth-of-type(2) .shuffle .num");
+    if (shuffleBtn) {
+        shuffleBtn.textContent = shuffles;
+    }
 
     // Hand cards
     const handCards = document.querySelectorAll(".play-space .card");
@@ -654,7 +731,7 @@ function refreshDisplay() {
     }
 
     // Shop items
-    const shopItems = document.querySelectorAll(".left-column .title + .items .item");
+    const shopItems = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item");
     shopItems.forEach((item, index) => {
         if (shop[index]) {
             item.textContent = shop[index].name;
@@ -711,6 +788,12 @@ function refreshDisplay() {
         }
     });
 
+    // Shuffle button
+    const shuffleBtn = document.querySelector(".left-column .vert-container:nth-of-type(2) .shuffle .num");
+    if (shuffleBtn) {
+        shuffleBtn.textContent = shuffles;
+    }
+
     // Hand cards
     const handCards = document.querySelectorAll(".play-space .card");
     handCards.forEach((card, index) => {
@@ -723,6 +806,9 @@ function refreshDisplay() {
 
     refreshImages();
     updateShopButtonStatus();
+    updateRerollButtonStatus();
+    updateShuffleButtonStatus();
+    updatePlayButtonStatus();
 }
 
 // Adding art images dynamically to shop and hand areas
@@ -730,7 +816,7 @@ function refreshDisplay() {
 function initImages() {
     console.log("Adding images...");
     // Shop images
-    const shopItems = document.querySelectorAll(".left-column .items .item");
+    const shopItems = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item");
     shopItems.forEach(item => {
         // If the item doesn't already have an image
         if (!item.querySelector("img")) {
@@ -785,7 +871,7 @@ function refreshImages() {
     console.log("Refreshing images...");
 
     // Shop images
-    const shopItems = document.querySelectorAll(".left-column .items .item");
+    const shopItems = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item");
     shopItems.forEach((item, index) => {
         let img = item.querySelector("img");
         if (!img) {
@@ -822,8 +908,14 @@ function refreshImages() {
         }
 
         if (bin[index]) {
+            const card = bin[index];
             img.src = "../assets/pics/placeholder.png";
-            img.alt = bin[index].name;
+            img.alt = card.name;
+            // Enable/disable interactivity per-instance (object identity)
+            const isDisabled = binDisabled.has(card);
+            item.classList.toggle("disabled", isDisabled);
+            item.style.pointerEvents = isDisabled ? "none" : "";
+            item.setAttribute("draggable", isDisabled ? "false" : "true");
         } else {
             img.src = "../assets/pics/placeholder.png";
             img.alt = "Empty slot";
@@ -854,7 +946,7 @@ function refreshImages() {
 }
 
 
-// Making a function to make shop buy buttons unclickable if money is insufficient
+// make shop buy buttons unclickable if money is insufficient
 // Currently called in refreshDisplay
 function updateShopButtonStatus() {
     console.log("Updating shop button status...");
@@ -874,13 +966,35 @@ function updateShopButtonStatus() {
     });
 }
 
-// Making a function to make reroll button unclickable if money is insufficient
+// make reroll button unclickable if money is insufficient
+function updateRerollButtonStatus() {
+    if (!rerollBtn) return;
+    // Reroll is free when the shop is empty
+    const blocked = (shop.length > 0) && (money < 5);
+    rerollBtn.disabled = blocked;
+    rerollBtn.classList.toggle("disabled", blocked);
+    rerollBtn.title = blocked ? "Need $5 to reroll" : "Reroll the shop";
+}
 
-// Write code to make shuffle unclickable if 3 shuffles done
+// make shuffle unclickable if 3 shuffles done
+function updateShuffleButtonStatus() {
+    if (!shuffleBtn) return;
+    const blocked = shuffles < 1;
+    shuffleBtn.disabled = blocked;
+    shuffleBtn.classList.toggle("disabled", blocked);
+    shuffleBtn.title = blocked ? "No shuffles remaining" : "Shuffle your bin";
+}
 
-// Write code to make play button unclickable if hand is empty
+// make play button unclickable if hand is empty
+function updatePlayButtonStatus() {
+    if (!playBtn) return;
+    const blocked = hand.length < 1;
+    playBtn.disabled = blocked;
+    playBtn.classList.toggle("disabled", blocked);
+    playBtn.title = blocked ? "Add cards to your hand to play" : "Play your hand";
+}
 
-// Write code to make a shop item unclickable if it gets bought
+// FUTURE make a shop item unclickable if it gets bought
 
 // -----Interaction events-----
 // Click events
@@ -888,7 +1002,9 @@ function updateShopButtonStatus() {
 if (resetBtn) {
     resetBtn.addEventListener("click", function() {
         console.log("*-*-*-Reset Button Clicked-*-*-*");
+        if (winPopup && document.body.contains(winPopup)) {
         document.body.removeChild(winPopup);
+        }
         document.querySelector("main").style.pointerEvents = "auto";
         startGame();
     });
@@ -911,11 +1027,32 @@ if (undoBtn) {
 }
 
 // Clicking the reroll button -> rerollShop()
+if (rerollBtn) {
+    rerollBtn.addEventListener("click", function() {
+        console.log("*-*-*-Reroll Button Clicked-*-*-*");
+        if (money < 5) {
+                console.log("Click ignored: Need $5 to reroll.");
+                return;
+        }
+        rerollShop();
+        updateRerollButtonStatus();
+    });
+}
 
 // Clicking the shuffle button -> shuffleBin()
+if (shuffleBtn) {
+    shuffleBtn.addEventListener("click", function() {
+        console.log("*-*-*-Shuffle Button Clicked-*-*-*");
+        if (shuffles < 1) {
+            console.log("Click ignored: No shuffles remaining.");
+            return;
+        }
+        shuffleBin();
+        updateShuffleButtonStatus();
+    });
+}
 
 // Clicking a card's buy button in shop -> buyFromShop(card)
-//need to do more coding before buyFromShop call is implemented
 const shopItems = document.querySelectorAll(".left-column .items .item-row .buy")
     .forEach((buyButton, index) => {
         buyButton.addEventListener("click", () => {
@@ -937,6 +1074,21 @@ function clearDragStyles() {
 }
 let draggedCardIndex = null;
 let dndBound = false;
+const handArea = document.querySelector(".play-space .cards");
+const binArea  = document.querySelector(".left-column .vert-container:nth-of-type(2) .items");
+
+// markDraggable, used in initDragAndDrop and shuffleBin
+function markDraggable() {
+    const binItems  = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
+    const handCards = document.querySelectorAll(".play-space .cards .card");
+    binItems.forEach((el, i) => { 
+        const card = bin[i];
+        const isDisabled = card && binDisabled.has(card);
+        el.setAttribute("draggable", isDisabled ? "false" : "true");
+        el.dataset.index = i;
+    });
+    handCards.forEach((el, i) => { el.setAttribute("draggable", "true"); el.dataset.index = i; });
+}
 
 function initDragAndDrop() {
     if (dndBound) return;
@@ -944,44 +1096,38 @@ function initDragAndDrop() {
 
     console.log("Initializing drag and drop...");
 
-    const handArea = document.querySelector(".play-space .cards");
-    const binArea  = document.querySelector(".left-column .vert-container:nth-of-type(2) .items");
-
-    function markDraggable() {
-        const binItems  = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
-        const handCards = document.querySelectorAll(".play-space .cards .card");
-        binItems.forEach((el, i) => { el.setAttribute("draggable", "true"); el.dataset.index = i; });
-        handCards.forEach((el, i) => { el.setAttribute("draggable", "true"); el.dataset.index = i; });
-    }
-
     function attachDragStarts() {
-        binArea.addEventListener("dragstart", (e) => {
-            const el = e.target.closest(".item");
-            if (!el) return;
-            draggedFrom = "bin";
-            draggedCardIndex = parseInt(el.dataset.index, 10);
-            e.dataTransfer.effectAllowed = "move";
-            e.dataTransfer.setData("text/plain", "x");
-            el.classList.add("is-dragging");
-        }, true);
+    binArea.addEventListener("dragstart", (e) => {
+        const el = e.target.closest(".item");
+        if (!el) return;
+        if (el.classList.contains("disabled")) {
+            e.preventDefault();
+            return;
+        }
+        draggedFrom = "bin";
+        draggedCardIndex = parseInt(el.dataset.index, 10);
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", "x");
+        el.style.opacity = "0.5";
+    }, true);
 
-        handArea.addEventListener("dragstart", (e) => {
-            const el = e.target.closest(".card");
-            if (!el) return;
-            draggedFrom = "hand";
-            draggedCardIndex = parseInt(el.dataset.index, 10);
-            e.dataTransfer.effectAllowed = "move";
-            e.dataTransfer.setData("text/plain", "x");
-            el.classList.add("is-dragging");
-        }, true);
+    handArea.addEventListener("dragstart", (e) => {
+        const el = e.target.closest(".card");
+        if (!el) return;
+        draggedFrom = "hand";
+        draggedCardIndex = parseInt(el.dataset.index, 10);
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", "x");
+        el.style.opacity = "0.5";
+    }, true);
 
-        document.addEventListener("dragend", (e) => {
-            const el = e.target;
-            if (el) el.classList.remove("is-dragging");
-            draggedFrom = null;
-            draggedCardIndex = null;
-        }, true);
-    }
+    document.addEventListener("dragend", (e) => {
+        const el = e.target;
+        if (el && el.style) el.style.opacity = "";
+        draggedFrom = null;
+        draggedCardIndex = null;
+    }, true);
+}
 
     function handleDrop(targetArea) {
         if (draggedCardIndex === null || !draggedFrom) return;
