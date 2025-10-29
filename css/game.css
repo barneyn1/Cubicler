@@ -315,32 +315,14 @@ progress::-moz-progress-bar {
   cursor: pointer;
 }
 
-.winPopup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(30, 30, 30, 0.8);
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  z-index: 1000;
+/*drag and drop helpers */
+.is-dragging {
+  opacity: 0.55;
+  filter: grayscale(25%);
+  transition: opacity .15s ease, filter .15s ease;
 }
 
-.innerResetBtn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: 1px solid white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px;
-  font-size: 16px;
-  transition: box-shadow 0.25s ease;
-}
-
-.innerResetBtn:hover {
-  box-shadow: 0 1.5px 5px rgba(255,255,255,.65);
-  transform: translateY(-1px);
+/* helper class add/remove darken anything */
+.darkened {
+  filter: brightness(0.6) saturate(0.85);
 }
