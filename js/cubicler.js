@@ -114,7 +114,7 @@ function startGame() {
     console.log("Starting game...");
     // Set default game variables
     level = 0;
-    money = 5;
+    money = 15;
     // Starting new level at 0 -> +1 in newLevel()
     newLevel();
 }
@@ -190,13 +190,13 @@ function newLevel() {
             //win case
             //make everything within main tag unclickable
             document.querySelector("main").style.pointerEvents = "none";
-            
+
             //add popup for "you win" & reset button
             winPopup.className = "winPopup";
             winPopup.style.pointerEvents = "auto";
             winPopup.innerHTML = `<h1>You Win!</h1><button class="innerResetBtn"id="innerResetBtn">Reset</button>`;
             document.body.appendChild(winPopup);
-            
+
             //reset button
             document.getElementById("innerResetBtn").addEventListener("click", function() {
                 document.body.removeChild(winPopup);
@@ -326,7 +326,7 @@ function synergy() {
     let software = hand.filter(c => c.tags == "software").length;
     synergy += software * 1;
     }
-    
+
 if (names.includes("uCPU")) {
     let software = hand.filter(c => c.tags == "software").length;
     synergy += software * 2;
@@ -403,7 +403,7 @@ function calculateScore() {
 // Shuffle Bin, used for rerolling the bin, add code for -1 shuffles remaining
 function shuffleBin() {
     console.log("Shuffling Bin...");
-    
+
     // Removing appropriate cards from bin
     // for cards in removedInBin
     // remove from bin[]
@@ -416,7 +416,7 @@ function shuffleBin() {
     function removeAllFromBin(card) {
         bin = bin.filter(c => !sameRef(c, card));
     }
-    
+
     function dedupeOneInBin(card) {
         let seen = false;
         bin = bin.filter(c => {
@@ -448,7 +448,7 @@ function shuffleBin() {
     markDraggable();
     removedFromBin = [];
     removedFromHand = [];
-    
+
     // -1 shuffles
     shuffles -= 1;
 
@@ -486,6 +486,13 @@ function rerollShop() {
     console.log("New Shop Contents:");
     shop.forEach(card => console.log(card.describe()));
 
+    // Re-enabling clickabiliy of all shop buttons, undarkening them
+    const itemRow = document.querySelector(".left-column .items .item-row");
+    const buyButton = document.querySelector(".left-column .items .item-row .buy");
+    itemRow.classList.remove("darkened");
+    buyButton.disabled = false;
+    buyButton.classList.remove("darkened");
+    
     refreshDisplay(); // refresh display
 }
 
@@ -1004,8 +1011,6 @@ function updatePlayButtonStatus() {
     playBtn.title = blocked ? "Add cards to your hand to play" : "Play your hand";
 }
 
-// FUTURE make a shop item unclickable if it gets bought
-
 // -----Interaction events-----
 // Click events
 //Clicking the reset button -> startGame()
@@ -1068,6 +1073,12 @@ const shopItems = document.querySelectorAll(".left-column .items .item-row .buy"
         buyButton.addEventListener("click", () => {
             console.log(`*-*-*-Buy Button ${index + 1} Clicked-*-*-*`);
             buyFromShop(shop[index]);
+
+            // Mark the bought item as unavailable until next reroll
+            const itemRow = buyButton.closest(".item-row");
+            itemRow.classList.add("darkened");
+            buyButton.disabled = true;
+            buyButton.classList.add("darkened");
         });
     });
 
