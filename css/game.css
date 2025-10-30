@@ -298,6 +298,7 @@ progress::-moz-progress-bar {
   padding: 5%;
   border: 0.08vw solid black;
   background-color: #773f1a;
+  color: white;
 }
 
 .play-space .hand .cards {
