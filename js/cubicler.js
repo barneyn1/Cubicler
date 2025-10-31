@@ -115,6 +115,10 @@ function startGame() {
     // Set default game variables
     level = 0;
     money = 15;
+
+    //Clearing darkened styles FUTURE enable after initDrag&Drop update
+    //clearDarkenedRows();
+
     // Starting new level at 0 -> +1 in newLevel()
     newLevel();
 }
@@ -477,8 +481,8 @@ function rerollShop() {
     }
     // Clear the shop
     shop = [];
-    // Add 5 random cards to the player's shop
-    for (let i = 0; i < 5; i++) {
+    // Add 4 random cards to the player's shop
+    for (let i = 0; i < 4; i++) {
         let randomIndex = Math.floor(Math.random() * cardPool.length);
         shop.push(createCardInstance(cardPool[randomIndex]));
     }
@@ -557,6 +561,9 @@ function buyFromShop(card) {
     addToBin(card);
     // Print the player's shop to the console
     console.log("New Shop Contents:");
+    shop.forEach(card => console.log(card.describe()));
+    // Print the player's money to the console
+    console.log("Money after Purchase: " + money);
 
     refreshDisplay(); // refresh display
 }
@@ -979,7 +986,9 @@ function updateShopButtonStatus() {
         const disable = !(Number.isFinite(cost) && Number.isFinite(cash) && cash >= cost);
         // Dynamically disable buttons based on money
         button.disabled = disable;
-        button.classList.toggle("disabled", disable); //Add a class to style dark disabled buttons
+        button.classList.toggle("disabled", disable); 
+        //Add a class to style dark disabled buttons
+        button.classList.toggle("darkened", disable);
     });
 }
 
@@ -1010,6 +1019,29 @@ function updatePlayButtonStatus() {
     playBtn.classList.toggle("disabled", blocked);
     playBtn.title = blocked ? "Add cards to your hand to play" : "Play your hand";
 }
+
+// clear darkened class function for resets, also helps with clickable resets
+// FUTURE: implement after initDrag&Drop darkened classList update
+/*function clearDarkenedRows() {
+  // Shop rows + buttons
+  document
+    .querySelectorAll(".left-column .vert-container:first-of-type .item-row")
+    .forEach(row => {
+      row.classList.remove("darkened");
+      const btn = row.querySelector(".buy");
+      if (btn) {
+        btn.disabled = false;
+        btn.classList.remove("darkened");
+      }
+    });
+
+  // Bin rows
+  document
+    .querySelectorAll(".left-column .vert-container:nth-of-type(2) .item-row")
+    .forEach(row => {
+        row.classList.remove("darkened");
+    });
+}*/
 
 // -----Interaction events-----
 // Click events
