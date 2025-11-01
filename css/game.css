@@ -297,7 +297,12 @@ progress::-moz-progress-bar {
   width: 100%;
   padding: 5%;
   border: 0.08vw solid black;
-  background-color: #773f1a;
+  /*bkg image stuff */
+  /*background-color: #773f1a;*/
+  background-image: url("../assets/pics/handSpaceBkg.png"); /*img: 64x64px*/
+  background-repeat: repeat;
+  background-size: 64px 64px;
+  image-rendering: pixelated;
 }
 
 .play-space .hand .cards {
