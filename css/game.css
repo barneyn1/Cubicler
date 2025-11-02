@@ -326,3 +326,11 @@ progress::-moz-progress-bar {
 .darkened {
   filter: brightness(0.6) saturate(0.85);
 }
+
+.item.disabled,
+.card.disabled {
+  filter: brightness(0.6) saturate(0.85);
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: default;
+}
