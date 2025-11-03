@@ -315,7 +315,7 @@ progress::-moz-progress-bar {
 .play-space .hand .cards .card {
   border: 0.04vw solid black;
   border-radius: 1.74vh; /* 25px */
-  padding: 3.47vh 2.78vh; /* 50px 40px */
+  padding: clamp(8px, 2.2vh, 12px); /* 50px 40px */ /* was padding: 3.47vh 2.78vh; */
   margin: 0.7vh; /* 10px */
   cursor: pointer;
   color: white;
