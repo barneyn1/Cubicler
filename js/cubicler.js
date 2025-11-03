@@ -582,6 +582,9 @@ function buyFromShop(card) {
     addToBin(card);
     shopSold[i] = true; 
     console.log("New Shop Contents:");
+    shop.forEach(card => console.log(card.describe()));
+    // Print the player's money to the console
+    console.log("Money after Purchase: " + money);
 
     refreshDisplay(); // refresh display
 }
@@ -1110,6 +1113,12 @@ document.querySelectorAll(".left-column .items .item-row .buy")
         buyButton.addEventListener("click", () => {
             console.log(`*-*-*-Buy Button ${index + 1} Clicked-*-*-*`);
             buyFromShop(shop[index]);
+
+            // Mark the bought item as unavailable until next reroll
+            const itemRow = buyButton.closest(".item-row");
+            itemRow.classList.add("darkened");
+            buyButton.disabled = true;
+            buyButton.classList.add("darkened");
         });
     });
 

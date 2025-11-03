@@ -297,7 +297,12 @@ progress::-moz-progress-bar {
   width: 100%;
   padding: 5%;
   border: 0.08vw solid black;
-  background-color: #773f1a;
+  /*bkg image stuff */
+  /*background-color: #773f1a;*/
+  background-image: url("../assets/pics/handSpaceBkg.png"); /*img: 64x64px*/
+  background-repeat: repeat;
+  background-size: 64px 64px;
+  image-rendering: pixelated;
 }
 
 .play-space .hand .cards {
@@ -333,4 +338,33 @@ progress::-moz-progress-bar {
   opacity: 0.6;
   pointer-events: none;
   cursor: default;
+}
+.winPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 30, 30, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 1000;
+}
+
+.winPopup .innerResetBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: 1px solid white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 16px;
+  transition: box-shadow 0.25s ease;
+}
+
+.innerResetBtn:hover {
+  box-shadow: 0 1.5px 5px rgba(255,255,255,.65);
+  transform: translateY(-1px);
 }
