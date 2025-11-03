@@ -318,6 +318,8 @@ progress::-moz-progress-bar {
   padding: 3.47vh 2.78vh; /* 50px 40px */
   margin: 0.7vh; /* 10px */
   cursor: pointer;
+  color: white;
+  text-align: center;
 }
 
 /*drag and drop helpers */
