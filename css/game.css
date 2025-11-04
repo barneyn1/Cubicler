@@ -297,6 +297,7 @@ progress::-moz-progress-bar {
   width: 100%;
   padding: 5%;
   border: 0.08vw solid black;
+  color: white;
   /*bkg image stuff */
   /*background-color: #773f1a;*/
   background-image: url("../assets/pics/handSpaceBkg.png"); /*img: 64x64px*/
