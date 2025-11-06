@@ -854,13 +854,13 @@ function initImages() {
     console.log("Adding images...");
     // Shop images
     const shopItems = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item");
-    shopItems.forEach(item => {
+    shopItems.forEach((item, index) => {
         // If the item doesn't already have an image
         if (!item.querySelector("img")) {
             const img = document.createElement("img");
             // In the future, replace placeholder with card-specific art:
-            // img.src = `../assets/cards/${shop[index].id}.png`;
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${shop[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = "Card placeholder";
             img.width = 40;   // we can change this
             img.height = 40;
@@ -872,11 +872,12 @@ function initImages() {
 
     // Bin images
     const binItems = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
-    binItems.forEach(item => {
+    binItems.forEach((item, index) => {
         // If the item doesn't already have an image
         if (!item.querySelector("img")) {
             const img = document.createElement("img");
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${bin[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = "Card placeholder";
             img.width = 40;   // we can change this
             img.height = 40;
@@ -891,7 +892,7 @@ function initImages() {
     handCards.forEach(card => {
         if (!card.querySelector("img")) {
             const img = document.createElement("img");
-            img.src = "../assets/pics/placeholder.png";
+            img.src = "../assets/pics/placeholder.png"; //hand starts with empty placeholders
             img.alt = "Card placeholder";
             img.width = 80;  // we can change this
             img.height = 80;
@@ -922,8 +923,8 @@ function refreshImages() {
 
         if (shop[index]) {
             // FUTURE, replace placeholder with card-specific art:
-            // img.src = `../assets/cards/${shop[index].id}.png`;
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${shop[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = shop[index].name;
         } else {
             img.src = "../assets/pics/placeholder.png";
@@ -946,7 +947,8 @@ function refreshImages() {
 
         if (bin[index]) {
             const card = bin[index];
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${bin[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = card.name;
             // Enable/disable interactivity per-instance (object identity)
             const isDisabled = binDisabled.has(card);
@@ -976,7 +978,8 @@ function refreshImages() {
         }
 
         if (hand[index]) {
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${hand[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = hand[index].name;
             card.classList.remove("disabled", "darkened", "empty");
             card.setAttribute("draggable", "true");
