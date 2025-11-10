@@ -155,6 +155,10 @@ button {
   margin: 0.7vh 0; /* 10px 0 */
 }
 
+.left-column .vert-container:first-of-type .items .item-row{
+  margin-left: 3.37vw; /* centers the shop item-row with the item, leaves buy btn hanging instead */
+}
+
 .left-column .vert-container .items .item-row .item{
   display: flex;
   align-items: center;
@@ -174,6 +178,7 @@ button {
   margin-left: 0.59vw; /* 15px */
   margin-top: -0.07vh; /* -1px */
   padding: 1.04vh 0.31vw; /* 15px 8px */
+  font-size: 78%;
   color: white;
   border-radius: 0.23vw; /* 6px */
   cursor: pointer;
