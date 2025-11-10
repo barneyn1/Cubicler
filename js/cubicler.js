@@ -389,8 +389,8 @@ function calculateScore() {
     console.log("Calculating Score...");
     // Calculate the player's score
     lastScore = score;
-    // Testing score = 25 TEMP FUTURE CHANGE BACK TO 0
-    score = 50;
+    // Default score = 0, set to a higher value to test wins
+    score = 0;
     // Add the base value of each card in the player's hand to the score
     hand.forEach(card => score += card.base);
     console.log("Base Score: " + score);
@@ -683,6 +683,14 @@ function initDisplay() {
         }
     });
 
+    // Shop buttons
+    const shopBtns = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item-row .buy");
+    shopBtns.forEach((item, index) => {
+        if (shop[index]) {
+            item.textContent = "Buy $" + shop[index].base;
+        }
+    });
+
     // Bin items
     const binItems = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
     binItems.forEach((item, index) => {
@@ -793,6 +801,14 @@ function refreshDisplay() {
             }
         } else {
             item.textContent = "Empty";
+        }
+    });
+
+    // Shop buttons
+    const shopBtns = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item-row .buy");
+    shopBtns.forEach((item, index) => {
+        if (shop[index]) {
+            item.textContent = "Buy $" + shop[index].base;
         }
     });
 
@@ -999,7 +1015,7 @@ function refreshImages() {
 function updateShopButtonStatus() {
     console.log("Updating shop button status...");
 
-    // Select the actual Buy buttons
+    // Select the buy buttons
     const rows = document.querySelectorAll('.left-column .items .item-row');
     const buttons = document.querySelectorAll('.left-column .items .item-row .buy');
 
@@ -1018,7 +1034,8 @@ function updateShopButtonStatus() {
         }
 
         button.disabled = disable;
-        button.classList.toggle("disabled", disable); //Add a class to style dark disabled buttons
+        button.classList.toggle("disabled", disable);
+        button.classList.toggle("darkened", disable);
 
         if (rows[i]) {
             rows[i].classList.toggle("darkened", !item || sold);
