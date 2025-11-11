@@ -651,7 +651,7 @@ function initDisplay() {
     // Plays section
     const playText = document.querySelector(".right-column .plays-remaining");
     if (playText) {
-        playText.textContent = (9 - round) + " Play(s) remaining !";
+        playText.textContent = (9 - round) + (round === 8 ?" Play remaining!" : " Plays remaining!");
     }
 
     // Shop items
@@ -772,7 +772,7 @@ function refreshDisplay() {
     // Plays section
     const playText = document.querySelector(".right-column .plays-remaining");
     if (playText) {
-        playText.textContent = (9 - round) + " Play(s) remaining !";
+        playText.textContent = (9 - round) + (round === 8 ?" Play remaining!" : " Plays remaining!");
     }
 
     // Shop items
