@@ -60,6 +60,7 @@ const undoBtn = document.getElementById("undoBtn");
 const shuffleBtn = document.getElementById("shuffleBtn");
 const rerollBtn = document.getElementById("rerollBtn");
 const winPopup = document.createElement("div");
+const losePopup = document.createElement("div");
 
 // helper function to know if there are any cards on the shop 
 function shopHasAny() {
@@ -235,6 +236,26 @@ function newLevel() {
         lastScore = 0;
         shuffles = 3;
 
+        //lose case
+        if (round >= 9) {
+            //make everything within main tag unclickable
+            document.querySelector("main").style.pointerEvents = "none";
+
+            //add popup for "you lose" & reset button
+            losePopup.className = "losePopup";
+            losePopup.style.pointerEvents = "auto";
+            losePopup.innerHTML = `<h1>You Lose!</h1><button class="innerResetBtn"id="innerResetBtn">Reset</button>`;
+            document.body.appendChild(losePopup);
+
+            //reset button
+            document.getElementById("innerResetBtn").addEventListener("click", function() {
+                document.body.removeChild(losePopup);
+                document.querySelector("main").style.pointerEvents = "auto";
+                startGame();                                                    
+            });
+        }
+        
+
         refreshDisplay(); // refresh display
     }
 
@@ -389,8 +410,8 @@ function calculateScore() {
     console.log("Calculating Score...");
     // Calculate the player's score
     lastScore = score;
-    // Testing score = 25 TEMP FUTURE CHANGE BACK TO 0
-    score = 50;
+    // Default score = 0, set to a higher value to test wins
+    score = 0;
     // Add the base value of each card in the player's hand to the score
     hand.forEach(card => score += card.base);
     console.log("Base Score: " + score);
@@ -651,7 +672,7 @@ function initDisplay() {
     // Plays section
     const playText = document.querySelector(".right-column .plays-remaining");
     if (playText) {
-        playText.textContent = (9 - round) + " Play(s) remaining !";
+        playText.textContent = (9 - round) + (round === 8 ?" Play remaining!" : " Plays remaining!");
     }
 
     // Shop items
@@ -680,6 +701,14 @@ function initDisplay() {
             }
         } else {
             item.textContent = "Empty";
+        }
+    });
+
+    // Shop buttons
+    const shopBtns = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item-row .buy");
+    shopBtns.forEach((item, index) => {
+        if (shop[index]) {
+            item.textContent = "Buy $" + shop[index].base;
         }
     });
 
@@ -764,7 +793,7 @@ function refreshDisplay() {
     // Plays section
     const playText = document.querySelector(".right-column .plays-remaining");
     if (playText) {
-        playText.textContent = (9 - round) + " Play(s) remaining !";
+        playText.textContent = (9 - round) + (round === 8 ?" Play remaining!" : " Plays remaining!");
     }
 
     // Shop items
@@ -793,6 +822,14 @@ function refreshDisplay() {
             }
         } else {
             item.textContent = "Empty";
+        }
+    });
+
+    // Shop buttons
+    const shopBtns = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item-row .buy");
+    shopBtns.forEach((item, index) => {
+        if (shop[index]) {
+            item.textContent = "Buy $" + shop[index].base;
         }
     });
 
@@ -854,13 +891,13 @@ function initImages() {
     console.log("Adding images...");
     // Shop images
     const shopItems = document.querySelectorAll(".left-column .vert-container:first-of-type .items .item");
-    shopItems.forEach(item => {
+    shopItems.forEach((item, index) => {
         // If the item doesn't already have an image
         if (!item.querySelector("img")) {
             const img = document.createElement("img");
             // In the future, replace placeholder with card-specific art:
-            // img.src = `../assets/cards/${shop[index].id}.png`;
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${shop[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = "Card placeholder";
             img.width = 40;   // we can change this
             img.height = 40;
@@ -872,11 +909,12 @@ function initImages() {
 
     // Bin images
     const binItems = document.querySelectorAll(".left-column .vert-container:nth-of-type(2) .item");
-    binItems.forEach(item => {
+    binItems.forEach((item, index) => {
         // If the item doesn't already have an image
         if (!item.querySelector("img")) {
             const img = document.createElement("img");
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${bin[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = "Card placeholder";
             img.width = 40;   // we can change this
             img.height = 40;
@@ -891,7 +929,7 @@ function initImages() {
     handCards.forEach(card => {
         if (!card.querySelector("img")) {
             const img = document.createElement("img");
-            img.src = "../assets/pics/placeholder.png";
+            img.src = "../assets/pics/placeholder.png"; //hand starts with empty placeholders
             img.alt = "Card placeholder";
             img.width = 80;  // we can change this
             img.height = 80;
@@ -922,8 +960,8 @@ function refreshImages() {
 
         if (shop[index]) {
             // FUTURE, replace placeholder with card-specific art:
-            // img.src = `../assets/cards/${shop[index].id}.png`;
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${shop[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = shop[index].name;
         } else {
             img.src = "../assets/pics/placeholder.png";
@@ -946,7 +984,8 @@ function refreshImages() {
 
         if (bin[index]) {
             const card = bin[index];
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${bin[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = card.name;
             // Enable/disable interactivity per-instance (object identity)
             const isDisabled = binDisabled.has(card);
@@ -976,7 +1015,8 @@ function refreshImages() {
         }
 
         if (hand[index]) {
-            img.src = "../assets/pics/placeholder.png";
+            img.src = `../assets/cards/${hand[index].id}.png`;
+            //img.src = "../assets/pics/placeholder.png";
             img.alt = hand[index].name;
             card.classList.remove("disabled", "darkened", "empty");
             card.setAttribute("draggable", "true");
@@ -996,7 +1036,7 @@ function refreshImages() {
 function updateShopButtonStatus() {
     console.log("Updating shop button status...");
 
-    // Select the actual Buy buttons
+    // Select the buy buttons
     const rows = document.querySelectorAll('.left-column .items .item-row');
     const buttons = document.querySelectorAll('.left-column .items .item-row .buy');
 
@@ -1015,7 +1055,8 @@ function updateShopButtonStatus() {
         }
 
         button.disabled = disable;
-        button.classList.toggle("disabled", disable); //Add a class to style dark disabled buttons
+        button.classList.toggle("disabled", disable);
+        button.classList.toggle("darkened", disable);
 
         if (rows[i]) {
             rows[i].classList.toggle("darkened", !item || sold);
@@ -1057,8 +1098,12 @@ function updatePlayButtonStatus() {
 if (resetBtn) {
     resetBtn.addEventListener("click", function() {
         console.log("*-*-*-Reset Button Clicked-*-*-*");
+        // Win and Lose Popup Fixes
         if (winPopup && document.body.contains(winPopup)) {
         document.body.removeChild(winPopup);
+        }
+        if (losePopup && document.body.contains(losePopup)) {
+        document.body.removeChild(losePopup);
         }
         document.querySelector("main").style.pointerEvents = "auto";
         startGame();
