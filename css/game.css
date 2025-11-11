@@ -360,7 +360,20 @@ progress::-moz-progress-bar {
   z-index: 1000;
 }
 
-.winPopup .innerResetBtn {
+.losePopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 30, 30, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 1000;
+}
+
+.innerResetBtn {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: 1px solid white;
