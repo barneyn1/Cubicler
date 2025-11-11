@@ -60,6 +60,7 @@ const undoBtn = document.getElementById("undoBtn");
 const shuffleBtn = document.getElementById("shuffleBtn");
 const rerollBtn = document.getElementById("rerollBtn");
 const winPopup = document.createElement("div");
+const losePopup = document.createElement("div");
 
 // helper function to know if there are any cards on the shop 
 function shopHasAny() {
@@ -234,6 +235,26 @@ function newLevel() {
         // Set default round variables
         lastScore = 0;
         shuffles = 3;
+
+        //lose case
+        if (round >= 9) {
+            //make everything within main tag unclickable
+            document.querySelector("main").style.pointerEvents = "none";
+
+            //add popup for "you lose" & reset button
+            losePopup.className = "losePopup";
+            losePopup.style.pointerEvents = "auto";
+            losePopup.innerHTML = `<h1>You Lose!</h1><button class="innerResetBtn"id="innerResetBtn">Reset</button>`;
+            document.body.appendChild(losePopup);
+
+            //reset button
+            document.getElementById("innerResetBtn").addEventListener("click", function() {
+                document.body.removeChild(losePopup);
+                document.querySelector("main").style.pointerEvents = "auto";
+                startGame();                                                    
+            });
+        }
+        
 
         refreshDisplay(); // refresh display
     }
@@ -1077,8 +1098,12 @@ function updatePlayButtonStatus() {
 if (resetBtn) {
     resetBtn.addEventListener("click", function() {
         console.log("*-*-*-Reset Button Clicked-*-*-*");
+        // Win and Lose Popup Fixes
         if (winPopup && document.body.contains(winPopup)) {
         document.body.removeChild(winPopup);
+        }
+        if (losePopup && document.body.contains(losePopup)) {
+        document.body.removeChild(losePopup);
         }
         document.querySelector("main").style.pointerEvents = "auto";
         startGame();
