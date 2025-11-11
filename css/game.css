@@ -289,7 +289,7 @@ progress::-moz-progress-bar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-end;
   height: 100vh;
   background-color: #060C23;
   width: 70%;
@@ -298,33 +298,33 @@ progress::-moz-progress-bar {
 
 /* --- DESK IMAGE LAYER --- */
 .play-space .desk {
-  position: relative;
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
-  height: 0;                       /* no height in flow */
+  z-index: 12;
+  pointer-events: none;                      
 }
 
 .play-space .desk img {
-  position: absolute;
-  top: 50%;                        /* center of play-space */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;            /* image doesn't block interactions */
-  z-index: 5;                      /* sits under .hand */
-  width: 65%;                      /* adjust scale to fit nicely */
-  height: auto;
-  display: block;
+width: 50%;
+height: auto;
+display: block;
+margin: 0 auto;
+filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
 }
 
 /* --- HAND SECTION --- */
 .play-space .hand {
-  position: relative;              /* stays in flow */
-  z-index: 10;                     /* sits above PNG */
+  position: relative;             
+  z-index: 10;                   
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  padding: 5%;
+  padding: 3% 0;
   border: 0.08vw solid black;
   color: white;
   background-image: url("../assets/pics/handSpaceBkg.png");
@@ -333,7 +333,6 @@ progress::-moz-progress-bar {
   image-rendering: pixelated;
 }
 
-/* cards layout stays unchanged */
 .play-space .hand .cards {
   display: flex;
   flex-direction: row;
