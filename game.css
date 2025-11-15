@@ -1,0 +1,461 @@
+/* Game.css */
+/* Game exclusive styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.35vh 0.78vw; /* .5rem 2rem → responsive */
+  box-shadow: 0 0.14vh 0.7vh rgba(0,0,0,0.1); /* 2px 10px */
+}
+
+header a {
+  text-decoration: none;
+  color: white;
+  border: 0.08vw solid white; /* 2px */
+  border-radius: 0.78vw; /* 20px */
+  padding: 0.35vh 0.27vw; /* 5px 7px */
+}
+
+header h1 {
+  font-size: 1.56vw; /* 2.5rem ≈ 40px */
+  font-weight: 300;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+  cursor: default;
+}
+/* Alternate colors -- Left Column BLACK */
+body.alt-colors header a,
+body.alt-colors header h1,
+body.alt-colors header .resetBtn,
+body.alt-colors .left-column .vert-container .title,
+body.alt-colors .left-column .vert-container .items .item-row .item{
+  color: black;
+}
+
+/* Alternate colors -- Left Column WHITE */
+body.alt-colors .left-column .vert-container .reroll,
+body.alt-colors .left-column .vert-container .reroll .cost,
+body.alt-colors .left-column .vert-container .shuffle,
+body.alt-colors .left-column .vert-container .shuffle .num{
+  color: white;
+}
+
+/* Alternate colors -- Right Column BLACK */
+body.alt-colors .right-column .title,
+body.alt-colors .right-column p,
+body.alt-colors .right-column .title .bottom,
+body.alt-colors .right-column .title .money,
+body.alt-colors .right-column .undo,
+body.alt-colors .right-column .play{
+  color: black;
+}
+
+body.alt-colors .buy,
+body.alt-colors .card {
+    color: black !important;     /* or whatever alt color you want */
+}
+
+body.alt-colors .progress-label  {
+  color: white !important;
+}
+
+/* Alternate Progress Bar Colors */
+/* WebKit browsers (Chrome, Edge, Safari) */
+body.alt-colors progress::-webkit-progress-bar {
+    background-color: black !important;
+}
+
+/* Firefox */
+/* body.alt-colors progress::-moz-progress-bar {
+    background-color: white !important;
+} */
+
+
+header img {
+  max-width: 4.69vw; /* 120px */
+  height: auto;
+  background-color: linear-gradient(135deg, #775cb3 0%, #764ba2 100%);
+}
+
+header button{
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+header .resetBtn{
+  background: none;
+  text-decoration: none;
+  font-size: 16px;
+  color: white;
+  border: 0.08vw solid white; /* 2px */
+  border-radius: 0.55vw; /* 20px */
+  padding: 0.35vh 0.27vw;
+  margin-right: 10px;
+}
+
+/* FUTURE: Dropdown in all pages (migrate to style.css)? */
+.dropdown{
+  display: inline-block;
+}
+
+.dropdown a{
+  display: block;
+  color: black;
+  text-decoration: none;
+  padding: 0.7vh 0.59vw; /* 10px 15px */
+}
+
+.dropdown .content{
+  display: none;
+  position: absolute;
+  right: 0;
+  transform: translateX(-0.98vw); /* 25px */
+  background-color: rgb(240, 242, 255);
+  min-width: 3.91vw; /* 100px */
+  box-shadow: 0.08vw 0.08vw 0.08vw; 
+  z-index: 9999;
+} 
+
+.dropdown:hover .content{
+  display: block;
+}
+
+.dropdown:hover button{
+  background-color: rgb(240, 242, 255);
+}
+
+.dropdown a:hover{
+  background-color: #667eea;
+}
+
+main{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+button {
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.left-column{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 100vh;
+  width: 15%;
+  background: repeating-linear-gradient(
+      45deg,
+      #525252,          
+      #525252 1.39vh, /* 20px */
+      #3b3b3b 1.39vh,
+      #3b3b3b 2.78vh /* 40px */
+  );
+}
+
+.left-column .vert-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.left-column .vert-container .title{
+  font-size: 4.17vh; /* 60px */
+  color: white;
+  margin-bottom: -1.39vh; /* -20px */
+}
+
+.left-column .vert-container .items{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+}
+
+.left-column .vert-container .items .item-row{
+  display: flex;
+  align-items: center;
+  margin: 0.7vh 0; /* 10px 0 */
+}
+
+.left-column .vert-container:first-of-type .items .item-row{
+  margin-left: 3.37vw; /* centers the shop item-row with the item, leaves buy btn hanging instead */
+}
+
+.left-column .vert-container .items .item-row .item{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 6.25vw; /* 160px */
+  height: 8.85vh; /* 100px */ /*Was: 6.94vh*/
+  padding: 0;
+  color: white;
+  border: 0.08vw solid white; /* 2px */
+  border-radius: 0.23vw; /* 6px */
+  cursor: pointer;
+}
+
+.left-column .vert-container .items .item-row .buy{
+  background-color: rgb(77, 231, 77);
+  margin-left: 0.59vw; /* 15px */
+  margin-top: -0.07vh; /* -1px */
+  padding: 1.04vh 0.31vw; /* 15px 8px */
+  font-size: 78%;
+  color: white;
+  border-radius: 0.23vw; /* 6px */
+  cursor: pointer;
+}
+
+.left-column .vert-container button{
+  background-color: #FFB700;
+  border-radius: 0.63vw; /* 16px */
+  margin-top: 0.7vh; /* 10px */
+  font-size: 1.11vh; /* 18px */
+  padding: 0 1.56vw; /* 0 40px */
+  cursor: pointer;
+}
+
+.left-column .vert-container button div{
+  font-size: 2.78vh; /* 40px */
+}
+
+.right-column {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 100vh;
+  width: 15%;
+  color: white;
+  background: repeating-linear-gradient(
+      -45deg,
+      #525252,          
+      #525252 1.39vh,
+      #3b3b3b 1.39vh,
+      #3b3b3b 2.78vh
+  );
+}
+
+.right-column .title{
+  margin-top: 1.39vh; /* 20px */
+  font-size: 4.17vh; /* 60px */
+}
+
+.right-column p{
+  font-size: 2.08vh; /* 30px */
+}
+
+.right-column .undo {
+  text-decoration: none;
+  background-color: rgb(180, 9, 9);
+  border-radius: 0.63vw; /* 16px */
+  color: white;
+  font-size: 2.78vh; /* 40px */
+  margin-top: 6.94vh; /* 100px */
+  padding: 1.39vh 1.56vw; /* 20px 40px */
+  cursor: pointer;
+}
+
+.right-column .play {
+  text-decoration: none;
+  background-color: rgb(77, 231, 77);
+  border-radius: 0.63vw; /* 16px */
+  color: white;
+  font-size: 2.78vh; /* 40px */
+  margin-top: 4.17vh; /* 60px */
+  padding: 1.39vh 1.56vw; /* 20px 40px */
+  cursor: pointer;
+}
+
+.progress-wrapper {
+  position: relative;
+  width: 75%;
+  height: 2.08vh; /* 30px */
+}
+
+progress {
+  width: 100%;
+  height: 100%;
+  border: 0.08vw solid white; /* 2px */
+  border-radius: 1.04vh; /* 15px */
+  appearance: none;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 1.04vh; /* 15px */
+}
+progress::-webkit-progress-value {
+  background: #FFB700;
+  border-radius: 1.04vh; /* 15px */
+}
+
+progress::-moz-progress-bar {
+  background: #FFB700;
+  border-radius: 1.04vh; /* 15px */
+}
+
+.progress-label {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.39vh; /* 20px */
+  color: black;
+  pointer-events: none;
+}
+
+/* --- PLAY SPACE FIXED STRUCTURE --- */
+.play-space {
+  position: relative;              /* for positioning absolute children */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100vh;
+  background-color: #060C23;
+  width: 70%;
+  overflow: hidden;                /* ensures large PNGs don’t spill out */
+}
+
+/* --- DESK IMAGE LAYER --- */
+.play-space .desk {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 12;
+  pointer-events: none;                      
+}
+
+.play-space .desk img {
+width: 50%;
+height: auto;
+display: block;
+margin: 0 auto;
+filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
+}
+
+/* --- HAND SECTION --- */
+.play-space .hand {
+  position: relative;             
+  z-index: 10;                   
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 3% 0;
+  border: 0.08vw solid black;
+  color: white;
+  background-image: url("../assets/pics/handSpaceBkg.png");
+  background-repeat: repeat;
+  background-size: 64px 64px;
+  image-rendering: pixelated;
+}
+
+.play-space .hand .cards {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.play-space .hand .cards .card {
+  border: 0.04vw solid black;
+  border-radius: 1.74vh;
+  padding: clamp(8px, 2.2vh, 12px);
+  margin: 0.7vh;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+}
+
+
+/*drag and drop helpers */
+.is-dragging {
+  opacity: 0.55;
+  filter: grayscale(25%);
+  transition: opacity .15s ease, filter .15s ease;
+}
+
+/* helper class add/remove darken anything */
+.darkened {
+  filter: brightness(0.6) saturate(0.85);
+}
+
+.item.disabled,
+.card.disabled {
+  filter: brightness(0.6) saturate(0.85);
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: default;
+}
+.winPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 30, 30, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 1000;
+}
+
+.losePopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 30, 30, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 1000;
+}
+
+.innerResetBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: 1px solid white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 16px;
+  transition: box-shadow 0.25s ease;
+}
+
+.innerResetBtn:hover {
+  box-shadow: 0 1.5px 5px rgba(255,255,255,.65);
+  transform: translateY(-1px);
+}
