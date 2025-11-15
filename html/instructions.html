@@ -4,14 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How To Play | Cubicler</title>
+     <!-- Font and Boxicons -->
+    <style>@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');</style>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
     <!--CSS-->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/instructions.css">
     <!--JS-->
-    <script src="js/script.js" defer></script>
+    <script src="../js/script.js" defer></script>
 </head>
 <body>
-    <h1>How To Play</h1>
-    <p>This is the instructions page.</p>
-    <a href="../index.html">Back to Home (We'll change this).</a>
+    <header>
+        <h1>Cubicler</h1>
+        <nav>
+            <button id="B2HBtn"><a href="../index.html">Back to Home</a></button>
+            <button id="playBtn"><a href="../html/game.html">Play Game</a></button>
+            <button id="pageBtn"><a href="../html/credits.html"> Credits</a></button>
+        </nav>
+    </header>
+    <!-- FUTURE: Top Navbar & CSS Overhaul-->
+    <main>
+        <h1>How to Play</h1>
+    
+        <div class="card">
+            <h3>Beginning the Game</h3>
+            <p>
+                The main goal of Cubicler is to assemble an optimal hand that reaches or surpasses the required level score. 
+                With good synergy and a little luck, you can create an efficient desk to do your job!
+            </p>
+            <p>
+                At the start of the game, the player’s bin contains their starting item cards. The player can add items to their hand and shuffle the bin to see other objects in the bin. 
+                The bin can be shuffled up to 3 times each round. When the player thinks they have a good hand, they can click the <strong>PLAY</strong> button to score their current hand. 
+                If the player wants to revoke a selection, they can click the <strong>UNDO</strong> button to remove the object card from their hand.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Items & Shopping</h3>
+            <p>
+                There are multiple item groups with different variants and upgraded versions that the player has a chance of purchasing each round. 
+                For example, the Cup of Coffee is a buff type item with a common rarity. 
+                Items have underlying synergies that add bonus score to the end of the round — this is the key to making the best desk! 
+                For example, the mouse and keyboard object cards have upgrading synergies per rarity which adds bonus score when played in the same hand.
+            </p>
+            <p>
+                The shop is available to the player to add new item cards to their bin in exchange for money. 
+                If the player has enough money, they can reroll the shop to get new items to buy. 
+                Be careful — the shop may not have the same items when you come back!
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Tips for Winning</h3>
+            <ul>
+                <li>Optimize shuffle and shop usage in the first rounds to make an exponentially better hand.</li>
+                <li>Utilize item synergies to increase your bonus score.</li>
+                <li>Sometimes, you just need to get lucky to get the job done!</li>
+            </ul>
+        </div>
+    </main>
 </body>
 </html>
