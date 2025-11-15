@@ -40,10 +40,13 @@ header h1 {
   flex: 1;
   cursor: default;
 }
+
+
 /* Alternate colors -- Left Column BLACK */
 body.alt-colors header a,
 body.alt-colors header h1,
 body.alt-colors header .resetBtn,
+/* body.alt-colors .left-column .vert-container .items .item-row .buy, */
 body.alt-colors .left-column .vert-container .title,
 body.alt-colors .left-column .vert-container .items .item-row .item{
   color: black;
@@ -67,13 +70,16 @@ body.alt-colors .right-column .play{
   color: black;
 }
 
-body.alt-colors .buy,
-body.alt-colors .card {
-    color: black !important;     /* or whatever alt color you want */
-}
-
 body.alt-colors .progress-label  {
   color: white !important;
+}
+
+body.alt-colors .buy {
+  color: black !important;
+}
+
+body.alt-colors .play-space .hand .cards .card {
+  color: black !important;
 }
 
 /* Alternate Progress Bar Colors */
@@ -81,12 +87,6 @@ body.alt-colors .progress-label  {
 body.alt-colors progress::-webkit-progress-bar {
     background-color: black !important;
 }
-
-/* Firefox */
-/* body.alt-colors progress::-moz-progress-bar {
-    background-color: white !important;
-} */
-
 
 header img {
   max-width: 4.69vw; /* 120px */

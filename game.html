@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game | Cubicler</title>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');</style>
+    <!--CSS-->
+    <link rel="stylesheet" href="../css/game.css">
+    <!--JS-->
+    <script src="../js/script.js" defer></script>
+    <script src="../js/cubicler.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="../index.html">Back to Home</a>
+        <h1>Cubicler</h1>
+        <button class="resetBtn" id="resetBtn">Reset</button>
+        <div class="dropdown">
+            <button>
+                <img src="../assets/pics/cog.png" alt="Settings">
+            </button>
+            <div class="content">
+                <!-- <a href="" onclick='document.getElementById("placeholder").innerHTML = ""JAVASCRIPT FUNCTION'>Alt color</a> -->
+                <a id="alt_color_button" href="">Alt color</a>
+                <a id="font_size_button" href="">Font size</a>
+                <a id="night_mode_button" href="">Night mode</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="left-column">
+            <div class="vert-container">
+                <div class="title"> Shop</div>
+
+                <div class="items">
+                    <div class="item-row">
+                        <div class="item">item 1</div>
+                        <button class="buy">Buy</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 2</div>
+                        <button class="buy">Buy</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 3</div>
+                        <button class="buy">Buy</button>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 4</div>
+                        <button class="buy">Buy</button>
+                    </div>
+                </div>
+
+                <button class="reroll" id="rerollBtn">Reroll
+                    <div class="cost">$5</div>
+                </button>
+            </div>
+
+            <div class="vert-container">
+                <div class="title">Bin</div>
+
+                <div class="items">
+                    <div class="item-row">
+                        <div class="item">item 1</div>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 2</div>
+                    </div>
+                    <div class="item-row">
+                        <div class="item">item 3</div>
+                    </div>
+                </div>
+                    
+                <button class="shuffle" id="shuffleBtn">Shuffle
+                    <div class="num">3</div>
+                </button>
+                
+            </div>
+        </div>
+        <!-- FUTURE: Div up the play space so we can make it look like a computer screen-->
+        <div class="play-space">
+            <div class="desk">
+                <img src="../assets/pics/main_monitor.png" alt="monitor">
+            </div>
+            <div class="hand">
+                <div class="cards">
+                    <div class="card">1</div>
+                    <div class="card">2</div>
+                    <div class="card">3</div>
+                    <div class="card">4</div>
+                    <div class="card">5</div>
+                    <div class="card">6</div>
+                    <div class="card">7</div>
+                </div>
+            </div>
+        </div>
+        <div class="right-column">
+            <div class="title">Score</div>
+            
+            <div class="progress-wrapper">
+                <progress value="50" max="100"></progress>
+                <span class="progress-label">50/100</span>
+            </div>
+
+
+            <div class="title">Round</div>
+            <p>1 of 8</p>
+
+            <div class="title">Level</div>
+            <p class="bottom">1 of 4</p>
+
+            <div class="title">Money</div>
+            <p class="money">$0</p>
+
+            <button class="undo" id="undoBtn">UNDO</button>
+            <button class="play" id="playBtn">PLAY</button>
+            <p class="plays-remaining">8 Play(s) Remaining !</p>
+        </div>
+    </main>
+</body>
+</html>
