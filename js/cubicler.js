@@ -189,7 +189,7 @@ function newLevel() {
     switch (true) {
         case (level == 1):
             console.log("Level 1 Logic");
-            goalScore = 25; //TEMP FUTURE CHANGE UPDATE SCOREBAR TOO
+            goalScore = 25; //TEMP FUTURE CHANGE; UPDATE SCOREBAR TOO
             break;
         case (level == 2):
             console.log("Level 2 Logic");
@@ -197,9 +197,11 @@ function newLevel() {
             break;
         case (level == 3):
             console.log("Level 3 Logic");
+            goalScore = 45; //TEMP FUTURE CHANGE
             break;
         case (level == 4):
             console.log("Level 4 Logic");
+            goalScore = 55; //TEMP FUTURE CHANGE
             break;
         case (level > 4):
             console.log("-*-*-* YOU WIN *-*-*-")
