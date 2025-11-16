@@ -1472,6 +1472,23 @@ function initHoverTooltips(){
   window.addEventListener('scroll', _hideTip, { passive: true });
 }
 
+// Accessibility functions
+// Alternate color button
+const altTextButton = document.getElementById('alt_color_button')
+function changeTextColor() {
+    document.body.classList.toggle("alt-colors");
+}
+
+altTextButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Stops a from navigating
+    changeTextColor();
+});
+
+// Written so toggling each function doesn't affect the other
+document.body.classList.toggle("night-mode");
+document.body.classList.toggle("font-large");
+//document.body.classList.toggle("alt-colors"); //DON'T ENABLE. This will switch the 
+
 // ---Main (keep below functions and events)---
 // Call the initialization function to start the engine
 document.addEventListener('DOMContentLoaded', (event) => {
