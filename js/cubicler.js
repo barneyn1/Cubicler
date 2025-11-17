@@ -197,11 +197,9 @@ function newLevel() {
             break;
         case (level == 3):
             console.log("Level 3 Logic");
-            goalScore = 45; //TEMP FUTURE CHANGE
             break;
         case (level == 4):
             console.log("Level 4 Logic");
-            goalScore = 55; //TEMP FUTURE CHANGE
             break;
         case (level > 4):
             console.log("-*-*-* YOU WIN *-*-*-")
