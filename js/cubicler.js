@@ -189,7 +189,7 @@ function newLevel() {
     switch (true) {
         case (level == 1):
             console.log("Level 1 Logic");
-            goalScore = 25; //TEMP FUTURE CHANGE UPDATE SCOREBAR TOO
+            goalScore = 25; //TEMP FUTURE CHANGE; UPDATE SCOREBAR TOO
             break;
         case (level == 2):
             console.log("Level 2 Logic");
@@ -197,9 +197,11 @@ function newLevel() {
             break;
         case (level == 3):
             console.log("Level 3 Logic");
+            goalScore = 45; //TEMP FUTURE CHANGE
             break;
         case (level == 4):
             console.log("Level 4 Logic");
+            goalScore = 55; //TEMP FUTURE CHANGE
             break;
         case (level > 4):
             console.log("-*-*-* YOU WIN *-*-*-")
@@ -1471,23 +1473,6 @@ function initHoverTooltips(){
   // also hide on scroll
   window.addEventListener('scroll', _hideTip, { passive: true });
 }
-
-// Accessibility functions
-// Alternate color button
-const altTextButton = document.getElementById('alt_color_button')
-function changeTextColor() {
-    document.body.classList.toggle("alt-colors");
-}
-
-altTextButton.addEventListener("click", function (event) {
-    event.preventDefault(); // Stops a from navigating
-    changeTextColor();
-});
-
-// Written so toggling each function doesn't affect the other
-document.body.classList.toggle("night-mode");
-document.body.classList.toggle("font-large");
-//document.body.classList.toggle("alt-colors"); //DON'T ENABLE. This will switch the 
 
 // ---Main (keep below functions and events)---
 // Call the initialization function to start the engine
