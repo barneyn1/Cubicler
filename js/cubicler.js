@@ -1073,6 +1073,7 @@ function updateRerollButtonStatus() {
     const blocked = shopHasAny() && money < 5; // works with helper function 
     rerollBtn.disabled = blocked;
     rerollBtn.classList.toggle("disabled", blocked);
+    rerollBtn.classList.toggle("darkened", blocked);
     rerollBtn.title = blocked ? "Need $5 to reroll" : "Reroll the shop";
 }
 
@@ -1082,6 +1083,7 @@ function updateShuffleButtonStatus() {
   const blocked = shuffles < 1;
   shuffleBtn.disabled = blocked;
   shuffleBtn.classList.toggle("disabled", blocked);
+  shuffleBtn.classList.toggle("darkened", blocked);
   shuffleBtn.title = blocked ? "No shuffles remaining" : "Shuffle your bin";
 }
 
@@ -1091,6 +1093,7 @@ function updatePlayButtonStatus() {
     const blocked = hand.length < 1;
     playBtn.disabled = blocked;
     playBtn.classList.toggle("disabled", blocked);
+    playBtn.classList.toggle("darkened", blocked);
     playBtn.title = blocked ? "Add cards to your hand to play" : "Play your hand";
 }
 
