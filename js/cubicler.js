@@ -1052,7 +1052,7 @@ function refreshImages() {
                     img.src = "../assets/levels/database.png";
                     break;
                 default:
-                    img.src = "../assets/pics/placeholder.png";
+                    img.src = "";
                     break;
             }
     });
