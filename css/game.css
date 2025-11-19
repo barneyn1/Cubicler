@@ -412,3 +412,13 @@ filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
   box-shadow: 0 1.5px 5px rgba(255,255,255,.65);
   transform: translateY(-1px);
 }
+
+/* Viewport Adjustments */
+/* Styles for smaller laptop viewports */
+/*15" Screen*/
+@media screen and (max-width: 1540px) and (max-height: 730px) {
+  /*Fix for Desk Monitor to Appear as Expected*/
+  .play-space .desk {
+    bottom: 26%;                  
+  }
+}
