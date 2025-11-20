@@ -104,3 +104,9 @@ main h1 {
     color: #000000;
     line-height: 1.6;
 }
+
+.team-photo {
+    width: 15vw;
+    height: 40vh;
+    border: 1px solid black;
+}
