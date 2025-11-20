@@ -189,7 +189,7 @@ function newLevel() {
     switch (true) {
         case (level == 1):
             console.log("Level 1 Logic");
-            goalScore = 25; //TEMP FUTURE CHANGE; UPDATE SCOREBAR TOO
+            goalScore = 25; //TEMP FUTURE CHANGE;; UPDATE SCOREBAR TOO
             break;
         case (level == 2):
             console.log("Level 2 Logic");
@@ -888,7 +888,6 @@ function refreshDisplay() {
 }
 
 // Adding art images dynamically to shop and hand areas
-// FUTURE: Currently using placeholders, Alter code so image matches card, might want to edit into initDisplay code
 function initImages() {
     console.log("Adding images...");
     // Shop images
@@ -897,7 +896,6 @@ function initImages() {
         // If the item doesn't already have an image
         if (!item.querySelector("img")) {
             const img = document.createElement("img");
-            // In the future, replace placeholder with card-specific art:
             img.src = `../assets/cards/${shop[index].id}.png`;
             //img.src = "../assets/pics/placeholder.png";
             img.alt = "Card placeholder";
@@ -925,6 +923,35 @@ function initImages() {
             item.prepend(img);
         }
     });
+
+    //Level image
+    const levelImg = document.querySelectorAll(".play-space .desk .levelImg");
+    levelImg.forEach((item) => {
+        // If the item doesn't already have an image
+        if (!item.querySelector("img")) {
+            const img = document.createElement("img");
+            // Img level logic, keeping in init for later implementations (ex. start at level 2)
+            switch (level) {
+                case 1:
+                    img.src = "../assets/levels/sheetStar.png";
+                    break;
+                case 2:
+                    img.src = "../assets/levels/VOIP.png";
+                    break;
+                case 3:
+                    img.src = "../assets/levels/email.png";
+                    break;
+                case 4:
+                    img.src = "../assets/levels/database.png";
+                    break;
+                default:
+                    img.src = "../assets/pics/placeholder.png";
+                    break;
+            }
+            item.prepend(img);
+        }      
+    });
+    
 
     // Hand images
     const handCards = document.querySelectorAll(".play-space .cards .card");
@@ -961,7 +988,6 @@ function refreshImages() {
         }
 
         if (shop[index]) {
-            // FUTURE, replace placeholder with card-specific art:
             img.src = `../assets/cards/${shop[index].id}.png`;
             //img.src = "../assets/pics/placeholder.png";
             img.alt = shop[index].name;
@@ -1001,6 +1027,34 @@ function refreshImages() {
             item.style.pointerEvents = "none";
             item.setAttribute("draggable", "false");
         }
+    });
+
+    //Level image
+    const levelImg = document.querySelectorAll(".play-space .desk .levelImg");
+    levelImg.forEach((item) => {
+        let img = item.querySelector("img");
+        //if there is no image element created yet
+        if (!img) {
+            img = document.createElement("img");
+            item.prepend(img);
+        }
+        switch (level) {
+                case 1:
+                    img.src = "../assets/levels/sheetStar.png";
+                    break;
+                case 2:
+                    img.src = "../assets/levels/VOIP.png";
+                    break;
+                case 3:
+                    img.src = "../assets/levels/email.png";
+                    break;
+                case 4:
+                    img.src = "../assets/levels/database.png";
+                    break;
+                default:
+                    img.src = "";
+                    break;
+            }
     });
 
     // Hand images
@@ -1073,6 +1127,7 @@ function updateRerollButtonStatus() {
     const blocked = shopHasAny() && money < 5; // works with helper function 
     rerollBtn.disabled = blocked;
     rerollBtn.classList.toggle("disabled", blocked);
+    rerollBtn.classList.toggle("darkened", blocked);
     rerollBtn.title = blocked ? "Need $5 to reroll" : "Reroll the shop";
 }
 
@@ -1082,6 +1137,7 @@ function updateShuffleButtonStatus() {
   const blocked = shuffles < 1;
   shuffleBtn.disabled = blocked;
   shuffleBtn.classList.toggle("disabled", blocked);
+  shuffleBtn.classList.toggle("darkened", blocked);
   shuffleBtn.title = blocked ? "No shuffles remaining" : "Shuffle your bin";
 }
 
@@ -1091,6 +1147,7 @@ function updatePlayButtonStatus() {
     const blocked = hand.length < 1;
     playBtn.disabled = blocked;
     playBtn.classList.toggle("disabled", blocked);
+    playBtn.classList.toggle("darkened", blocked);
     playBtn.title = blocked ? "Add cards to your hand to play" : "Play your hand";
 }
 

@@ -308,11 +308,21 @@ progress::-moz-progress-bar {
 }
 
 .play-space .desk img {
-width: 50%;
-height: auto;
-display: block;
-margin: 0 auto;
-filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
+  width: 50%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
+}
+
+.play-space .desk .levelImg {
+  position: absolute;
+  left: 24.9%;
+  width: 50%;
+  height: auto;
+  display: block;
+  margin: auto;
+  z-index: 13;
 }
 
 /* --- HAND SECTION --- */
@@ -421,4 +431,3 @@ filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
   .play-space .desk {
     bottom: 26%;                  
   }
-}
