@@ -423,7 +423,6 @@ progress::-moz-progress-bar {
   transform: translateY(-1px);
 }
 
-
 /* Viewport Adjustments */
 /* Styles for smaller laptop viewports */
 /*15" Screen*/
@@ -432,4 +431,3 @@ progress::-moz-progress-bar {
   .play-space .desk {
     bottom: 26%;                  
   }
-}
