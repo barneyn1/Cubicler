@@ -355,11 +355,21 @@ progress::-moz-progress-bar {
 }
 
 .play-space .desk img {
-width: 50%;
-height: auto;
-display: block;
-margin: 0 auto;
-filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
+  width: 50%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
+}
+
+.play-space .desk .levelImg {
+  position: absolute;
+  left: 24.9%;
+  width: 50%;
+  height: auto;
+  display: block;
+  margin: auto;
+  z-index: 13;
 }
 
 /* --- HAND SECTION --- */
@@ -458,4 +468,14 @@ filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
 .innerResetBtn:hover {
   box-shadow: 0 1.5px 5px rgba(255,255,255,.65);
   transform: translateY(-1px);
+}
+
+/* Viewport Adjustments */
+/* Styles for smaller laptop viewports */
+/*15" Screen*/
+@media screen and (max-width: 1540px) and (max-height: 730px) {
+  /*Fix for Desk Monitor to Appear as Expected*/
+  .play-space .desk {
+    bottom: 26%;                  
+  }
 }

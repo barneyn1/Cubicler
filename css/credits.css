@@ -36,7 +36,6 @@ header nav a {
     text-decoration: none;
     color: white;
     margin: 0.3vw;
-    padding: 0.35vh 0.27vw; /* 5px 7px */
 }
 
 
@@ -47,25 +46,27 @@ header nav a {
 }
 
 /* Button */
-button {
+a {
+    text-decoration: none;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    border: solid 1px;
-    padding: 12px 30px;
-    margin: 8px;
+    border: none;
+    padding: 10px 36px;
+    border: solid 1px white;
     border-radius: 25px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
-button:hover {
+a:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
-button:active {
+a:active {
     transform: translateY(0);
 }
 /*---------------------------------------*/
@@ -103,4 +104,10 @@ main h1 {
 .card p {
     color: #000000;
     line-height: 1.6;
+}
+
+.team-photo {
+    width: 15vw;
+    height: 40vh;
+    border: 1px solid black;
 }
