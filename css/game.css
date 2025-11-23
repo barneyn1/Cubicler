@@ -511,4 +511,8 @@ progress::-moz-progress-bar {
   .play-space .desk {
     bottom: 26%;                  
   }
+
+  .play-space .hand {
+    max-height: 26%;
+  }
 }

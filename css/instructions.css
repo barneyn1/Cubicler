@@ -96,7 +96,7 @@ main h1 {
 
 .card h3 {
     color: #2c3e50;
-    /*margin-bottom: 1rem;*/
+    margin-bottom: 1vh;
     font-size: 1.3rem;
 }
 
@@ -105,6 +105,46 @@ main h1 {
     line-height: 1.6;
 }
 
+.card ul {
+    list-style-position: inside;
+}
+
 .card li {
     color: #7f8c8d;
+}
+
+.cardFlexbox {
+    display: flex;
+}
+
+.cardContents {
+    padding-right: 2vw;
+}
+
+.cardImgs {
+    display: flex;
+    flex-direction: column;
+    max-width: 25vw;
+    padding-left: 2vw;
+    border-left: 2px solid #eee;
+}
+
+.instructionsGIF {
+    display: block;
+    /*margin: auto;*/
+    /*width: auto;
+    height: auto;*/
+    padding-bottom: 5px;
+}
+
+.instructionsImg {
+    display: block;
+}
+
+#playUndo {
+    width: 18vw;
+}
+
+#shopExample {
+    height: 50vh;
 }
