@@ -1,6 +1,6 @@
 # Cubicler
 
-A Deck-Building Stratrgy Game for the Web.
+A Deck-Building Strategy Game for the Web.
 
 ## Overview
 
