@@ -1543,8 +1543,29 @@ altTextButton.addEventListener("click", function (event) {
     changeTextColor();
 });
 
+// Night mode button
+const nightModeButton = document.getElementById('night_mode_button')
+function activateNightMode() {
+    document.body.classList.toggle("night-mode");
+}
+
+nightModeButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Stops a from navigating
+    activateNightMode();
+
+    const isNight = document.body.classList.contains("night-mode");
+
+    if (isNight) {
+        settingsIcon.src = "../assets/pics/cog_alt.png";
+        homeScreenMonitor.src = "../assets/pics/main_monitor_alt.png";
+    } else {
+        settingsIcon.src = "../assets/pics/cog.png";
+        homeScreenMonitor.src = "../assets/pics/main_monitor.png";
+    }
+});
+
 // Written so toggling each function doesn't affect the other
-document.body.classList.toggle("night-mode");
+//document.body.classList.toggle("night-mode");
 document.body.classList.toggle("font-large");
 //document.body.classList.toggle("alt-colors"); //DON'T ENABLE. This will switch the 
 

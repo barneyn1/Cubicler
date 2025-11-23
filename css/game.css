@@ -41,12 +41,11 @@ header h1 {
   cursor: default;
 }
 
-
+/* Alt Text  */
 /* Alternate colors -- Left Column BLACK */
 body.alt-colors header a,
 body.alt-colors header h1,
 body.alt-colors header .resetBtn,
-/* body.alt-colors .left-column .vert-container .items .item-row .buy, */
 body.alt-colors .left-column .vert-container .title,
 body.alt-colors .left-column .vert-container .items .item-row .item{
   color: black;
@@ -70,10 +69,6 @@ body.alt-colors .right-column .play{
   color: black;
 }
 
-body.alt-colors .progress-label  {
-  color: white !important;
-}
-
 body.alt-colors .buy {
   color: black !important;
 }
@@ -82,10 +77,48 @@ body.alt-colors .play-space .hand .cards .card {
   color: black !important;
 }
 
+body.night-mode .progress-label  {
+  color: white !important;
+}
+
 /* Alternate Progress Bar Colors */
 /* WebKit browsers (Chrome, Edge, Safari) */
-body.alt-colors progress::-webkit-progress-bar {
+body.night-mode progress::-webkit-progress-bar {
     background-color: black !important;
+}
+
+/* Night mode edits */
+body.night-mode .play-space {
+  background-color: black;
+}
+
+body.night-mode .play-space .hand {
+  background-image: url("../assets/pics/handSpaceBkg-nightmode.png");
+}
+
+body.night-mode header {
+  /* background: #280137; */
+  background: linear-gradient(135deg, #5e147b 0%, #280137 100%)
+}
+
+body.night-mode .left-column {
+  background: repeating-linear-gradient(
+      45deg,
+      #201a1a,          
+      #201a1a 1.39vh,
+      #404434 1.39vh,
+      #403434 2.78vh
+  );
+}
+
+body.night-mode .right-column {
+  background: repeating-linear-gradient(
+      -45deg,
+      #201a1a,          
+      #201a1a 1.39vh,
+      #404434 1.39vh,
+      #403434 2.78vh
+  );
 }
 
 header img {
