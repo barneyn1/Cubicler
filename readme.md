@@ -13,9 +13,13 @@ Visit https://cubiclergame.net (or https://https://barneyn1.github.io/Cubicler) 
 ## Development Team
 
 Nick Barney (Project Leader, Frontend & Backend, Art) - barney1
+
 Collin Follett (Web Hosting, Frontend & Backend) - DrDisc0
+
 Antonios Ibrakhim (Objects & Display, Frontend & Backend) - Antonios1210
+
 Steven Lonsdale-Verbiest (Game Scene Design, Frontend) - Steven-LV
+
 Brandon Morrow (Accessibility & Art, Backend) - brandad17
 
 ## System Architecture
