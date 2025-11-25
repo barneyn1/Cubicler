@@ -239,7 +239,7 @@ function newLevel() {
         shuffles = 3;
 
         //lose case
-        if (round >= 9) {
+        if (round >= 7) {
             //make everything within main tag unclickable
             document.querySelector("main").style.pointerEvents = "none";
 
@@ -674,7 +674,7 @@ function initDisplay() {
     // Plays section
     const playText = document.querySelector(".right-column .plays-remaining");
     if (playText) {
-        playText.textContent = (9 - round) + (round === 8 ?" Play remaining!" : " Plays remaining!");
+        playText.textContent = (7 - round) + (round === 6 ?" Play remaining!" : " Plays remaining!");
     }
 
     // Shop items
@@ -795,7 +795,7 @@ function refreshDisplay() {
     // Plays section
     const playText = document.querySelector(".right-column .plays-remaining");
     if (playText) {
-        playText.textContent = (9 - round) + (round === 8 ?" Play remaining!" : " Plays remaining!");
+        playText.textContent = (7 - round) + (round === 6 ?" Play remaining!" : " Plays remaining!");
     }
 
     // Shop items
