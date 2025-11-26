@@ -203,7 +203,11 @@ function newLevel() {
             console.log("Level 4 Logic");
             goalScore = 55; //TEMP FUTURE CHANGE
             break;
-        case (level > 4):
+        case (level == 5):
+            console.log("Level 5 Logic");
+            goalScore = 60;
+            break;
+        case (level > 5):
             console.log("-*-*-* YOU WIN *-*-*-")
             //win case
             //make everything within main tag unclickable
@@ -656,13 +660,13 @@ function initDisplay() {
     // Round section
     const roundText = document.querySelector(".right-column p:nth-of-type(1)");
     if (roundText) {
-        roundText.textContent = round + " of 8";
+        roundText.textContent = round + " of 6";
     }
 
     // Level section
     const levelText = document.querySelector(".right-column .bottom");
     if (levelText) {
-        levelText.textContent = level + " of 4";
+        levelText.textContent = level + " of 5";
     }
 
     // Money section
@@ -777,13 +781,13 @@ function refreshDisplay() {
     // Round section
     const roundText = document.querySelector(".right-column p:nth-of-type(1)");
     if (roundText) {
-        roundText.textContent = round + " of 8";
+        roundText.textContent = round + " of 6";
     }
 
     // Level section
     const levelText = document.querySelector(".right-column .bottom");
     if (levelText) {
-        levelText.textContent = level + " of 4";
+        levelText.textContent = level + " of 5";
     }
 
     // Money section
@@ -944,6 +948,9 @@ function initImages() {
                 case 4:
                     img.src = "../assets/levels/database.png";
                     break;
+                case 5:
+                    img.src = "../assets/levels/bossCall.png";
+                    break;
                 default:
                     img.src = "../assets/pics/placeholder.png";
                     break;
@@ -1050,6 +1057,9 @@ function refreshImages() {
                     break;
                 case 4:
                     img.src = "../assets/levels/database.png";
+                    break;
+                case 5:
+                    img.src = "../assets/levels/bossCall.png";
                     break;
                 default:
                     img.src = "";
