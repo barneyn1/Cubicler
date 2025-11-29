@@ -2,7 +2,7 @@
 // This is the main file for the Cubicler game engine. It contains the main game loop and other important functions.
 
 // Add script to game.html to use the Cubicler game engine.
-// Maybe use defer attribute to ensure the script runs after the HTML is fully loaded.
+// Use defer attribute to ensure the script runs after the HTML is fully loaded.
 
 // -----Classes-----
 // Class for blueprint for all cards with id, name, base, tags, rarity and the text displayed.
@@ -17,7 +17,7 @@ class Card {
     }
 
     describe() {
-        // this method displays the card information. 
+        // This method displays the card information. 
         return "Name: " + this.name
         + " |Base: " + this.base
         + " |Tags: " + this.tags
@@ -62,14 +62,6 @@ const rerollBtn = document.getElementById("rerollBtn");
 const winPopup = document.createElement("div");
 const losePopup = document.createElement("div");
 
-// helper function to know if there are any cards on the shop 
-function shopHasAny() {
-    for (var i = 0; i < shop.length; i++) {
-        if (shop[i] && !shopSold[i]) return true;
-    }
-    return false;
-}
-
 // -----Initialization functions-----
 // Setting up the enviroment with all cards and prints them to console.
 function setupEnvironment() {
@@ -89,12 +81,12 @@ function setupEnvironment() {
         new Card("sMonitor", "Standard Monitor", 5, "display", "common", "+2 if CPU is present"),
         new Card("hMonitor", "HD Monitor", 7, "display", "uncommon", "+3 if GPU is present"),
         new Card("dMonitors", "Dual Monitors", 9, "display", "rare", "+3 if GPU is present and CPU is present"),
-        new Card("kMonitor", "4K Monitor", 11, "display", "epic", "+4 if CPU is present"),
+        new Card("kMonitor", "4K Monitor", 10, "display", "epic", "+4 if CPU is present"), // Was 11
         new Card("sCPU", "Standard CPU", 6, "compute", "common", "+1 per software"),
         new Card("uCPU", "Upgraded CPU", 8, "compute", "uncommon", "+2 per software"),
         new Card("sGPU", "Standard GPU", 8, "compute", "uncommon", "+2 if HD Monitor is present"),
-        new Card("uGPU", "Upgraded GPU", 10, "compute", "rare", "+3 if Dual Monitors are present"),
-        new Card("dGPU", "Dual GPU Rig", 12, "compute", "epic", "+4 if 4K Monitor is present"),
+        new Card("uGPU", "Upgraded GPU", 9, "compute", "rare", "+3 if Dual Monitors are present"), // Was 10
+        new Card("dGPU", "Dual GPU Rig", 11, "compute", "epic", "+4 if 4K Monitor is present"), // Was 12
         new Card("sApp", "Productivity App", 3, "software", "common", "+1 per input (max +2)"),
         new Card("aApp", "Advanced App", 5, "software", "uncommon", "+2 per input (max +4)"),
         new Card("aiAssist", "AI Assist", 7, "software", "rare", "+3 if CPU or GPU is present"),
@@ -114,9 +106,10 @@ function setupEnvironment() {
     cardPool.forEach(card => console.log(card.describe()));
 }
 
-// FUTURE: preload images
+// Preload images
 function loadAssets() {
-    console.log("Loading assets..."); 
+    console.log("Loading assets...");
+    // NOTE: For our current web scope as of M4, this was unneeded. Will be keeping for future usage
 }
 
 // Start Game, used for initialization and resetting the game
@@ -138,7 +131,7 @@ function initializeGameEngine() {
     // Start the game loop
     startGame();
 
-    // dyanmic label for synergy score FUTURE CHANGE
+    // Dyanmic label for synergy score, alterations on CSS side
     synergyLabel = document.createElement("div"); 
     synergyLabel.style.position = "absolute"; 
     synergyLabel.style.top = "2px"; 
@@ -155,7 +148,7 @@ function initializeGameEngine() {
     initDragAndDrop();
     initHoverTooltips();
 
-    // set shop count from DOM 
+    // Setting shop count from DOM 
     var rowsInShop = document.querySelectorAll(".left-column .items .item-row");
     if (rowsInShop && rowsInShop.length) {
         Shop_Slot_Count = rowsInShop.length;
@@ -168,7 +161,7 @@ function newLevel() {
     level++;
     console.log("New Level: " + level);
 
-    // Set default level variables
+    // Setting default level variables
     bin = [];
     shop = [];
     hand = [];
@@ -189,37 +182,37 @@ function newLevel() {
     switch (true) {
         case (level == 1):
             console.log("Level 1 Logic");
-            goalScore = 25; //TEMP FUTURE CHANGE;; UPDATE SCOREBAR TOO
+            goalScore = 25; // Update scorebar default if this gets changed
             break;
         case (level == 2):
             console.log("Level 2 Logic");
-            goalScore = 35; //TEMP FUTURE CHANGE
+            goalScore = 35;
             break;
         case (level == 3):
             console.log("Level 3 Logic");
-            goalScore = 45; //TEMP FUTURE CHANGE
+            goalScore = 45;
             break;
         case (level == 4):
             console.log("Level 4 Logic");
-            goalScore = 55; //TEMP FUTURE CHANGE
+            goalScore = 55;
             break;
         case (level == 5):
             console.log("Level 5 Logic");
             goalScore = 60;
             break;
         case (level > 5):
-            console.log("-*-*-* YOU WIN *-*-*-")
-            //win case
-            //make everything within main tag unclickable
+            console.log("-*-*-* YOU WIN *-*-*-");
+            // Win case
+            // Make everything within main tag unclickable
             document.querySelector("main").style.pointerEvents = "none";
 
-            //add popup for "you win" & reset button
+            // Adds popup for "you win" & reset button
             winPopup.className = "winPopup";
             winPopup.style.pointerEvents = "auto";
             winPopup.innerHTML = `<h1>You Win!</h1><button class="innerResetBtn"id="innerResetBtn">Reset</button>`;
             document.body.appendChild(winPopup);
 
-            //reset button
+            // Reset button
             document.getElementById("innerResetBtn").addEventListener("click", function() {
                 document.body.removeChild(winPopup);
                 document.querySelector("main").style.pointerEvents = "auto";
@@ -229,7 +222,7 @@ function newLevel() {
         default:
             console.log("Default Level Logic");
     }
-    refreshDisplay(); // refresh display
+    refreshDisplay(); // Refresh display
 }
 
 // New Round
@@ -242,18 +235,18 @@ function newLevel() {
         lastScore = 0;
         shuffles = 3;
 
-        //lose case
+        // Lose case
         if (round >= 7) {
-            //make everything within main tag unclickable
+            // Make everything within main tag unclickable
             document.querySelector("main").style.pointerEvents = "none";
 
-            //add popup for "you lose" & reset button
+            // Adds popup for "you lose" & reset button
             losePopup.className = "losePopup";
             losePopup.style.pointerEvents = "auto";
             losePopup.innerHTML = `<h1>You Lose!</h1><button class="innerResetBtn"id="innerResetBtn">Reset</button>`;
             document.body.appendChild(losePopup);
 
-            //reset button
+            // Reset button
             document.getElementById("innerResetBtn").addEventListener("click", function() {
                 document.body.removeChild(losePopup);
                 document.querySelector("main").style.pointerEvents = "auto";
@@ -262,7 +255,7 @@ function newLevel() {
         }
         
 
-        refreshDisplay(); // refresh display
+        refreshDisplay(); // Refresh display
     }
 
 // New Bin, used for initialization and new levels
@@ -277,7 +270,7 @@ function newBin() {
     console.log("Initial Bin Order:");
     bin.forEach(card => console.log(card.describe()));
 
-    refreshDisplay(); // refresh display 
+    refreshDisplay(); // Refresh display 
 }
 
 // -----Calculation functions-----
@@ -286,9 +279,9 @@ function synergy() {
     console.log("Calculating Synergy...");
     let synergy = 0;
 
-    let names = hand.map(card => card.id); // gets all cards from hand
+    let names = hand.map(card => card.id); // Gets all cards from hand
 
-    // buff cards synergies
+    // Buff cards synergies
     if (names.includes("coffee")) {
         let inputs = hand.filter(c => c.tags == "input").length;
         synergy += inputs;
@@ -306,24 +299,24 @@ function synergy() {
         synergy += ergo;
     }
 
-    // input cards synergies
+    // Input cards synergies
     if (names.includes("sKeyboard") && names.includes("sMouse")) synergy += 1;
     if (names.includes("sKeyboard") && names.includes("pMouse")) synergy += 2;
     if (names.includes("mKeyboard") && names.includes("sMouse")) synergy += 2;
     if (names.includes("mKeyboard") && names.includes("pMouse")) synergy += 3;
 
-    // display cards synergies
+    // Display cards synergies
     if (names.includes("sMonitor") && names.includes("sCPU")) synergy += 2;
     if (names.includes("hMonitor") && names.includes("sGPU")) synergy += 3;
     if (names.includes("dMonitors") && names.includes("uGPU") && names.includes("sCPU")) synergy += 3;
     if (names.includes("kMonitor") && names.includes("sCPU")) synergy += 4;
 
-    // compute cards synergies
+    // Compute cards synergies
     if (names.includes("sGPU") && names.includes("hMonitor")) synergy += 2;
     if (names.includes("uGPU") && names.includes("dMonitors")) synergy += 3;
     if (names.includes("dGPU") && names.includes("kMonitor")) synergy += 4;
 
-    // software synergies
+    // Software synergies
     if (names.includes("sApp")) {
         let inputs = hand.filter(c => c.tags == "input").length;
         synergy += Math.min(inputs * 1, 2);
@@ -345,7 +338,7 @@ function synergy() {
         synergy += software;
     }
 
-    // ergonomics synergies
+    // Ergonomics synergies
     if (names.includes("sChair")) {
         let inputs = hand.filter(c => c.tags == "input").length;
         synergy += inputs;
@@ -363,7 +356,7 @@ function synergy() {
         synergy += ergo;
     }
 
-    // fixed CPU synergy didnt have it before
+    // Fixed CPU synergy didnt have it before
     if (names.includes("sCPU")) {
     let software = hand.filter(c => c.tags == "software").length;
     synergy += software * 1;
@@ -374,7 +367,7 @@ if (names.includes("uCPU")) {
     synergy += software * 2;
     }
 
-    // show synergy in console and update UI label
+    // Show synergy in console and update UI label
     console.log("Synergy: " + synergy);
     if (synergyLabel) {
         synergyLabel.innerText = "Synergy: " + synergy;
@@ -398,14 +391,14 @@ function calculateMoney(){
     console.log("Calculating Money...");
     // Determining money to add to player's money based on score
     console.log("Money before Addition: " + money);
-    // Add code for money calculation based on score
+    // Calculating money based on score
     var addMoney = 0;
     if (score <= 0) {
         addMoney = 0;
     } else if (score > 0 & score <= 3) {
         addMoney += 1;
     } else if (score > 3) {
-        addMoney += (Math.floor(score / 2))
+        addMoney += (Math.floor(score / 2));
     }
     console.log("Money to Add: " + addMoney);
     return addMoney;
@@ -418,7 +411,7 @@ function calculateScore() {
     lastScore = score;
     // Default score = 0, set to a higher value to test wins
     score = 0;
-    // Add the base value of each card in the player's hand to the score
+    // Adding the base value of each card in the player's hand to the score
     hand.forEach(card => score += card.base);
     console.log("Base Score: " + score);
     // Determining synergies and adding bonus score
@@ -438,20 +431,22 @@ function calculateScore() {
         newRound();
     }
 
-    refreshDisplay(); // refresh display 
+    refreshDisplay(); // Refresh display 
 }
 
 // -----Interaction functions-----
-// Shuffle Bin, used for rerolling the bin, add code for -1 shuffles remaining
+// Helper function to know if there are any cards on the shop 
+function shopHasAny() {
+    for (var i = 0; i < shop.length; i++) {
+        if (shop[i] && !shopSold[i]) return true;
+    }
+    return false;
+}
+
+// Shuffle Bin, used for rerolling the bin
 function shuffleBin() {
     console.log("Shuffling Bin...");
 
-    // Removing appropriate cards from bin
-    // for cards in removedInBin
-    // remove from bin[]
-    // bin.splice(bin.indexOf(card), 1)
-    // if card is in removedFromHand add back to bin then remove card from removedFromHand to prevent duplicates
-    // bin.push(card)
     const sameRef = (a, b) => a === b;
 
     // Remove all occurrences of a card object from bin
@@ -459,30 +454,28 @@ function shuffleBin() {
         bin = bin.filter(c => !sameRef(c, card));
     }
 
+    // Preventing duplicate insertions in bin
     function dedupeOneInBin(card) {
         let seen = false;
         bin = bin.filter(c => {
             if (!sameRef(c, card)) return true;
-            if (!seen) { seen = true; return true; } // keep the first encounter
-            return false; // drop extras
+            if (!seen) { seen = true; return true; } // Keep the first encounter
+            return false; // Drop extras
         });
     }
 
-    const undoneSet = new Set(removedFromHand); // object identity set
+    const undoneSet = new Set(removedFromHand); // Object identity set
 
     for (const card of removedFromBin) {
         if (undoneSet.has(card)) {
-            // undone: make sure card is in bin only once
+            // Undone: make sure card is in bin only once
             dedupeOneInBin(card);
-            undoneSet.delete(card); // prevent double-processing
+            undoneSet.delete(card); // Prevent double-processing
         } else {
-            // not undone: remove its disabled presence from bin
+            // Not undone: remove its disabled presence from bin
             removeAllFromBin(card);
         }
     }
-
-    // Setting all bin fields to clickable / removing darkened styles
-    // FUTURE: implement this after merging with Antonios's darken code
 
     // Clearing removedFromBin and removedFromHand arrays
     binDisabled.clear();
@@ -501,10 +494,10 @@ function shuffleBin() {
     console.log("New Bin Order:");
     bin.forEach(card => console.log(card.describe()));
 
-    refreshDisplay(); // refresh display 
+    refreshDisplay(); // Refresh display 
 }
 
-// Reroll Shop, FUTURE will need code to make reroll button unclickable if money is insufficient
+// Reroll Shop function
 function rerollShop() {
     console.log("Rerolling Shop...");
     // If shop is already empty, reroll for free
@@ -520,13 +513,14 @@ function rerollShop() {
         console.log("Shop is empty, rerolling for free");
     }
 
-    // build a fixed size shop so rows don't move around
+    // Bilding a fixed size shop so rows don't move around
     shop = [];
     for (var i = 0; i < Shop_Slot_Count; i++) {
         var r = Math.floor(Math.random() * cardPool.length);
         shop.push(createCardInstance(cardPool[r]));
     }
     shopSold = new Array(Shop_Slot_Count).fill(false);
+
     // Print the player's shop to the console
     console.log("New Shop Contents:");
     shop.forEach(card => console.log(card.describe()));
@@ -539,11 +533,11 @@ function rerollShop() {
         if (btn) { btn.disabled = false; btn.classList.remove("darkened"); }
     }); 
     
-    refreshDisplay(); // refresh display
+    refreshDisplay(); // Refresh display
 }
 
 // Add to Hand from Bin
-function addToHand(card, index = hand.length) { // default index = end
+function addToHand(card, index = hand.length) { // Default index = end
     console.log("Adding card to hand...");
     // Add the card to the player's hand
     removedFromBin.push(card);
@@ -570,7 +564,7 @@ function addToBin(card) {
     console.log("New Bin Contents:");
     bin.forEach(card => console.log(card.describe()));
 
-    refreshDisplay(); // refresh display 
+    refreshDisplay(); // Refresh display 
 }
 
 // Remove from Hand, used in undoSelection
@@ -583,19 +577,20 @@ function removeFromHand(card) {
     hand.splice(hand.indexOf(card), 1);
     // Add the card to the player's bin
     addToBin(card);
-    binDisabled.delete(card); // makes the card clickable again immediately
+    binDisabled.delete(card); // Makes the card clickable again immediately
 
     // Print the player's hand to the console
     console.log("New Hand Contents:");
     hand.forEach(card => console.log(card.describe()));
 
-    refreshDisplay(); // refresh display 
+    refreshDisplay(); // Refresh display 
 }
 
 // Buy From Shop
 function buyFromShop(card) {
     console.log("Buying card from shop...");
     var i = shop.indexOf(card);
+    // Determining if card can be bought
     if (i === -1) {
         console.log("Card not found in shop.");
         return;
@@ -605,15 +600,17 @@ function buyFromShop(card) {
         return;
     }
     
+    // Adding card to bin
     money -= card.base;
     addToBin(card);
     shopSold[i] = true; 
     console.log("New Shop Contents:");
     shop.forEach(card => console.log(card.describe()));
+
     // Print the player's money to the console
     console.log("Money after Purchase: " + money);
 
-    refreshDisplay(); // refresh display
+    refreshDisplay(); // Refresh display
 }
 
 // Play Round
@@ -622,16 +619,16 @@ function playRound() {
     // Calculate the player's score
     calculateScore();
 
-    refreshDisplay(); // refresh display
+    refreshDisplay(); // Refresh display
 }
 
 // Undo Bin to Hand Selection
 // Questions for a FUTURE date: How should bin undo work? Refund card to bin or just remove from hand? 
 // Should this be overhauled to discard drag & drop zone? Would need to address bin -> undo drag bug.
+// We may get around to this when we migrate the code post M4 I'll keep this around
 function undoSelection() {
     console.log("Undoing selection...");
-    // Add code for undoing selection
-    // Protection check
+    // Checking if there is a card to undo
     if (!lastAddedCard) {
         console.log("No recent card to undo.");
         return;
@@ -690,15 +687,12 @@ function initDisplay() {
             switch(shop[index].name){
                 case "Standard Keyboard":
                     item.textContent = "Std. Keyboard";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Mechanical Keyboard":
                     item.textContent = "Mech Keyboard";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Standard Monitor":
                     item.textContent = "Std. Monitor";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Smart Notetaker":
                     item.textContent = "Smart Notetaker";
@@ -727,15 +721,12 @@ function initDisplay() {
             switch(bin[index].name){
                 case "Standard Keyboard":
                     item.textContent = "Std. Keyboard";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Mechanical Keyboard":
                     item.textContent = "Mech Keyboard";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Standard Monitor":
                     item.textContent = "Std. Monitor";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Smart Notetaker":
                     item.textContent = "Smart Notetaker";
@@ -762,7 +753,7 @@ function initDisplay() {
             card.textContent = "";
         }
     });
-    updateRerollButtonStatus(); // updates reroll button status 
+    updateRerollButtonStatus(); // Updates reroll button status 
 }
 
 function refreshDisplay() {
@@ -793,7 +784,7 @@ function refreshDisplay() {
     // Money section
     const moneyText = document.querySelector(".right-column .money");
     if (moneyText) {
-        moneyText.textContent = "$" + money
+        moneyText.textContent = "$" + money;
     }
 
     // Plays section
@@ -811,15 +802,12 @@ function refreshDisplay() {
             switch(shop[index].name){
                 case "Standard Keyboard":
                     item.textContent = "Std. Keyboard";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Mechanical Keyboard":
                     item.textContent = "Mech Keyboard";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Standard Monitor":
                     item.textContent = "Std. Monitor";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Smart Notetaker":
                     item.textContent = "Smart Notetaker";
@@ -848,15 +836,12 @@ function refreshDisplay() {
             switch(bin[index].name){
                 case "Standard Keyboard":
                     item.textContent = "Std. Keyboard";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Mechanical Keyboard":
                     item.textContent = "Mech Keyboard";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Standard Monitor":
                     item.textContent = "Std. Monitor";
-                    //item.style.fontSize = "12pt";
                     break;
                 case "Smart Notetaker":
                     item.textContent = "Smart Notetaker";
@@ -902,8 +887,8 @@ function initImages() {
             const img = document.createElement("img");
             img.src = `../assets/cards/${shop[index].id}.png`;
             //img.src = "../assets/pics/placeholder.png";
-            img.alt = "Card placeholder";
-            img.width = 40;   // we can change this
+            img.alt = "Card";
+            img.width = 40;   // We can change this
             img.height = 40;
             img.style.display = "block";
             img.style.margin = "5px auto 2px auto";
@@ -919,8 +904,8 @@ function initImages() {
             const img = document.createElement("img");
             img.src = `../assets/cards/${bin[index].id}.png`;
             //img.src = "../assets/pics/placeholder.png";
-            img.alt = "Card placeholder";
-            img.width = 40;   // we can change this
+            img.alt = "Card";
+            img.width = 40;   // We can change this
             img.height = 40;
             img.style.display = "block";
             img.style.margin = "5px auto 2px auto";
@@ -928,7 +913,7 @@ function initImages() {
         }
     });
 
-    //Level image
+    // Level image
     const levelImg = document.querySelectorAll(".play-space .desk .levelImg");
     levelImg.forEach((item) => {
         // If the item doesn't already have an image
@@ -965,9 +950,9 @@ function initImages() {
     handCards.forEach(card => {
         if (!card.querySelector("img")) {
             const img = document.createElement("img");
-            img.src = "../assets/pics/placeholder.png"; //hand starts with empty placeholders
+            img.src = "../assets/pics/placeholder.png"; // Hand starts with empty placeholders
             img.alt = "Card placeholder";
-            img.width = 80;  // we can change this
+            img.width = 80;  // We can change this
             img.height = 80;
             img.style.display = "block";
             img.style.margin = "5px auto 2px auto";
@@ -1036,15 +1021,16 @@ function refreshImages() {
         }
     });
 
-    //Level image
+    // Level image
     const levelImg = document.querySelectorAll(".play-space .desk .levelImg");
     levelImg.forEach((item) => {
         let img = item.querySelector("img");
-        //if there is no image element created yet
+        // If there is no image element created yet
         if (!img) {
             img = document.createElement("img");
             item.prepend(img);
         }
+        // Refreshing image based on current level
         switch (level) {
                 case 1:
                     img.src = "../assets/levels/sheetStar.png";
@@ -1097,14 +1083,13 @@ function refreshImages() {
     });
 }
 
-
-// Currently called in refreshDisplay
+// updateShopButtonStatus, currently called in refreshDisplay
 function updateShopButtonStatus() {
     console.log("Updating shop button status...");
 
     // Select the buy buttons
-    const rows = document.querySelectorAll('.left-column .items .item-row');
-    const buttons = document.querySelectorAll('.left-column .items .item-row .buy');
+    const rows = document.querySelectorAll(".left-column .items .item-row");
+    const buttons = document.querySelectorAll(".left-column .items .item-row .buy");
 
     buttons.forEach((button, i) => {
         const item = shop[i];
@@ -1113,6 +1098,7 @@ function updateShopButtonStatus() {
 
         const sold = !!shopSold[i];
         
+        // If the item is already sold, insufficient cost, or doesnt exist: disable item interactivity and darken
         var disable;
         if (!item || sold) {
             disable = true;
@@ -1130,18 +1116,18 @@ function updateShopButtonStatus() {
     });
 }
 
-// make reroll button unclickable if money is insufficient
+// Make reroll button unclickable if money is insufficient
 function updateRerollButtonStatus() {
     if (!rerollBtn) return;
     // Reroll is free when the shop is empty
-    const blocked = shopHasAny() && money < 5; // works with helper function 
+    const blocked = shopHasAny() && money < 5; // Works with helper function 
     rerollBtn.disabled = blocked;
     rerollBtn.classList.toggle("disabled", blocked);
     rerollBtn.classList.toggle("darkened", blocked);
     rerollBtn.title = blocked ? "Need $5 to reroll" : "Reroll the shop";
 }
 
-// make shuffle button unclickable shuffles < 1
+// Make shuffle button unclickable if shuffles < 1
 function updateShuffleButtonStatus() {
   if (!shuffleBtn) return;
   const blocked = shuffles < 1;
@@ -1151,7 +1137,7 @@ function updateShuffleButtonStatus() {
   shuffleBtn.title = blocked ? "No shuffles remaining" : "Shuffle your bin";
 }
 
-// make play button unclickable if hand is empty
+// Make play button unclickable if hand is empty
 function updatePlayButtonStatus() {
     if (!playBtn) return;
     const blocked = hand.length < 1;
@@ -1163,7 +1149,7 @@ function updatePlayButtonStatus() {
 
 // -----Interaction events-----
 // Click events
-//Clicking the reset button -> startGame()
+// Clicking the reset button -> startGame()
 if (resetBtn) {
     resetBtn.addEventListener("click", function() {
         console.log("*-*-*-Reset Button Clicked-*-*-*");
@@ -1238,13 +1224,13 @@ document.querySelectorAll(".left-column .items .item-row .buy")
 
 // Drag & Drop events
 // Drag card from bin to hand -> addToHand(card) 
-// it also lets you add the card back to the bin
+// It also lets you add the card back to the bin
 
 let draggedFrom = null;
-// helper to remove any stuck dragged classes
+// Helper to remove any stuck dragged classes
 function clearDragStyles() {
-  document.querySelectorAll('.is-dragging').forEach(function(el){
-    el.classList.remove('is-dragging');
+  document.querySelectorAll(".is-dragging").forEach(function(el){
+    el.classList.remove("is-dragging");
   });
 }
 let draggedCardIndex = null;
@@ -1381,30 +1367,30 @@ function initDragAndDrop() {
     attachDragStarts();
     markDraggable();
 }
-// code to show stats of card when hovering over the card
 
+// Show stats of card when hovering over the card
 var _tipEl, _tipTarget;
 
 function _makeTip() {
-  _tipEl = document.createElement('div');
-  _tipEl.style.position = 'fixed';
-  _tipEl.style.maxWidth = '260px';
-  _tipEl.style.padding = '10px 12px';
-  _tipEl.style.background = 'rgba(18,18,24,.96)';
-  _tipEl.style.color = '#fff';
-  _tipEl.style.border = '1px solid rgba(255,255,255,.15)';
-  _tipEl.style.borderRadius = '10px';
-  _tipEl.style.boxShadow = '0 8px 24px rgba(0,0,0,.35)';
-  _tipEl.style.font = '500 13px/1.35 system-ui,sans-serif';
-  _tipEl.style.zIndex = '9999';
-  _tipEl.style.pointerEvents = 'none';
-  _tipEl.style.display = 'none';
+  _tipEl = document.createElement("div");
+  _tipEl.style.position = "fixed";
+  _tipEl.style.maxWidth = "260px";
+  _tipEl.style.padding = "10px 12px";
+  _tipEl.style.background = "rgba(18,18,24,.96)";
+  _tipEl.style.color = "#fff";
+  _tipEl.style.border = "1px solid rgba(255,255,255,.15)";
+  _tipEl.style.borderRadius = "10px";
+  _tipEl.style.boxShadow = "0 8px 24px rgba(0,0,0,.35)";
+  _tipEl.style.font = "500 13px/1.35 system-ui,sans-serif";
+  _tipEl.style.zIndex = "9999";
+  _tipEl.style.pointerEvents = "none";
+  _tipEl.style.display = "none";
   document.body.appendChild(_tipEl);
 }
 
 function _showTip(html, x, y){
   _tipEl.innerHTML = html;
-  _tipEl.style.display = 'block';
+  _tipEl.style.display = "block";
   var padding = 12, viewportWidth = window.innerWidth, viewportHeight = window.innerHeight;
   var left = x + padding, top = y + padding;
   var tipRect = _tipEl.getBoundingClientRect();
@@ -1412,18 +1398,18 @@ function _showTip(html, x, y){
   if (top + tipRect.height > viewportHeight) top = y - tipRect.height - padding;
   if (left < 8) left = 8;
   if (top  < 8) top  = 8;
-  _tipEl.style.left = left + 'px';
-  _tipEl.style.top  = top  + 'px';
+  _tipEl.style.left = left + "px";
+  _tipEl.style.top  = top  + "px";
 }
-function _hideTip(){ if (_tipEl) _tipEl.style.display = 'none'; }
+function _hideTip(){ if (_tipEl) _tipEl.style.display = "none"; }
 
 function _tipHTML(card){
-  var name   = card ? card.name   : 'Unknown';
-  var base   = card ? card.base   : '-';
-  var tags   = card ? card.tags   : '-';
-  var rarity = card ? card.rarity : '-';
-  var text   = card && card.text ? card.text : '';
-  var html = '';
+  var name   = card ? card.name   : "Unknown";
+  var base   = card ? card.base   : "-";
+  var tags   = card ? card.tags   : "-";
+  var rarity = card ? card.rarity : "-";
+  var text   = card && card.text ? card.text : "";
+  var html = "";
   html += '<div style="font-weight:700;font-size:14px">' + name + '</div>';
   html += '<div style="margin-top:6px;display:flex;justify-content:space-between;gap:12px;opacity:.9"><span style="opacity:.75">Base</span><span>' + base + '</span></div>';
   html += '<div style="margin-top:6px;display:flex;justify-content:space-between;gap:12px;opacity:.9"><span style="opacity:.75">Rarity</span><span>' + rarity + '</span></div>';
@@ -1432,48 +1418,46 @@ function _tipHTML(card){
   return html;
 }
 
-// resolve a card object from the hovered element using arrays and dom
-// we need to know if the element is in the hand, the bin, or the shop.
-// then we use its position to pick the right object from hand/bin/shop.
+// Resolve a card object from the hovered element using arrays and dom
+// We need to know if the element is in the hand, the bin, or the shop.
+// Then we use its position to pick the right object from hand/bin/shop.
 function _resolveCard(el){
-  // if the element is inside the hand area, read its data-index
-  // and use that slot in the hand array
-  if (el.closest('.play-space .cards')) {
-    var handIndex = parseInt(el.dataset.index || '-1', 10);
+  // If the element is inside the hand area, read its data-index and use that slot in the hand array
+  if (el.closest(".play-space .cards")) {
+    var handIndex = parseInt(el.dataset.index || "-1", 10);
     return (Array.isArray(hand) && hand[handIndex]) ? hand[handIndex] : null;
   }
-  // if the element is inside the bin area, read its data-index
-  // and use that slot in the bin array
-  if (el.closest('.left-column .vert-container:nth-of-type(2) .items')) {
-    var binIndex = parseInt(el.dataset.index || '-1', 10);
+  // If the element is inside the bin area, read its data-index and use that slot in the bin array
+  if (el.closest(".left-column .vert-container:nth-of-type(2) .items")) {
+    var binIndex = parseInt(el.dataset.index || "-1", 10);
     return (Array.isArray(bin) && bin[binIndex]) ? bin[binIndex] : null;
   }
 
-  // shop items don’t have data index, so to make this work
-  // get the list of shop item elements in order
-  // find which position this element is in that list
-  // use that position to read from the shop array
-  var containers = document.querySelectorAll('.left-column .vert-container');
-  if (containers.length > 0 && el.closest('.left-column .vert-container:first-of-type .items')) {
-    var shopItems = containers[0].querySelectorAll('.items .item');
+  // Shop items don’t have data index, so to make this work
+  // Get the list of shop item elements in order
+  // Find which position this element is in that list
+  // Use that position to read from the shop array
+  var containers = document.querySelectorAll(".left-column .vert-container");
+  if (containers.length > 0 && el.closest(".left-column .vert-container:first-of-type .items")) {
+    var shopItems = containers[0].querySelectorAll(".items .item");
     var shopIndex = Array.prototype.indexOf.call(shopItems, el);
     return (Array.isArray(shop) && shop[shopIndex]) ? shop[shopIndex] : null;
   }
-  // if none match empty card
+  // If none match empty card
   return null;
 }
 
 function initHoverTooltips(){
-  if (_tipEl) return; // run once
+  if (_tipEl) return; // Run once
   _makeTip();
 
-  // helper to check if an element is a card/item we care about
+  // Helper to check if an element is a card/item we care about
   function isTarget(el){
-    return el.matches('.play-space .cards .card') ||
-           el.matches('.left-column .vert-container:nth-of-type(2) .items .item') ||
-           el.matches('.left-column .vert-container:first-of-type .items .item');
+    return el.matches(".play-space .cards .card") ||
+           el.matches(".left-column .vert-container:nth-of-type(2) .items .item") ||
+           el.matches(".left-column .vert-container:first-of-type .items .item");
   }
-  // walk up to find the actual target
+  // Walk up to find the actual target
   function findTarget(el){
     while (el && el !== document.body){
       if (el.nodeType === 1 && isTarget(el)) return el;
@@ -1482,12 +1466,12 @@ function initHoverTooltips(){
     return null;
   }
 
-  // show on hover if there is a real card
-  document.addEventListener('mouseover', function(e){
+  // Show on hover if there is a real card
+  document.addEventListener("mouseover", function(e){
     var targetElement = findTarget(e.target);
     if (!targetElement) return;
     var card = _resolveCard(targetElement);
-    if (!card) { // if no card, do not show anything
+    if (!card) { // If no card, do not show anything
       _tipTarget = null;
       _hideTip();
       return;
@@ -1496,9 +1480,9 @@ function initHoverTooltips(){
     _showTip(_tipHTML(card), e.clientX, e.clientY);
   });
 
-  // follow the cursor, but do not show during drag/hold, and hide if empty slot
-  document.addEventListener('mousemove', function(e){
-    // if a mouse button is down (dragging or holding), keep it hidden
+  // Follow the cursor, but do not show during drag/hold, and hide if empty slot
+  document.addEventListener("mousemove", function(e){
+    // If a mouse button is down (dragging or holding), keep it hidden
     if (e.buttons) {
       _tipTarget = null;
       _hideTip();
@@ -1506,7 +1490,7 @@ function initHoverTooltips(){
     }
     if (!_tipTarget) return;
     var card = _resolveCard(_tipTarget);
-    if (!card) { // if no card under target anymore, hide
+    if (!card) { // If no card under target anymore, hide
       _tipTarget = null;
       _hideTip();
       return;
@@ -1514,8 +1498,8 @@ function initHoverTooltips(){
     _showTip(_tipHTML(card), e.clientX, e.clientY);
   });
 
-  // hide when leaving the element
-  document.addEventListener('mouseout', function(e){
+  // Hide when leaving the element
+  document.addEventListener("mouseout", function(e){
     if (!_tipTarget) return;
     if (!e.relatedTarget || !_tipTarget.contains(e.relatedTarget)){
       _tipTarget = null;
@@ -1523,44 +1507,44 @@ function initHoverTooltips(){
     }
   });
 
-  // if user clicks on the card it makes the box dissapear, makes the game run smoother
-  document.addEventListener('pointerdown', function(e){
+  // If user clicks on the card it makes the box dissapear, makes the game run smoother
+  document.addEventListener("pointerdown", function(e){
     if (findTarget(e.target)) { 
       _tipTarget = null;
       _hideTip();
     }
   }, true); 
 
-  // also hide when dragging starts
-  document.addEventListener('dragstart', function(){
+  // Hide when dragging starts
+  document.addEventListener("dragstart", function(){
     _tipTarget = null;
     _hideTip();
   }, true);
 
-  // also hide on scroll
-  window.addEventListener('scroll', _hideTip, { passive: true });
+  // Hide on scroll
+  window.addEventListener("scroll", _hideTip, { passive: true });
 }
 
-// Accessibility functions
+// -----Accessibility functions-----
 // Alternate color button
-const altTextButton = document.getElementById('alt_color_button')
+const altTextButton = document.getElementById("alt_color_button")
 function changeTextColor() {
     document.body.classList.toggle("alt-colors");
 }
 
 altTextButton.addEventListener("click", function (event) {
-    event.preventDefault(); // Stops a from navigating
+    event.preventDefault(); // Stops from navigating
     changeTextColor();
 });
 
 // Night mode button
-const nightModeButton = document.getElementById('night_mode_button')
+const nightModeButton = document.getElementById("night_mode_button")
 function activateNightMode() {
     document.body.classList.toggle("night-mode");
 }
 
 nightModeButton.addEventListener("click", function (event) {
-    event.preventDefault(); // Stops a from navigating
+    event.preventDefault(); // Stops from navigating
     activateNightMode();
 
     const isNight = document.body.classList.contains("night-mode");
@@ -1579,8 +1563,8 @@ nightModeButton.addEventListener("click", function (event) {
 document.body.classList.toggle("font-large");
 //document.body.classList.toggle("alt-colors"); //DON'T ENABLE. This will switch the 
 
-// ---Main (keep below functions and events)---
+// -----Main (keep below functions and events)-----
 // Call the initialization function to start the engine
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener("DOMContentLoaded", (event) => {
     initializeGameEngine();
 });
