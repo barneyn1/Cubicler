@@ -93,6 +93,52 @@ body.night-mode progress::-webkit-progress-bar {
     background-color: black !important;
 }
 
+/* Enlarge text */
+body.enlarge-text header a,
+body.enlarge-text header #resetBtn,
+body.enlarge-text header,
+body.enlarge-text .left-column .vert-container .reroll,
+body.enlarge-text .left-column .vert-container #shuffleBtn,
+body.enlarge-text .play-space .hand .cards .card,
+body.enlarge-text .right-column .progress-wrapper .progress-label,
+body.enlarge-text .right-column .bottom,
+body.enlarge-text .right-column .money,
+body.enlarge-text .right-column .undo,
+body.enlarge-text .right-column .play,
+body.enlarge-text .right-column p {
+  font-size: 1.05rem;
+}
+
+body.enlarge-text .left-column .vert-container .reroll .cost,
+body.enlarge-text .left-column .vert-container .shuffle .num {
+  font-size: 18px;
+}
+
+body.enlarge-text .right-column .progress-wrapper {
+  height: 25px;
+  padding-top: 3%;
+}
+
+body.enlarge-text header h1,
+body.enlarge-text .right-column p {
+  font-size: 28px;
+}
+
+body.enlarge-text .left-column .vert-container {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+body.enlarge-text .left-column .vert-container #binLabel {
+  margin-top: 1px;
+  padding-top: 0px;
+}
+
+body.enlarge-text .left-column .title,
+body.enlarge-text .right-column .title {
+  font-size: 30px;
+}
+
 /* Night mode edits */
 body.night-mode .play-space {
   background-color: black;
@@ -384,12 +430,13 @@ progress::-moz-progress-bar {
 
 /* --- DESK IMAGE LAYER --- */
 .play-space .desk {
-  position: relative;
+  position: absolute;
+  bottom: 20%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
   z-index: 12;
-  pointer-events: none;
+  pointer-events: none;                      
 }
 
 .play-space .desk img {
@@ -398,7 +445,6 @@ progress::-moz-progress-bar {
   display: block;
   margin: 0 auto;
   filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
-  bottom: -1;
 }
 
 .play-space .desk .levelImg {
@@ -421,8 +467,6 @@ progress::-moz-progress-bar {
   justify-content: space-evenly;
   width: 100%;
   padding: 3% 0;
-  margin-bottom: 1vh;
-  max-height: 25%; /*prevents hand space from growing after bin add, change if it causes issues*/
   border: 0.08vw solid black;
   color: white;
   background-image: url("../assets/pics/handSpaceBkg.png");
@@ -436,7 +480,6 @@ progress::-moz-progress-bar {
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  padding-bottom: 1.5%;
 }
 
 .play-space .hand .cards .card {
@@ -516,9 +559,8 @@ progress::-moz-progress-bar {
 /* Styles for smaller laptop viewports */
 /*15" Screen*/
 @media screen and (max-width: 1540px) and (max-height: 730px) {
-  /*Hand space grow fix*/
-  .play-space .hand {
-    margin-bottom: 1.25vh;
-    max-height: 29%;
+  /*Fix for Desk Monitor to Appear as Expected*/
+  .play-space .desk {
+    bottom: 26%;                  
   }
 }
