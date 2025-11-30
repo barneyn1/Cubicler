@@ -133,26 +133,16 @@ function initializeGameEngine() {
 
     // Dyanmic label for synergy score, alterations on CSS side
     synergyLabel = document.createElement("div"); 
-    synergyLabel.style.position = "absolute"; 
-    synergyLabel.style.left = "50%";
-    synergyLabel.style.transform = "translate(-50%, -50%)";
-    synergyLabel.style.top = "-7%";
-    synergyLabel.style.zIndex = "15";
+    synergyLabel.style.position = "absolute";
+    synergyLabel.style.top = "2px"; 
+    synergyLabel.style.right = "100px"; // Changed to 100 to prevent font size from overlaying
     synergyLabel.style.background = "#222";
     synergyLabel.style.color = "#00ff00";
     synergyLabel.style.padding = "6px"; 
     synergyLabel.style.borderRadius = "4px"; 
     synergyLabel.style.fontFamily = "Arial, sans-serif"; 
     synergyLabel.innerText = "Synergy: 0";
-    
-    const gameContainer = document.querySelector(".play-space .desk");
-    if (gameContainer){
-        gameContainer.appendChild(synergyLabel);
-    }
-    else {
-        document.body.appendChild(synergyLabel);
-    }
-
+    document.body.appendChild(synergyLabel);
     initDisplay();
     initImages();
     initDragAndDrop();
@@ -667,13 +657,13 @@ function initDisplay() {
     // Round section
     const roundText = document.querySelector(".right-column p:nth-of-type(1)");
     if (roundText) {
-        roundText.textContent = round + " of 6";
+        roundText.textContent = round + " of 8";
     }
 
     // Level section
     const levelText = document.querySelector(".right-column .bottom");
     if (levelText) {
-        levelText.textContent = level + " of 5";
+        levelText.textContent = level + " of 4";
     }
 
     // Money section
@@ -685,7 +675,7 @@ function initDisplay() {
     // Plays section
     const playText = document.querySelector(".right-column .plays-remaining");
     if (playText) {
-        playText.textContent = (7 - round) + (round === 6 ?" Play remaining!" : " Plays remaining!");
+        playText.textContent = (9 - round) + (round === 8 ?" Play remaining!" : " Plays remaining!");
     }
 
     // Shop items
@@ -782,13 +772,13 @@ function refreshDisplay() {
     // Round section
     const roundText = document.querySelector(".right-column p:nth-of-type(1)");
     if (roundText) {
-        roundText.textContent = round + " of 6";
+        roundText.textContent = round + " of 8";
     }
 
     // Level section
     const levelText = document.querySelector(".right-column .bottom");
     if (levelText) {
-        levelText.textContent = level + " of 5";
+        levelText.textContent = level + " of 4";
     }
 
     // Money section
@@ -800,7 +790,7 @@ function refreshDisplay() {
     // Plays section
     const playText = document.querySelector(".right-column .plays-remaining");
     if (playText) {
-        playText.textContent = (7 - round) + (round === 6 ?" Play remaining!" : " Plays remaining!");
+        playText.textContent = (9 - round) + (round === 8 ?" Play remaining!" : " Plays remaining!");
     }
 
     // Shop items
@@ -943,9 +933,6 @@ function initImages() {
                 case 4:
                     img.src = "../assets/levels/database.png";
                     break;
-                case 5:
-                    img.src = "../assets/levels/bossCall.png";
-                    break;
                 default:
                     img.src = "../assets/pics/placeholder.png";
                     break;
@@ -1053,9 +1040,6 @@ function refreshImages() {
                     break;
                 case 4:
                     img.src = "../assets/levels/database.png";
-                    break;
-                case 5:
-                    img.src = "../assets/levels/bossCall.png";
                     break;
                 default:
                     img.src = "";
@@ -1547,6 +1531,17 @@ altTextButton.addEventListener("click", function (event) {
     changeTextColor();
 });
 
+// Enlarge text
+const enlargeText = document.getElementById('font_size_button')
+function enlargeTextSize() {
+    document.body.classList.toggle("enlarge-text");
+}
+
+enlargeText.addEventListener("click", function (event) {
+    event.preventDefault();
+    enlargeTextSize();
+})
+
 // Night mode button
 const nightModeButton = document.getElementById("night_mode_button")
 function activateNightMode() {
@@ -1566,12 +1561,7 @@ nightModeButton.addEventListener("click", function (event) {
         settingsIcon.src = "../assets/pics/cog.png";
         homeScreenMonitor.src = "../assets/pics/main_monitor.png";
     }
-});
-
-// Written so toggling each function doesn't affect the other
-//document.body.classList.toggle("night-mode");
-document.body.classList.toggle("font-large");
-//document.body.classList.toggle("alt-colors"); //DON'T ENABLE. This will switch the 
+}); 
 
 // -----Main (keep below functions and events)-----
 // Call the initialization function to start the engine
