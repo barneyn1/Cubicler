@@ -103,14 +103,17 @@ body.enlarge-text .play-space .hand .cards .card,
 body.enlarge-text .right-column .progress-wrapper .progress-label,
 body.enlarge-text .right-column .bottom,
 body.enlarge-text .right-column .money,
-body.enlarge-text .right-column .undo,
-body.enlarge-text .right-column .play,
 body.enlarge-text .right-column p {
   font-size: 1.05rem;
 }
 
+body.enlarge-text header h1 {
+  font-size: 28px;
+}
+
 body.enlarge-text .left-column .vert-container .reroll .cost,
 body.enlarge-text .left-column .vert-container .shuffle .num {
+  margin: 0;
   font-size: 18px;
 }
 
@@ -119,14 +122,24 @@ body.enlarge-text .right-column .progress-wrapper {
   padding-top: 3%;
 }
 
-body.enlarge-text header h1,
-body.enlarge-text .right-column p {
-  font-size: 28px;
+body.enlarge-text .right-column p,
+body.enlarge-text .right-column .money,
+body.enlarge-text .right-column .bottom {
+  font-size: 24px;
+}
+
+body.enlarge-text .right-column .undo,
+body.enlarge-text .right-column .play {
+  font-size: 24px;
 }
 
 body.enlarge-text .left-column .vert-container {
-  margin-top: 1px;
-  margin-bottom: 1px;
+  height: 50vh;
+}
+
+body.enlarge-text .left-column .vert-container .item-row {
+  margin-top: 0.2vh;
+  margin-bottom: 0.2vh;
 }
 
 body.enlarge-text .left-column .vert-container #binLabel {
