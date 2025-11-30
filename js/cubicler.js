@@ -134,15 +134,25 @@ function initializeGameEngine() {
     // Dyanmic label for synergy score, alterations on CSS side
     synergyLabel = document.createElement("div"); 
     synergyLabel.style.position = "absolute";
-    synergyLabel.style.top = "2px"; 
-    synergyLabel.style.right = "100px"; // Changed to 100 to prevent font size from overlaying
+    synergyLabel.style.left = "50%";
+    synergyLabel.style.transform = "translate(-50%, -50%)";
+    synergyLabel.style.top = "-7%";
+    synergyLabel.style.zIndex = "15";
     synergyLabel.style.background = "#222";
     synergyLabel.style.color = "#00ff00";
     synergyLabel.style.padding = "6px"; 
     synergyLabel.style.borderRadius = "4px"; 
     synergyLabel.style.fontFamily = "Arial, sans-serif"; 
     synergyLabel.innerText = "Synergy: 0";
-    document.body.appendChild(synergyLabel);
+        
+    const gameContainer = document.querySelector(".play-space .desk");
+    if (gameContainer){
+        gameContainer.appendChild(synergyLabel);
+    }
+    else {
+        document.body.appendChild(synergyLabel);
+    }
+
     initDisplay();
     initImages();
     initDragAndDrop();
