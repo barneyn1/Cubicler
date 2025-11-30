@@ -1017,6 +1017,7 @@ function refreshImages() {
             // Enable/disable interactivity per-instance (object identity)
             const isDisabled = binDisabled.has(card);
             item.classList.toggle("disabled", isDisabled);
+            item.classList.toggle("darkened", isDisabled);
             item.style.pointerEvents = isDisabled ? "none" : "";
             item.setAttribute("draggable", isDisabled ? "false" : "true");
         } else {
