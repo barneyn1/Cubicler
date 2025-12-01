@@ -24,12 +24,12 @@ document.addEventListener("DOMContentLoaded", function() {
         });
       });
     
-    // Add hover effects to cards
+    // Adding hover effects to cards
     cards.forEach((card, index) => {
-        card.addEventListener('click', function() {
+        card.addEventListener("click", function() {
             console.log(`Card ${index + 1} clicked`);
             
-            // Add a simple animation
+            // Adding a simple animation
             card.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 card.style.transform = '';
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     // Simple utility functions
-    function showMessage(message, type = 'info') {
+    function showMessage(message, type = "info") {
         console.log(`${type.toUpperCase()}: ${message}`);
     }
     
@@ -53,5 +53,5 @@ document.addEventListener("DOMContentLoaded", function() {
     };
     
     // Log that everything is ready
-    showMessage('All scripts loaded and ready!');
+    showMessage("All scripts loaded and ready!");
 });
