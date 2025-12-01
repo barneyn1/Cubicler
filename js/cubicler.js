@@ -943,6 +943,9 @@ function initImages() {
                 case 4:
                     img.src = "../assets/levels/database.png";
                     break;
+                case 5:
+                    img.src = "../assets/levels/bossCall.png";
+                    break;
                 default:
                     img.src = "../assets/pics/placeholder.png";
                     break;
@@ -1051,6 +1054,9 @@ function refreshImages() {
                     break;
                 case 4:
                     img.src = "../assets/levels/database.png";
+                    break;
+                case 5:
+                    img.src = "../assets/levels/bossCall.png";
                     break;
                 default:
                     img.src = "";
