@@ -480,6 +480,8 @@ progress::-moz-progress-bar {
   justify-content: space-evenly;
   width: 100%;
   padding: 3% 0;
+  margin-bottom: 1vh;
+  max-height: 25%; /*prevents hand space from growing after bin add, change if it causes issues*/
   border: 0.08vw solid black;
   color: white;
   background-image: url("../assets/pics/handSpaceBkg.png");
@@ -572,8 +574,10 @@ progress::-moz-progress-bar {
 /* Styles for smaller laptop viewports */
 /*15" Screen*/
 @media screen and (max-width: 1540px) and (max-height: 730px) {
-  /*Fix for Desk Monitor to Appear as Expected*/
-  .play-space .desk {
-    bottom: 26%;                  
+  /*Hand space grow fix*/
+  .play-space .hand {
+    max-height: 26%;
+    margin-bottom: 1.25vh;
+    max-height: 29%;
   }
 }
