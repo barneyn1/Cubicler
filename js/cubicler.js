@@ -523,7 +523,7 @@ function rerollShop() {
         console.log("Shop is empty, rerolling for free");
     }
 
-    // Bilding a fixed size shop so rows don't move around
+    // Building a fixed size shop so rows don't move around
     shop = [];
     for (var i = 0; i < Shop_Slot_Count; i++) {
         var r = Math.floor(Math.random() * cardPool.length);
@@ -673,7 +673,7 @@ function initDisplay() {
     // Level section
     const levelText = document.querySelector(".right-column .bottom");
     if (levelText) {
-        levelText.textContent = level + " of 4";
+        levelText.textContent = level + " of 5";
     }
 
     // Money section
@@ -788,7 +788,7 @@ function refreshDisplay() {
     // Level section
     const levelText = document.querySelector(".right-column .bottom");
     if (levelText) {
-        levelText.textContent = level + " of 4";
+        levelText.textContent = level + " of 5";
     }
 
     // Money section
